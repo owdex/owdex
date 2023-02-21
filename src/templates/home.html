@@ -2,42 +2,49 @@
 <html>
     <head>
         <title>xinase - home</title>
+        <link rel="stylesheet" href="/static/main.css">
     </head>
-    <body>
-        <h1>xinase</h1>
-        <form>
-            <input type="search" name="q" action="/search">
-            <fieldset>
-                <legend>index(es)</legend>
-                <label>
-                    <input type="checkbox" name="index" value="stable" checked>
-                    stable
-                </label>
-                <label>
-                    <input type="checkbox" name="index" value="unstable" checked>
-                    unstable
-                </label>
-                <label>
-                    <input type="checkbox" name="index" value="archive">
-                    archive
-                </label>
-            </fieldset>
-            <fieldset>
-                <legend>sorting</legend>
-                <label>
-                    <input type="radio" name="sort" value="relevance">
-                    by best match
-                </label>
-                <label>
-                    <input type="radio" name="sort" value="relevance">
-                    by score
-                </label>
-                <label>
-                    <input type="radio" name="sort" value="relevance" checked>
-                    by magic
-                </label>
-            </fieldset>
-            <input type="submit" value="search">
-        </form>
+    <body class="bg-gray-900 text-gray-400 flex h-screen">
+        <div class="m-auto">
+            <h1 class="flex justify-center text-7xl mb-12">xinase</h1>
+            <form>
+                <div class="flex justify-center">
+                    <input type="search" name="q" action="/search" class="border-y border-l rounded-l-lg bg-gray-800 border-gray-600">
+                    <input type="submit" value="search" class="border-y border-r rounded-r-lg bg-gray-800 border-gray-600">
+                </div>
+                <div class="flex justify-center space-x-7 mt-6">
+                    <fieldset>
+                        <legend>index(es)</legend>
+                        <label>
+                            <input type="checkbox" name="index" value="stable" class="accent-blue-600" checked>
+                            stable
+                        </label>
+                        <label>
+                            <input type="checkbox" name="index" value="unstable" class="accent-green-600" checked>
+                            unstable
+                        </label>
+                        <label>
+                            <input type="checkbox" name="index" value="archive" class="accent-orange-600">
+                            archive
+                        </label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>sorting</legend>
+                        <label>
+                            <input type="radio" name="sort" value="relevance">
+                            by best match
+                        </label>
+                        <label>
+                            <input type="radio" name="sort" value="relevance">
+                            by score
+                        </label>
+                        <label>
+                            <input type="radio" name="sort" value="relevance" checked>
+                            by magic
+                        </label>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
     </body>
 </html>
