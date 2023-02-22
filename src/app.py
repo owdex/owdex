@@ -8,7 +8,14 @@ def home():
 
 @app.route("/search")
 def search():
-    q = f.request.args.get('q')
-    index = f.request.args.getlist('index')
+    query = f.request.args.get('query')
+    indices = f.request.args.getlist('index')
     sort = f.request.args.get('sort')
-    return f"Query: {q}\nIndices:{index}\nSort:{sort}"
+    results = [
+        {"url":"https://example.com","title":"An example webpage","extract":"This is an extract from an example webpage."},
+        {"url":"https://example.com","title":"An example webpage","extract":"This is an extract from an example webpage."},
+        {"url":"https://example.com","title":"An example webpage","extract":"This is an extract from an example webpage."},
+        {"url":"https://example.com","title":"An example webpage","extract":"This is an extract from an example webpage."},
+        {"url":"https://example.com","title":"An example webpage","extract":"This is an extract from an example webpage."}
+    ]
+    return f.render_template("search.html", query=query, indices=indices, sort=sort, results=results)
