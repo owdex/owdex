@@ -554,6 +554,10 @@ video {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 .h-screen {
   height: 100vh;
 }
@@ -599,10 +603,38 @@ video {
   justify-content: center;
 }
 
+.gap-x-40 {
+  -moz-column-gap: 10rem;
+       column-gap: 10rem;
+}
+
+.gap-x-80 {
+  -moz-column-gap: 20rem;
+       column-gap: 20rem;
+}
+
 .space-x-7 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1.75rem * var(--tw-space-x-reverse));
   margin-left: calc(1.75rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-10 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(2.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-20 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(5rem * var(--tw-space-x-reverse));
+  margin-left: calc(5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-40 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(10rem * var(--tw-space-x-reverse));
+  margin-left: calc(10rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .rounded-l-lg {
@@ -682,6 +714,10 @@ video {
   padding-left: 0.25rem;
 }
 
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -697,6 +733,21 @@ video {
 .text-7xl {
   font-size: 4.5rem;
   line-height: 1;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .text-gray-400 {
