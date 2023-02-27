@@ -14,7 +14,7 @@ services:
     - "precreate-core stable; precreate-core unstable; precreate-core archive; exec solr -f"
 
   frontend:
-    build: ./frontend
+    build: ./src
     ports:
       - "80:80"
     depends_on:
