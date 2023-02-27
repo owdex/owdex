@@ -1,4 +1,5 @@
 import flask as f
+import os
 
 app = f.Flask(__name__)
 
@@ -19,3 +20,9 @@ def search():
         {"url":"https://example.com","title":"An example webpage","extract":"This is an extract from an example webpage."}
     ]
     return f.render_template("search.html", query=query, indices=indices, sort=sort, results=results)
+
+if __name__ == '__main__':
+    from waitress import serve
+    port = int(os.environ.get('PORT', 80))
+    print(port)
+    serve(app, host='0.0.0.0', port=port)

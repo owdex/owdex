@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  solr:
+    image: solr
+    ports:
+     - "8983:8983"
+    volumes:
+      - ./data:/var/solr/
+    entrypoint:
+    - bash
+    - "-c"
+    - "precreate-core stable; precreate-core unstable; precreate-core archive; exec solr -f"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - solr
+
+volumes:
+  data:
