@@ -4,26 +4,27 @@
         <title>xinase - {{ query }}</title>
         <link rel="stylesheet" href="/static/tailwind.css">
     </head>
-    <body class="my-5 ml-40 text-gray-400 bg-gray-900">
-        <div class="mb-10">
-            <a href="/">
-                <h1 class="mb-2.5 text-4xl text-blue-400">xinase</h1>
-            </a>
-            <p class="italic">"{{ query }}"</p>
-            <p>on {{ indices }}, sorted by {{ sort }}</p>
-        </div>
-
-        <div class="flex flex-col w-1/4">
-        {% for result in results %}
-            <div class="my-4">
-                <a href="{{ result.url }}">
-                    <h4 class="inline mr-1.5 text-xl text-blue-400 hover:underline decoration-blue-400">{{ result.title }}</h4>
-                    <span class="text-xs hover:underline">{{ result.url }}</span>
+    <body class="text-gray-400 bg-gray-900">
+        <main class="my-5 ml-40">
+            <div class="mb-10">
+                <a href="/">
+                    <h1 class="mb-2.5 text-4xl text-blue-400">xinase</h1>
                 </a>
-                <p class="text-sm">{{ result.extract }}</p>
+                <p class="italic">"{{ query }}"</p>
+                <p>on {{ indices }}, sorted by {{ sort }}</p>
             </div>
-        {% endfor %}
-        </div>
 
+            <div class="flex flex-col w-1/4">
+            {% for result in results %}
+                <div class="my-4">
+                    <a href="{{ result.url }}">
+                        <h4 class="inline mr-1.5 text-xl text-blue-400 hover:underline decoration-blue-400">{{ result.title }}</h4>
+                        <span class="text-xs hover:underline">{{ result.url }}</span>
+                    </a>
+                    <p class="text-sm">{{ result.extract }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        </main>
     </body>
 </html>
