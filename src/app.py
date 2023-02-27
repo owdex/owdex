@@ -7,6 +7,10 @@ app = f.Flask(__name__)
 def home():
     return f.render_template("home.html")
 
+@app.route("/add")
+def add():
+    return f.render_template("add.html")
+
 @app.route("/search")
 def search():
     query = f.request.args.get('query')
