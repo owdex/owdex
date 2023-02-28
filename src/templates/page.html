@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>xinase - {% block title %}{% endblock title %}</title>
+        <link rel="stylesheet" href="/static/tailwind.css">
+        {% if custom_css is defined %}
+            <link rel="stylesheet" href="{{ custom_css }}">
+        {% endif %}
+    </head>
+    <body class="px-40 py-5 h-screen text-gray-400 bg-gray-900">
+        <header class="flex pb-4 mb-4 border-b border-gray-400">
+            <a href="/"><h1 class="text-4xl text-blue-400">xinase</h1></a>
+            <h2 class="ml-auto text-4xl">{{ self.title() }}</h2>
+        </header>
+        <footer>
+            {% block main %}
+            {% endblock main %}
+        </footer>
+    </body>
+</html>
