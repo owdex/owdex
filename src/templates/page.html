@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <title>owdex - {% block title %}{% endblock title %}</title>
         <link rel="stylesheet" href="/static/tailwind.css">
         {% if custom_css is defined %}
@@ -12,9 +13,9 @@
             <a href="/"><h1 class="text-4xl text-blue-400">Owdex</h1></a>
             <h2 class="ml-auto text-4xl">{{ self.title() }}</h2>
         </header>
+        {% block main %}
+        {% endblock main %}
         <footer>
-            {% block main %}
-            {% endblock main %}
         </footer>
     </body>
 </html>
