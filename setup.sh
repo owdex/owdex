@@ -1,8 +1,8 @@
 #!/bin/sh
-# xinase setup script for easy configuration. creates the 'data' folders that solr will look for.
+# owdex setup script for easy configuration. creates the 'data' folders that solr will look for.
 
 if [ "$EUID" -ne 0 ]; then 
-    echo "xinase setup should be run as root in order to transfer ownership of the data folder correctly"
+    echo "owdex setup should be run as root in order to transfer ownership of the data folder correctly"
     exit
 fi
 
