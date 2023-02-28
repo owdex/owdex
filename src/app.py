@@ -11,6 +11,10 @@ def home():
 def add():
     return f.render_template("add.html")
 
+@app.route("/about")
+def about():
+    return f.render_template("about.html")
+
 @app.route("/search")
 def search():
     query = f.request.args.get('query')
