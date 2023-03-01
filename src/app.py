@@ -1,13 +1,15 @@
 import flask as f
 import os
 import pysolr
+import bs4
+from url_normalize import url_normalize as urlnorm
+import urllib.request
 
 app = f.Flask(__name__)
 
 DEV_MODE = True
 
 db_prefix = "http://solr:8983/solr/" if not DEV_MODE else "http://localhost:8983/solr/"
-
 db = {
     "stable": pysolr.Solr(db_prefix + "stable"),
     "unstable": pysolr.Solr(db_prefix + "unstable"),
@@ -18,9 +20,29 @@ db = {
 def home():
     return f.render_template("home.html")
 
-@app.route("/add")
+@app.route("/add", methods=["GET", "POST"])
 def add():
-    return f.render_template("add.html")
+    if f.request.method == "POST":
+        url = urlnorm(f.request.form["url"])
+        title = f.request.form["title"]
+        submitter = f.request.form["submitter"]
+
+        with urllib.request.urlopen(url) as response:
+            soup = bs4.BeautifulSoup(response.read(), features="html.parser")
+            content = soup.get_text()
+            description = soup.find("meta", attrs={"name" : "Description"}).get("content")
+
+        db["unstable"].add({
+            "url": url,
+            "title": title,
+            "description": description,
+            "submitter": submitter,
+            "content": content
+        }, commit=True)
+        return f.render_template("add.html")
+
+    else:
+        return f.render_template("add.html")
 
 @app.route("/about")
 def about():
