@@ -5,9 +5,9 @@ import bs4
 from url_normalize import url_normalize as urlnorm
 import urllib.request
 
-app = f.Flask(__name__)
-
 DEV_MODE = True
+
+app = f.Flask(__name__)
 
 db_prefix = "http://solr:8983/solr/" if not DEV_MODE else "http://localhost:8983/solr/"
 db = {
@@ -30,7 +30,7 @@ def add():
         with urllib.request.urlopen(url) as response:
             soup = bs4.BeautifulSoup(response.read(), features="html.parser")
             content = soup.get_text()
-            description = soup.find("meta", attrs={"name" : "Description"}).get("content")
+            description = soup.find("meta", attrs={"name" : "description"}).get("content")
 
         db["unstable"].add({
             "url": url,
@@ -68,6 +68,7 @@ def search():
         {"url":"https://example.com","title":"An example webpage","extract":"This is an extract from an example webpage."}
     ]
     return f.render_template("search.html", query=query, indices=indices, sort=sort, results=results)
+
 
 if __name__ == '__main__':
     from waitress import serve
