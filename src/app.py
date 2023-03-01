@@ -1,7 +1,13 @@
 import flask as f
 import os
+import pysolr
 
 app = f.Flask(__name__)
+db = {
+    "stable": pysolr.Solr("http://solr:8983/solr/stable"),
+    "unstable": pysolr.Solr("http://solr:8983/solr/unstable"),
+    "archive": pysolr.Solr("http://solr:8983/solr/archive")
+}
 
 @app.route("/")
 def home():
@@ -14,6 +20,10 @@ def add():
 @app.route("/about")
 def about():
     return f.render_template("about.html")
+
+@app.route("/ping")
+def ping():
+    return db["stable"].ping()
 
 @app.route("/search")
 def search():
