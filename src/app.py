@@ -3,10 +3,15 @@ import os
 import pysolr
 
 app = f.Flask(__name__)
+
+DEV_MODE = True
+
+db_prefix = "http://solr:8983/solr/" if not DEV_MODE else "http://localhost:8983/solr/"
+
 db = {
-    "stable": pysolr.Solr("http://solr:8983/solr/stable"),
-    "unstable": pysolr.Solr("http://solr:8983/solr/unstable"),
-    "archive": pysolr.Solr("http://solr:8983/solr/archive")
+    "stable": pysolr.Solr(db_prefix + "stable"),
+    "unstable": pysolr.Solr(db_prefix + "unstable"),
+    "archive": pysolr.Solr(db_prefix + "archive")
 }
 
 @app.route("/")
@@ -23,7 +28,10 @@ def about():
 
 @app.route("/ping")
 def ping():
-    return db["stable"].ping()
+    if DEV_MODE:
+        return db["stable"].ping()
+    else:
+        return "Not in development mode, ping not allowed!"
 
 @app.route("/search")
 def search():
