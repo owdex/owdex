@@ -8,6 +8,7 @@ services:
      - "8983:8983"
     volumes:
       - ./data:/var/solr/
+      - ./solr-conf:/config
     entrypoint:
     - bash
     - "-c"
@@ -22,3 +23,4 @@ services:
 
 volumes:
   data:
+  solr-conf:
