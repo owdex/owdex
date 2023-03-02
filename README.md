@@ -52,7 +52,7 @@ a number of smaller changes that should be made eventually but are neither criti
 system's core abilities. If you feel like taking one of them on, I'd love to work with you. 
 
 ## Acknowledgement
-Thanks to @4censord for exceptional help, suppport and words of advice.
+Thanks to [@4censord](https://github.com/4censord) for exceptional help, suppport and words of advice.
 
 ## License 
 Owdex is licensed under the [GNU AGPL v3](https://github.com/alexmshepherd/owdex/blob/main/LICENSE).
