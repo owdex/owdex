@@ -1,3 +1,6 @@
 src/static/tailwind.css linguist-generated
-solr_configset/ linguist-vendored
+solr_configset/** linguist-vendored
 solr_configset/managed-schema.xml linguist-detectable
+solr_configset/managed-schema.xml linguist-language=YAML
+docker-compose.yml linguist-detectable
+docker-compose.yml linguist-language=YAML
