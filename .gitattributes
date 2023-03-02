@@ -1,2 +1,3 @@
-# mark tailwind css as generated
-src/static/tailwind.css linguist-generated
+./src/static/tailwind.css linguist-generated
+./solr_configset/ linguist-vendored
+./solr_configset/managed-schema.xml linguist-detectable
