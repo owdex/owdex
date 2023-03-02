@@ -8,11 +8,10 @@ services:
      - "8983:8983"
     volumes:
       - ./data:/var/solr/
-      - ./solr-conf:/config
+      - ./solr_configset:/owdex_configset:ro
+      - ./solr_entrypoint.sh:/entrypoint.sh
     entrypoint:
-    - bash
-    - "-c"
-    - "precreate-core stable; precreate-core unstable; precreate-core archive; exec solr -f"
+    - /entrypoint.sh
 
   frontend:
     build: ./src
@@ -20,7 +19,3 @@ services:
       - "80:80"
     depends_on:
       - solr
-
-volumes:
-  data:
-  solr-conf:
