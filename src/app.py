@@ -30,7 +30,9 @@ def add():
         with urllib.request.urlopen(url) as response:
             soup = bs4.BeautifulSoup(response.read(), features="html.parser")
             content = soup.get_text()
-            description = soup.find("meta", attrs={"name" : "description"}).get("content")
+            description = soup.find("meta", attrs={"name" : "description"})
+            if description:
+                description = description.get("content")
 
         db["unstable"].add({
             "url": url,
