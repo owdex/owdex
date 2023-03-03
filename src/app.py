@@ -10,11 +10,7 @@ DEV_MODE = True
 app = f.Flask(__name__)
 
 db_prefix = "http://solr:8983/solr/" if not DEV_MODE else "http://localhost:8983/solr/"
-db = {
-    "stable": pysolr.Solr(db_prefix + "stable"),
-    "unstable": pysolr.Solr(db_prefix + "unstable"),
-    "archive": pysolr.Solr(db_prefix + "archive")
-}
+dbs = {db: pysolr.Solr(db_prefix + db) for db in ["stable", "unstable", "archive"]}
 
 @app.route("/")
 def home():
@@ -34,7 +30,7 @@ def add():
             if description:
                 description = description.get("content")
 
-        db["unstable"].add({
+        dbs["unstable"].add({
             "url": url,
             "title": title,
             "description": description,
@@ -53,7 +49,7 @@ def about():
 @app.route("/ping")
 def ping():
     if DEV_MODE:
-        return db["stable"].ping()
+        return dbs["stable"].ping()
     else:
         return "Not in development mode, ping not allowed!"
 
@@ -63,7 +59,7 @@ def search():
     indices = f.request.args.getlist('index')
     sort = f.request.args.get('sort')
 
-    results = db["unstable"].search(query)
+    results = dbs["unstable"].search(query)
 
     return f.render_template("search.html", query=query, indices=indices, sort=sort, results=results)
 
