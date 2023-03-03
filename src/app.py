@@ -5,7 +5,8 @@ import bs4
 from url_normalize import url_normalize as urlnorm
 import urllib.request
 
-DEV_MODE = True
+DEV_MODE = True if os.environ.get("OWDEX_DEVMODE") else False
+if DEV_MODE: print("Running Owdex in development mode!")
 
 app = f.Flask(__name__)
 
@@ -79,6 +80,9 @@ def search():
 
 
 if __name__ == '__main__':
-    from waitress import serve
-    port = int(os.environ.get('PORT', 80))
-    serve(app, host='0.0.0.0', port=port)
+    if DEV_MODE:
+        app.run(host="127.0.0.1", port="5000", debug=True)
+    else:
+        from waitress import serve
+        port = int(os.environ.get('PORT', 80))
+        serve(app, host='0.0.0.0', port=port)
