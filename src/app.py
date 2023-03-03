@@ -10,7 +10,7 @@ DEV_MODE = True
 app = f.Flask(__name__)
 
 db_prefix = "http://solr:8983/solr/" if not DEV_MODE else "http://localhost:8983/solr/"
-dbs = {db: pysolr.Solr(db_prefix + db) for db in ["stable", "unstable", "archive"]}
+dbs = {db_name: pysolr.Solr(db_prefix + db_name) for db_name in ["stable", "unstable", "archive"]}
 
 @app.route("/")
 def home():
