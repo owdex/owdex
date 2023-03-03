@@ -10,11 +10,16 @@ DEV_MODE = True
 app = f.Flask(__name__)
 
 db_prefix = "http://solr:8983/solr/" if not DEV_MODE else "http://localhost:8983/solr/"
-dbs = {db_name: pysolr.Solr(db_prefix + db_name) for db_name in ["stable", "unstable", "archive"]}
+dbs = {
+    db_name: pysolr.Solr(db_prefix + db_name)
+    for db_name in ["stable", "unstable", "archive"]
+}
+
 
 @app.route("/")
 def home():
     return f.render_template("home.html")
+
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
@@ -26,25 +31,29 @@ def add():
         with urllib.request.urlopen(url) as response:
             soup = bs4.BeautifulSoup(response.read(), features="html.parser")
             content = soup.get_text()
-            description = soup.find("meta", attrs={"name" : "description"})
+            description = soup.find("meta", attrs={"name": "description"})
             if description:
                 description = description.get("content")
 
-        dbs["unstable"].add({
-            "url": url,
-            "title": title,
-            "description": description,
-            "submitter": submitter,
-            "content": content
-        }, commit=True)
+        dbs["unstable"].add(
+            {
+                "url": url,
+                "title": title,
+                "description": description,
+                "submitter": submitter,
+                "content": content
+            },
+            commit=True)
         return f.render_template("add.html")
 
     else:
         return f.render_template("add.html")
 
+
 @app.route("/about")
 def about():
     return f.render_template("about.html")
+
 
 @app.route("/ping")
 def ping():
@@ -52,6 +61,7 @@ def ping():
         return dbs["stable"].ping()
     else:
         return "Not in development mode, ping not allowed!"
+
 
 @app.route("/search")
 def search():
@@ -61,7 +71,11 @@ def search():
 
     results = dbs["unstable"].search(query)
 
-    return f.render_template("search.html", query=query, indices=indices, sort=sort, results=results)
+    return f.render_template("search.html",
+                             query=query,
+                             indices=indices,
+                             sort=sort,
+                             results=results)
 
 
 if __name__ == '__main__':
