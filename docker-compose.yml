@@ -9,6 +9,7 @@ services:
     volumes:
       - ./data:/var/solr/
       - ./solr_configset:/owdex_configset:ro
+      - ./solr_configset_users:/owdex_configset_users:ro
       - ./solr_entrypoint.sh:/entrypoint.sh
     entrypoint:
     - /entrypoint.sh
