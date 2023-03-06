@@ -7,7 +7,7 @@
 set -e
 
 # only bring up the server, not the frontend through docker
-docker-compose up -d solr
+docker-compose up --detach solr
 
 # set devmode flag, enter venv and start app in background
 export OWDEX_DEVMODE=TRUE

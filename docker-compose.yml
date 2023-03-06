@@ -7,9 +7,9 @@ services:
     ports:
      - "8983:8983"
     volumes:
-      - ./data:/var/solr/
-      - ./solr_configset:/owdex_configset:ro
-      - ./solr_entrypoint.sh:/entrypoint.sh
+      - ./solr/data:/var/solr/
+      - ./solr/configset:/owdex_configset:ro
+      - ./solr/entrypoint.sh:/entrypoint.sh
     entrypoint:
     - /entrypoint.sh
 
