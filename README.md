@@ -31,7 +31,7 @@ _because nobody can spell Prerequisittes_
 - Apache Solr
 
 ## Installation
-Start by `git clone`ing the repo to an arbitrary location. Then run `chmod +x setup.sh; sudo ./setup.sh`. 
+Start by `git clone`ing the repo to an arbitrary location. Then run `chmod +x ./bin/setup.sh; sudo ./bin/setup.sh`. 
 This creates a `data` directory for Solr to use, fills it with the subdirectories it needs, and 
 sets permissions appropriately (this last step is why it has to be run with `sudo`.) 
 
@@ -39,9 +39,9 @@ sets permissions appropriately (this last step is why it has to be run with `sud
 Production users can run `docker-compose up`. This will run the Solr backend and Flask frontend, 
 get them talking to each other, and serve a website on port 80. 
 
-Developers should ~~sacrifice their souls to the god of Solr~~ install the dependencies, make sure 
-the `src/static/tailwind.css` file is up to date with `tailwindcss -o src/static/tailwind.css -c src/tailwind.config.js`, 
-and then can serve the site with `flask --app src/app.py run --debug`. 
+Developers can use our magic helper script with `chmod +x ./bin/dev.sh; ./bin/dev.sh`. This runs 
+Solr in the background using Docker and starts Tailwind and Flask in development mode, watching the
+source files and reloading on changes.
 
 ## Contribution
 First of all, thank you for getting this far! It means a lot to me that you're interested in this 
