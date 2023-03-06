@@ -821,6 +821,11 @@ video {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
+.text-red-200 {
+  --tw-text-opacity: 1;
+  color: rgb(254 202 202 / var(--tw-text-opacity));
+}
+
 .decoration-blue-400 {
   text-decoration-color: #60a5fa;
 }
