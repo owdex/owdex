@@ -1,9 +1,20 @@
-version: '3'
+version: '3.8'
 
 services:
 
   solr:
     image: solr
+    profiles: ["prod"]
+    volumes:
+      - ./solr/data:/var/solr/
+      - ./solr/configset:/owdex_configset:ro
+      - ./solr/entrypoint.sh:/entrypoint.sh
+    entrypoint:
+    - /entrypoint.sh
+  
+  solr_dev:
+    image: solr
+    profiles: ["dev"]
     ports:
      - "8983:8983"
     volumes:
@@ -13,9 +24,18 @@ services:
     entrypoint:
     - /entrypoint.sh
 
+  mongo:
+    image: mongo
+    profiles: ["prod"]
+  
+  mongo_dev:
+    image: mongo
+    profiles: ["dev"]
+    ports:
+      - "27017:27017"
+
   frontend:
+    profiles: ["prod"]
     build: ./src
     ports:
       - "80:80"
-    depends_on:
-      - solr

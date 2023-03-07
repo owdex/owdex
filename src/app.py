@@ -6,6 +6,7 @@ from url_normalize import url_normalize as urlnorm
 import urllib.request
 from dotenv import load_dotenv
 import flask_login
+from pymongo import MongoClient
 
 load_dotenv()
 if os.environ.get("OWDEX_DEVMODE"): print("Running Owdex in development mode!")
@@ -44,12 +45,24 @@ def request_loader(request):
     return user
 
 
-db_prefix = "http://solr:8983/solr/" if not os.environ.get(
+solr_prefix = "http://solr:8983/solr/" if not os.environ.get(
     "OWDEX_DEVMODE") else "http://localhost:8983/solr/"
 dbs = {
-    db_name: pysolr.Solr(db_prefix + db_name)
+    db_name: pysolr.Solr(solr_prefix + db_name)
     for db_name in ["stable", "unstable", "archive"]
 }
+
+mongo_client = MongoClient("mongodb://mongo:27017/" if not os.environ.get(
+    "OWDEX_DEVMODE") else "mongodb://localhost:27017")
+
+user_db = mongo_client["users"]
+user_cl = user_db["users"]
+
+user_cl.insert_one({"name": "alex", "phrase": "hi!", "age": 17})
+
+cursor = user_cl.find()
+for record in cursor:
+    print(record)
 
 
 @app.route('/login', methods=['GET', 'POST'])

@@ -6,8 +6,8 @@
 # exit on errors (like docker daemon not running)
 set -e
 
-# only bring up the server, not the frontend through docker
-docker-compose up --detach solr
+# only bring up the backend servers
+docker-compose --profile dev up --detach 
 
 # set devmode flag, enter venv and start app in background
 export OWDEX_DEVMODE=TRUE
