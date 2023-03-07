@@ -1,50 +1,69 @@
-version: '3.8'
+version: "3.8"
 
 services:
 
   solr:
+    container_name: solr
     image: solr
-    profiles: ["prod"]
+    profiles: 
+      - prod
+
     volumes:
       - ./solr/data:/var/solr/
       - ./solr/configset:/owdex_configset:ro
       - ./solr/entrypoint.sh:/entrypoint.sh
+
     entrypoint:
     - /entrypoint.sh
   
   solr-dev:
-    profiles: ["dev"]
     container_name: solr
     image: solr
+    profiles: 
+      - dev
+
     ports:
-     - "8983:8983"
+      - 8983:8983
     volumes:
       - ./solr/data:/var/solr/
       - ./solr/configset:/owdex_configset:ro
       - ./solr/entrypoint.sh:/entrypoint.sh
+
     entrypoint:
-    - /entrypoint.sh
+      - /entrypoint.sh
+
 
   mongo:
-    profiles: ["prod"]
+    container_name: mongo
     image: mongo
+    profiles: 
+      - prod
   
   mongo-dev:
     container_name: mongo
-    profiles: ["dev"]
-    ports:
-      - "27017:27017"
     image: mongo
+    profiles: 
+      - dev
+
+    ports:
+      - 27017:27017
   
   mongo-express:
+    container_name: mongo-express
     image: mongo-express
-    profiles: ["dev"]
+    profiles: 
+      - dev
+
     restart: always
     ports:
-      - "8081:8081"
+      - 8081:8081
+
 
   frontend:
-    profiles: ["prod"]
+    container_name: frontend
     build: ./src
+    profiles: 
+      - prod
+
     ports:
-      - "80:80"
+      - 80:80
