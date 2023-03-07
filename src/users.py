@@ -31,7 +31,4 @@ class UserManager():
 
     def verify(self, email, given_password):
         user = self.get(email)
-        if self._hasher.hash(given_password) == user["password"]:
-            return True
-        else:
-            return False
+        return self._hasher.verify(self.get(email)["password"], given_password)

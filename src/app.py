@@ -31,8 +31,11 @@ def login():
 
     if f.request.method == "POST":
         try:
-            if um.verify(f.request.form["email"], f.request.form["password"]):
-                session["user"] = user.email
+            email = f.request.form["email"]
+            password = f.request.form["password"]
+            if um.verify(email, password):
+                f.session["user"] = email
+                print(f"ur so swag, {email}")
                 success = True
             else:
                 success = False
