@@ -12,9 +12,10 @@ services:
     entrypoint:
     - /entrypoint.sh
   
-  solr_dev:
-    image: solr
+  solr-dev:
     profiles: ["dev"]
+    container_name: solr
+    image: solr
     ports:
      - "8983:8983"
     volumes:
@@ -25,14 +26,22 @@ services:
     - /entrypoint.sh
 
   mongo:
-    image: mongo
     profiles: ["prod"]
-  
-  mongo_dev:
     image: mongo
+  
+  mongo-dev:
+    container_name: mongo
     profiles: ["dev"]
     ports:
       - "27017:27017"
+    image: mongo
+  
+  mongo-express:
+    image: mongo-express
+    profiles: ["dev"]
+    restart: always
+    ports:
+      - "8081:8081"
 
   frontend:
     profiles: ["prod"]
