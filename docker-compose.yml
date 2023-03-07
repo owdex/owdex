@@ -38,6 +38,9 @@ services:
     image: mongo
     profiles: 
       - prod
+
+    volumes:
+      - ./mongo/data:/data/db
   
   mongo-dev:
     container_name: mongo
@@ -47,6 +50,8 @@ services:
 
     ports:
       - 27017:27017
+    volumes:
+      - ./mongo/data:/data/db
   
   mongo-express:
     container_name: mongo-express
