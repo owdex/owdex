@@ -29,9 +29,9 @@ class UserManager():
         else:
             raise KeyError("No such user!")
 
-    def verify(email, given_password):
+    def verify(self, email, given_password):
         user = self.get(email)
-        if self._hasher.hash(given_password) == user.password:
+        if self._hasher.hash(given_password) == user["password"]:
             return True
         else:
             return False
