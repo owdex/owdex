@@ -17,10 +17,9 @@ app.secret_key = os.environ.get("secret_key")
 
 um = UserManager(dev_mode=DEV_MODE)
 
-solr_prefix = "http://solr:8983/solr/" if not os.environ.get(
-    "OWDEX_DEVMODE") else "http://localhost:8983/solr/"
+solr_domain = "solr" if not DEV_MODE else "localhost"
 dbs = {
-    db_name: pysolr.Solr(solr_prefix + db_name)
+    db_name: pysolr.Solr(f"http://{solr_domain}:8983/solr/{db_name}")
     for db_name in ["stable", "unstable", "archive"]
 }
 
