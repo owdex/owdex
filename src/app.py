@@ -30,17 +30,20 @@ def login():
     success = None
 
     if f.request.method == "POST":
+        email = f.request.form["email"]
+        password = f.request.form["password"]
         try:
-            email = f.request.form["email"]
-            password = f.request.form["password"]
-            if um.verify(email, password):
-                f.session["user"] = email
-                print(f"ur so swag, {email}")
-                success = True
-            else:
-                success = False
-        except KeyError:
+            um.verify(email, password)
+        except argon2.exceptions.VerifyMismatchError:
+            # wrong password
             success = False
+        except KeyError:
+            # no such email
+            success = False
+        else:
+            # login successful
+            f.session["user"] = email
+            success = True
 
     return f.render_template("login.html", success=success)
 
