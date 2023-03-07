@@ -1,49 +1,21 @@
-import flask as f
 import os
+
+from dotenv import load_dotenv
+import flask as f
 import pysolr
-import bs4
 from url_normalize import url_normalize as urlnorm
 import urllib.request
-from dotenv import load_dotenv
-import flask_login
-from pymongo import MongoClient
+import bs4
+
+from users import UserManager
 
 load_dotenv()
-if os.environ.get("OWDEX_DEVMODE"): print("Running Owdex in development mode!")
+DEV_MODE = os.environ.get("OWDEX_DEVMODE")
 
 app = f.Flask(__name__)
 app.secret_key = os.environ.get("secret_key")
 
-login_manager = flask_login.LoginManager()
-login_manager.init_app(app)
-
-users = {'foo@bar.tld': {'password': 'secret'}}
-
-
-class User(flask_login.UserMixin):
-    pass
-
-
-@login_manager.user_loader
-def user_loader(email):
-    if email not in users:
-        return
-
-    user = User()
-    user.id = email
-    return user
-
-
-@login_manager.request_loader
-def request_loader(request):
-    email = request.form.get('email')
-    if email not in users:
-        return
-
-    user = User()
-    user.id = email
-    return user
-
+um = UserManager(dev_mode=DEV_MODE)
 
 solr_prefix = "http://solr:8983/solr/" if not os.environ.get(
     "OWDEX_DEVMODE") else "http://localhost:8983/solr/"
@@ -52,56 +24,47 @@ dbs = {
     for db_name in ["stable", "unstable", "archive"]
 }
 
-mongo_client = MongoClient("mongodb://mongo:27017/" if not os.environ.get(
-    "OWDEX_DEVMODE") else "mongodb://localhost:27017")
 
-user_db = mongo_client["users"]
-user_cl = user_db["users"]
-
-user_cl.insert_one({"name": "alex", "phrase": "hi!", "age": 17})
-
-cursor = user_cl.find()
-for record in cursor:
-    print(record)
-
-
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if f.request.method == 'GET':
-        return '''
-               <form action='login' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='password' name='password' id='password' placeholder='password'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+    success = None
 
-    email = f.request.form['email']
-    if email in users and f.request.form['password'] == users[email][
-            'password']:
-        user = User()
-        user.id = email
-        flask_login.login_user(user)
-        return f.redirect(f.url_for('protected'))
+    if f.request.method == "POST":
+        try:
+            if um.verify(f.request.form["email"], f.request.form["password"]):
+                session["user"] = user.email
+                success = True
+            else:
+                success = False
+        except KeyError:
+            success = False
 
-    return 'Bad login'
+    return f.render_template("login.html", success=success)
 
 
-@app.route('/protected')
-@flask_login.login_required
-def protected():
-    return 'Logged in as: ' + flask_login.current_user.id
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    success = None
+
+    if f.request.method == "POST":
+        try:
+            um.create(f.request.form["email"], f.request.form["password"])
+        except KeyError:
+            success = False
+
+    return f.render_template("signup.html", success=success)
 
 
-@app.route('/logout')
+@app.route("/logout")
 def logout():
-    flask_login.logout_user()
-    return 'Logged out'
+    session.pop("user", None)
+    return "Logged out"
 
 
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    return 'Unauthorized', 401
+@app.route("/protected")
+def protected():
+    if "user" in f.session:
+        return f"Logged in as {um.get(f.session['user'])}"
 
 
 @app.route("/")
@@ -145,7 +108,7 @@ def about():
 
 @app.route("/ping")
 def ping():
-    if os.environ.get("OWDEX_DEVMODE"):
+    if DEV_MODE:
         return dbs["stable"].ping()
     else:
         return "Not in development mode, ping not allowed!"
@@ -153,9 +116,9 @@ def ping():
 
 @app.route("/search")
 def search():
-    query = f.request.args.get('query')
-    indices = f.request.args.getlist('index')
-    sort = f.request.args.get('sort')
+    query = f.request.args.get("query")
+    indices = f.request.args.getlist("index")
+    sort = f.request.args.get("sort")
 
     results = dbs["unstable"].search(query)
 
@@ -166,10 +129,10 @@ def search():
                              results=results)
 
 
-if __name__ == '__main__':
-    if os.environ.get("OWDEX_DEVMODE"):
+if __name__ == "__main__":
+    if DEV_MODE:
         app.run(host="127.0.0.1", port="5000", debug=True)
     else:
         from waitress import serve
-        port = int(os.environ.get('PORT', 80))
-        serve(app, host='0.0.0.0', port=port)
+        port = int(os.environ.get("PORT", 80))
+        serve(app, host="0.0.0.0", port=port)
