@@ -9,9 +9,9 @@ services:
       - prod
 
     volumes:
-      - ./solr/data:/var/solr/
-      - ./solr/configset:/owdex_configset:ro
-      - ./solr/entrypoint.sh:/entrypoint.sh
+      - ./db/solr/data:/var/solr/
+      - ./db/solr/configset:/owdex_configset:ro
+      - ./db/solr/entrypoint.sh:/entrypoint.sh
 
     entrypoint:
     - /entrypoint.sh
@@ -25,9 +25,9 @@ services:
     ports:
       - 8983:8983
     volumes:
-      - ./solr/data:/var/solr/
-      - ./solr/configset:/owdex_configset:ro
-      - ./solr/entrypoint.sh:/entrypoint.sh
+      - ./db/solr/data:/var/solr/
+      - ./db/solr/configset:/owdex_configset:ro
+      - ./db/solr/entrypoint.sh:/entrypoint.sh
 
     entrypoint:
       - /entrypoint.sh
@@ -40,7 +40,7 @@ services:
       - prod
 
     volumes:
-      - ./mongo/data:/data/db
+      - ./db/mongo/data:/data/db
   
   mongo-dev:
     container_name: mongo
@@ -51,7 +51,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./mongo/data:/data/db
+      - ./db/mongo/data:/data/db
   
   mongo-express:
     container_name: mongo-express
