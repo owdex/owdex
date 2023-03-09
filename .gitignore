@@ -164,5 +164,3 @@ solr/data
 mongo/data
 
 .vscode/
-
-src/.env
