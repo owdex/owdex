@@ -3,7 +3,7 @@ module.exports = {
   content: {
     relative: true,
     files: [
-      "./templates/*.html"
+      "./owdex/templates/*.html"
     ]
   },
   theme: {
