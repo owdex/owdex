@@ -45,7 +45,7 @@ def signup():
 
 @users.route("/logout")
 def logout():
-    session.pop("user", None)
+    f.session.pop("user", None)
     return "Logged out"
 
 
