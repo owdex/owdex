@@ -24,7 +24,7 @@ _because nobody can spell Prerequisittes_
 
 ### For development
 - Python 3.10+
-    - [various packages](/src/requirements.txt)
+    - [various packages](/frontend/owdex/requirements.txt)
 - Tailwind CSS
 - Docker
 

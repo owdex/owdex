@@ -160,9 +160,7 @@ cython_debug/
 #.idea/
 
 # db data
-solr/data
-mongo/data
+db/solr/data
+db/mongo/data
 
 .vscode/
-
-src/.env
