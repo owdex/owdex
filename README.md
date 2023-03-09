@@ -21,14 +21,12 @@ _because nobody can spell Prerequisittes_
 
 ### For production install
 - Docker
-- that's it
 
 ### For development
-- Python 3
-    - Flask
-    - waitress
+- Python 3.10+
+    - [various packages](blob/main/src/requirements.txt)
 - Tailwind CSS
-- Apache Solr
+- Docker
 
 ## Installation
 Start by `git clone`ing the repo to an arbitrary location. Then run `chmod +x ./bin/setup.sh; sudo ./bin/setup.sh`. 
