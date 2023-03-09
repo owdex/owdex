@@ -24,7 +24,7 @@ _because nobody can spell Prerequisittes_
 
 ### For development
 - Python 3.10+
-    - [various packages](blob/main/src/requirements.txt)
+    - [various packages](/src/requirements.txt)
 - Tailwind CSS
 - Docker
 
