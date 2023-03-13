@@ -10,11 +10,12 @@ from .add import add
 from .users import users
 
 
-def create_app():
+def create_app(custom_config=None):
     app = f.Flask("owdex")
 
     load_dotenv()
     app.config.update(SECRET_KEY=os.environ.get("secret_key"))
+    if custom_config: app.config = app.config | custom_config
 
     app.um = UserManager(dev_mode=app.config["DEBUG"])
 

@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]
+
+[tool.coverage]
+branch = true
+source = "owdex"
