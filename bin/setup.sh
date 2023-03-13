@@ -7,8 +7,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 echo "making data folder structure"
-mkdir data data/data data/logs
-chown -R 8983 data 
+mkdir db/solr/data db/solr/data/data db/solr/data/logs
+chown -R 8983 db/solr/data
 
 
 echo "done :)"
