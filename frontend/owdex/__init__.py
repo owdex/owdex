@@ -4,7 +4,7 @@ import flask as f
 from dotenv import load_dotenv
 
 from .usermanager import UserManager
-from .static import static_page
+from .page import page
 from .search import search
 from .add import add
 from .users import users
@@ -20,9 +20,7 @@ def create_app(custom_config=None):
     app.um = UserManager(dev_mode=app.config["DEBUG"])
 
     with app.app_context():
-        app.register_blueprint(static_page,
-                               static_folder="assets",
-                               static_url_path="/assets/")
+        app.register_blueprint(page)
         app.register_blueprint(search)
         app.register_blueprint(add)
         app.register_blueprint(users)
