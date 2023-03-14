@@ -20,7 +20,9 @@ def create_app(custom_config=None):
     app.um = UserManager(dev_mode=app.config["DEBUG"])
 
     with app.app_context():
-        app.register_blueprint(static_page, static_folder="static")
+        app.register_blueprint(static_page,
+                               static_folder="assets",
+                               static_url_path="/assets/")
         app.register_blueprint(search)
         app.register_blueprint(add)
         app.register_blueprint(users)
