@@ -1,0 +1,7 @@
+{
+    "_id": {
+      "$oid": "640a4aa28ae7b98ec1035e4b"
+    },
+    "email": "test@test.test",
+    "password": "$argon2id$v=19$m=65536,t=3,p=4$jjqeoCfjFdLdy4mW362ooA$Fl865V0yYxKrewDLNS+kLITJkFAf4e1POZdYAM6YnH0"
+  }

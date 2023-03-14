@@ -12,3 +12,4 @@ repos:
     hooks:
     -   id: yapf
         args: [-i]
+        additional_dependencies: [toml]
