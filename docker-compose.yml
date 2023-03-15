@@ -79,5 +79,5 @@ services:
     ports:
       - 80:80
     volumes:
-      - caddy_data:/data
-      - Caddyfile:/etc/caddy/caddyfile
+      - ./caddy_data:/data
+      - ./Caddyfile:/etc/caddy/caddyfile
