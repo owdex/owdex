@@ -164,3 +164,5 @@ db/solr/data
 db/mongo/data
 
 .vscode/
+
+Caddyfile
