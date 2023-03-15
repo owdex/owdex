@@ -71,13 +71,14 @@ services:
       - prod
 
   caddy:
-    container_name: cadddy
+    container_name: caddy
     image: caddy
     profiles:
       - prod
 
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./caddy_data:/data
       - ./Caddyfile:/etc/caddy/Caddyfile
