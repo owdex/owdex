@@ -2,11 +2,15 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>owdex - {% block title %}{% endblock title %}</title>
+
         <link rel="stylesheet" href="{{ url_for('static', filename='tailwind.css') }}">
         {% if custom_css is defined %}
             <link rel="stylesheet" href="{{ custom_css }}">
         {% endif %}
+        
     </head>
     <body class="px-40 py-5 h-screen text-gray-400 bg-gray-900">
         <header class="flex pb-4 mb-4 border-b border-gray-400">
