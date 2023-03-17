@@ -12,14 +12,26 @@
         {% endif %}
         
     </head>
-    <body class="px-40 py-5 h-screen text-gray-400 bg-gray-900">
+    <body class="{% block body_classes %} px-40 py-5 h-screen text-gray-400 bg-gray-900 {% endblock body_classes %} ">
+
+        {% block header %}
         <header class="flex pb-4 mb-4 border-b border-gray-400">
             <a href="/"><h1 class="text-4xl text-blue-400">Owdex</h1></a>
             <h2 class="ml-auto text-4xl">{{ self.title() }}</h2>
         </header>
+        {% endblock header %}
+
         {% block main %}
+        <main>
+
+        </main>
         {% endblock main %}
+
+        {% block footer %}
         <footer>
+
         </footer>
+        {% endblock footer %}
+        
     </body>
 </html>
