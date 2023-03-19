@@ -1,0 +1,6 @@
+{
+        email sysadmin@example.com
+}
+www.example.com, example.com {
+        reverse_proxy http://frontend:80
+}
