@@ -3,12 +3,12 @@
 
 ![Website](https://img.shields.io/website?down_color=red&down_message=down&style=flat-square&up_color=green&up_message=up&url=https%3A%2F%2Fowdex.com)
 ![License](https://img.shields.io/github/license/alexmshepherd/owdex?style=flat-square&color=blue)
+![Trans Rights](https://img.shields.io/badge/trans-rights-ff69b4?style=flat-square)
 
 ![Vulnerability Checks](https://img.shields.io/github/actions/workflow/status/alexmshepherd/owdex/codeql.yml?label=vulnerability%20checks&style=flat-square)
 ![Chromium HSTS preload](https://img.shields.io/hsts/preload/owdex.com?style=flat-square)
 ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/owdex.com?style=flat-square)
 
-![Trans Rights](https://img.shields.io/badge/trans-rights-ff69b4?style=flat-square)
 
 Owdex is an open index of pages from across the web. Instead of crawling through hypertext based
 on links, it only indexes pages that its users direct it to. Owdex aims to build a better 
