@@ -14,7 +14,7 @@ echo "Getting latest code..."
 git pull
 
 echo "Restarting Owdex..."
-docker compose --profile prod up --build
+docker compose --profile prod up --build -d
 
 echo "Updated. Happy searching!"
 exit
