@@ -166,3 +166,4 @@ db/mongo/data
 .vscode/
 
 Caddyfile
+caddy_data/
