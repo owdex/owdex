@@ -1,0 +1,29 @@
+#!/bin/bash
+
+echo "Starting Owdex in development mode."
+echo "WARNING: do NOT use this in a publicly-accessible environment."
+
+# exit on errors (like docker daemon not running)
+set -e
+
+# get script location and cd to owdex main dir
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path/.."
+
+# set DEVMODE env var
+export OWDEX_DEVMODE=TRUE
+
+# enter venv
+. frontend/.venv/bin/activate
+
+# only bring up the backend servers
+echo "Starting background processes..."
+docker-compose --profile dev up --detach 
+
+# run flask in background
+echo "Starting Owdex. Happy searching!"
+flask --app frontend/owdex run --debug &
+
+# start tailwind watching
+# note that tailwind doesn't support running in background so it has to start last
+tailwindcss -c frontend/tailwind.config.js -o frontend/static/tailwind.css --watch

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# exit on errors (like docker daemon not running)
+set -e
+
+# check root
+if [ "$EUID" -ne 0 ]; then 
+    echo "Owdex setup should be run as root in order to transfer ownership of the data folder correctly."
+    exit
+fi
+
+echo "Setting up your Owdex installation."
+
+# get script location and cd to owdex main dir
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path/.."
+
+echo "Setting executable flag on scripts in bin/..."
+chmod +x bin/*
+
+echo "Preparing Solr..."
+mkdir db/solr/data db/solr/data/data db/solr/data/logs
+chown -R 8983 db/solr/data
+
+echo "Done. Happy searching!"
