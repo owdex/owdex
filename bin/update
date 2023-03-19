@@ -1,28 +1,20 @@
 #!/bin/bash
 
 echo "Updating your Owdex installation."
-echo "Warning: as a side-effect, this will stop and remove ANY OTHER DOCKER CONTAINERS RUNNING ON YOUR SYSTEM."
+echo "Note: this is for use in a production environment, and will not work in dev."
 
-read -p "Run anyway? [y/N]" -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
+# get script location and cd to owdex main dir
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path/.."
 
-    # get script location and cd to owdex main dir
-    parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-    cd "$parent_path/.."
+echo "Stopping Docker containers..."
+docker compose --profile prod down
 
-    echo "Stopping Docker containers..."
-    docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+echo "Getting latest code..."
+git pull
 
-    echo "Getting latest code..."
-    git pull
+echo "Restarting Owdex..."
+docker compose --profile prod up --build
 
-    echo "Building frontend..."
-    docker build frontend -t frontend
-
-    echo "Updated. Happy searching!"
-    exit
-
-fi
-
-echo "Aborted."
+echo "Updated. Happy searching!"
+exit
