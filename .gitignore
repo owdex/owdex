@@ -163,7 +163,5 @@ cython_debug/
 db/solr/data
 db/mongo/data
 
-.vscode/
-
 Caddyfile
 caddy_data/
