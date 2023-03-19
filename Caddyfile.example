@@ -5,10 +5,12 @@ www.example.com, example.com {
         reverse_proxy http://frontend:80
 
         header {
-                Strict-Transport-Security max-age=31536000;
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
                 X-Content-Type-Options nosniff
                 X-Frame-Options DENY
                 Referrer-Policy same-origin
+                X-XSS-Protection "1; mode=block"
+                Content-Security-Policy "default-src 'none'; img-src 'self'; style-src 'self'"
         }
 
 }
