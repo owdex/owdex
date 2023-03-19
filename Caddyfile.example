@@ -3,4 +3,12 @@
 }
 www.example.com, example.com {
         reverse_proxy http://frontend:80
+
+        header {
+                Strict-Transport-Security max-age=31536000;
+                X-Content-Type-Options nosniff
+                X-Frame-Options DENY
+                Referrer-Policy same-origin
+        }
+
 }
