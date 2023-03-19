@@ -6,7 +6,7 @@
 
 ![Vulnerability Checks](https://img.shields.io/github/actions/workflow/status/alexmshepherd/owdex/codeql.yml?label=vulnerability%20checks&style=flat-square)
 ![Chromium HSTS preload](https://img.shields.io/hsts/preload/owdex.com?style=flat-square)
-![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/owdex.com)
+![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/owdex.com?style=flat-square)
 
 ![Trans Rights](https://img.shields.io/badge/trans-rights-ff69b4?style=flat-square)
 
