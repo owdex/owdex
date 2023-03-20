@@ -13,7 +13,7 @@ from .users import users
 def create_app(custom_config=None):
     app = f.Flask("owdex")
 
-    load_dotenv()
+    load_dotenv(raise_error_if_not_found=True)
     app.config.update(SECRET_KEY=os.environ.get("secret_key"))
     if custom_config: app.config = app.config | custom_config
 
