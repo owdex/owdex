@@ -167,3 +167,5 @@ Caddyfile
 caddy_data/
 
 owdex.toml
+
+tailwind.css
