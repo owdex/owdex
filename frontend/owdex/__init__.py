@@ -1,7 +1,7 @@
 import os
 
 import flask as f
-from dotenv import load_dotenv
+import toml
 
 from .usermanager import UserManager
 from .page import page
@@ -10,12 +10,13 @@ from .add import add
 from .users import users
 
 
-def create_app(custom_config=None):
+def create_app(config_file=None, config_dict=None):
     app = f.Flask("owdex")
 
-    load_dotenv(raise_error_if_not_found=True)
-    app.config.update(SECRET_KEY=os.environ.get("secret_key"))
-    if custom_config: app.config = app.config | custom_config
+    if config_file:
+        app.config.from_file(config_file, load=toml.load)
+    if config_dict:
+        app.config = app.config | config_dict
 
     app.um = UserManager(dev_mode=app.config["DEBUG"])
 

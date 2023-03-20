@@ -165,3 +165,5 @@ db/mongo/data
 
 Caddyfile
 caddy_data/
+
+owdex.toml
