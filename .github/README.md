@@ -1,12 +1,12 @@
 # owdex
 **_open web index_**
 
-![Website](https://img.shields.io/website?down_color=red&down_message=down&style=for-the-badge&up_color=green&up_message=up&url=https%3A%2F%2Fowdex.com)
+![Website](https://img.shields.io/website?down_color=red&down_message=down&style=for-the-badge&up_color=forestgreen&up_message=up&url=https%3A%2F%2Fowdex.com)
 ![License](https://img.shields.io/github/license/owdex/owdex?color=blue&style=for-the-badge)
 ![Trans Rights](https://img.shields.io/badge/trans-rights-blue?style=for-the-badge)
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/codeql.yml?color=green&label=Vulnerability%20checks&logo=github&style=for-the-badge)
-![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/owdex.com?color=green&logo=mozilla&publish&style=for-the-badge)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/codeql.yml?color=forestgreen&label=Vulnerability%20checks&logo=github&style=for-the-badge)
+![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/owdex.com?color=forestgreen&logo=mozilla&publish&style=for-the-badge)
 ![Chromium HSTS preload](https://img.shields.io/hsts/preload/owdex.com?color=yellow&logo=googlechrome&logoColor=white&style=for-the-badge)
 
 Owdex is an open index of pages from across the web. Instead of crawling through hypertext based
