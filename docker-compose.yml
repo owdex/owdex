@@ -69,6 +69,9 @@ services:
     build: ./frontend
     profiles: 
       - prod
+    
+    volumes:
+      - ./owdex.toml:/owdex.toml:ro
 
   caddy:
     container_name: caddy
