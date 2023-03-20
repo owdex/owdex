@@ -34,6 +34,8 @@ def add_page():
                 "content": content
             },
             commit=True)
+
+        f.flash("Successfully added webpage!")
         return f.render_template("add.html"), 201
 
     else:
