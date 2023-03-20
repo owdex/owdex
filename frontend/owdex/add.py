@@ -34,7 +34,7 @@ def add_page():
                 "content": content
             },
             commit=True)
-        return f.render_template("add.html")
+        return f.render_template("add.html"), 201
 
     else:
         return f.render_template("add.html")
