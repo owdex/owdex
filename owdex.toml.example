@@ -1,0 +1,7 @@
+# OWDEX Configuration
+
+# Set a secret key. THIS MUST BE CHANGED from the default value (or else anyone can log in as anyone)
+SECRET_KEY = "supersneaky"
+
+# Set debug mode. This must be disabled for production environments (or else anyone can execute arbitrary code)
+# DEBUG = True
