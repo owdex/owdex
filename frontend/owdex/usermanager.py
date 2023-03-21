@@ -9,13 +9,14 @@ class UserManager():
         self._table = self._mongo["users"]["users"]
         self._hasher = PasswordHasher()
 
-    def create(self, email, password):
+    def create(self, email, password, admin=False):
         try:
             user = self.get(email)
         except KeyError:
             self._table.insert_one({
                 "email": email,
-                "password": self._hasher.hash(password)
+                "password": self._hasher.hash(password),
+                "admin": admin
             })
         else:
             raise KeyError(f"User already exists with given email {email}!")

@@ -1,7 +1,6 @@
 import flask as f
 from argon2.exceptions import VerifyMismatchError
 
-
 users = f.Blueprint('users', __name__, template_folder="templates")
 
 
@@ -52,3 +51,16 @@ def logout():
 def protected():
     if "user" in f.session:
         return f"Logged in as {f.current_app.um.get(f.session['user'])}"
+    else:
+        return "Not logged in!", 401
+
+
+@users.route("/admin")
+def admin():
+    if "user" in f.session:
+        if f.session["user"]["admin"]:
+            return f.render_template("admin.html")
+        else:
+            return "Not an admin!", 403
+    else:
+        return "Not logged in!", 401
