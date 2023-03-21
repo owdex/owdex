@@ -5,8 +5,6 @@ services:
   solr:
     container_name: solr
     image: solr
-    profiles: 
-      - prod
 
     volumes:
       - ./db/solr/data:/var/solr/
@@ -15,63 +13,36 @@ services:
 
     entrypoint:
     - /entrypoint.sh
-  
-  solr-dev:
-    container_name: solr
-    image: solr
-    profiles: 
-      - dev
-
-    ports:
-      - 8983:8983
-    volumes:
-      - ./db/solr/data:/var/solr/
-      - ./db/solr/configset:/owdex_configset:ro
-      - ./db/solr/entrypoint.sh:/entrypoint.sh
-
-    entrypoint:
-      - /entrypoint.sh
 
 
   mongo:
     container_name: mongo
     image: mongo
-    profiles: 
-      - prod
 
     volumes:
       - ./db/mongo/data:/data/db
-  
-  mongo-dev:
-    container_name: mongo
-    image: mongo
-    profiles: 
-      - dev
-
-    ports:
-      - 27017:27017
-    volumes:
-      - ./db/mongo/data:/data/db
-  
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express
-    profiles: 
-      - dev
-
-    restart: always
-    ports:
-      - 8081:8081
 
 
   frontend:
     container_name: frontend
     build: ./frontend
-    profiles: 
+    profiles:
       - prod
     
     volumes:
       - ./owdex.toml:/owdex.toml:ro
+
+  frontend_dev:
+    container_name: frontend
+    build: ./frontend
+    profiles:
+      - dev
+    
+    ports:
+      - 80:80
+    volumes:
+      - ./owdex.toml:/owdex.toml:ro
+
 
   caddy:
     container_name: caddy

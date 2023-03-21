@@ -5,8 +5,7 @@ from argon2 import PasswordHasher
 class UserManager():
 
     def __init__(self, dev_mode=False):
-        self._mongo = MongoClient("mongodb://mongo:27017/" if not dev_mode else
-                                  "mongodb://localhost:27017")
+        self._mongo = MongoClient("mongodb://mongo:27017/")
         self._table = self._mongo["users"]["users"]
         self._hasher = PasswordHasher()
 
