@@ -1,7 +1,6 @@
 import flask as f
 from argon2.exceptions import VerifyMismatchError
 
-from .usermanager import UserManager
 
 users = f.Blueprint('users', __name__, template_folder="templates")
 
