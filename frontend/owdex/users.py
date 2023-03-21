@@ -4,6 +4,10 @@ from argon2.exceptions import VerifyMismatchError
 users = f.Blueprint('users', __name__, template_folder="templates")
 
 
+def get_current_user():
+    return f.current_app.um.get(f.session['user'])
+
+
 @users.route("/login", methods=["GET", "POST"])
 def login():
     success = None
@@ -50,7 +54,7 @@ def logout():
 @users.route("/protected")
 def protected():
     if "user" in f.session:
-        return f"Logged in as {f.current_app.um.get(f.session['user'])}"
+        return f"Logged in as {get_current_user()}"
     else:
         return "Not logged in!", 401
 
@@ -58,7 +62,7 @@ def protected():
 @users.route("/admin")
 def admin():
     if "user" in f.session:
-        if f.session["user"]["admin"]:
+        if get_current_user()["admin"]:
             return f.render_template("admin.html")
         else:
             return "Not an admin!", 403
