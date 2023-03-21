@@ -2,12 +2,7 @@ FROM node:19-alpine AS tailwind_build
 WORKDIR /build_css
 RUN npm install tailwindcss
 COPY . .
-RUN [ \
-    "npx", "tailwindcss", \
-    "-o", "/build.css", \
-    "--minify" \
-    ]
-
+RUN npx tailwindcss -o /build.css --minify
 
 
 FROM python:3-alpine AS flask_build
