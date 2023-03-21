@@ -21,29 +21,14 @@ information.
 > (TM). 
 
 ## Requirements
-_because nobody can spell Prerequisittes_
-
-### For production install
-- Docker
-
-### For development
-- Python 3.10+
-    - [various packages](/frontend/owdex/requirements.txt)
-- Tailwind CSS
-- Docker
+All You Need Is Docker™. 
 
 ## Installation
 Start by `git clone`ing the repo to an arbitrary location. Then run `chmod +x ./bin/setup.sh; sudo ./bin/setup.sh`. 
-This creates a `data` directory for Solr to use, fills it with the subdirectories it needs, and 
-sets permissions appropriately (this last step is why it has to be run with `sudo`.) 
+This creates all the necessary files and directories, and sets permissions where it's needed.
 
 ## Usage
-Production users can run `docker-compose up`. This will run the Solr backend and Flask frontend, 
-get them talking to each other, and serve a website on port 80. 
-
-Developers can use our magic helper script with `chmod +x ./bin/dev.sh; ./bin/dev.sh`. This runs 
-Solr in the background using Docker and starts Tailwind and Flask in development mode, watching the
-source files and reloading on changes.
+It's recommended to use `docker-compose`. You must use either `--profile dev` or `--profile prod`. 
 
 ## Contribution
 Please see [CONTRIBUTING.md](/.github/CONTRIBUTING.md).
