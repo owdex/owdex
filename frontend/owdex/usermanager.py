@@ -4,19 +4,27 @@ from argon2 import PasswordHasher
 
 class UserManager():
 
-    def __init__(self):
+    def __init__(self, admin_username, admin_password):
         self._mongo = MongoClient("mongodb://mongo:27017/")
         self._table = self._mongo["users"]["users"]
         self._hasher = PasswordHasher()
 
-    def create(self, username, password, admin=False):
+        try:
+            self.create(admin_username, admin_password, admin=True, hash=False)
+        except KeyError:
+            pass  # Admin already exists
+
+    def create(self, username, password, admin=False, hash=True):
         try:
             user = self.get(username)
         except KeyError:
             self._table.insert_one({
-                "username": username,
-                "password": self._hasher.hash(password),
-                "admin": admin
+                "username":
+                username,
+                "password":
+                self._hasher.hash(password) if hash else password,
+                "admin":
+                admin
             })
         else:
             raise KeyError(

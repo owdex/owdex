@@ -22,7 +22,8 @@ def create_app(config_dict=None):
     if config_dict:
         app.config = app.config | config_dict
 
-    app.um = UserManager()
+    app.um = UserManager(app.config["ADMIN_USERNAME"],
+                         app.config["ADMIN_PASSWORD"])
 
     with app.app_context():
         app.register_blueprint(page)
