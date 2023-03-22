@@ -31,19 +31,19 @@ def login():
     success = None
 
     if f.request.method == "POST":
-        email = f.request.form["email"]
+        username = f.request.form["username"]
         password = f.request.form["password"]
         try:
-            f.current_app.um.verify(email, password)
+            f.current_app.um.verify(username, password)
         except VerifyMismatchError:
             # wrong password
             success = False
         except KeyError:
-            # no such email
+            # no such username
             success = False
         else:
             # login successful
-            f.session["user"] = email
+            f.session["user"] = username
             success = True
 
     return f.render_template("login.html", success=success)
@@ -55,7 +55,7 @@ def signup():
 
     if f.request.method == "POST":
         try:
-            f.current_app.um.create(f.request.form["email"],
+            f.current_app.um.create(f.request.form["username"],
                                     f.request.form["password"])
         except KeyError:
             success = False
@@ -72,7 +72,7 @@ def logout():
 @users.route("/protected")
 @require_login
 def protected():
-    return f"Logged in as {get_current_user()}"
+    return f"Logged in as {get_current_user()['username']}"
 
 
 @users.route("/admin")
