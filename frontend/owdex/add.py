@@ -7,12 +7,13 @@ add = f.Blueprint('search', __name__, template_folder="templates")
 @add.route("/add", methods=["GET", "POST"])
 def add_page():
     if f.request.method == "POST":
-        link = app.lm.add(url=f.request.form["url"],
-                          title=f.request.form["title"],
-                          submitter=f.request.form["submitter"],
-                          index="unstable")
+        app.lm.add(url=f.request.form["url"],
+                   title=f.request.form["title"],
+                   submitter=f.request.form["submitter"],
+                   index="unstable")
         f.flash("Successfully added webpage!")
-        return f.render_template("add.html", submitter=link.submitter), 201
+        return f.render_template("add.html",
+                                 submitter=f.request.form["submitter"]), 201
 
     else:
         try:
