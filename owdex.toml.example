@@ -21,3 +21,6 @@ ADMIN_PASSWORD = "$argon2id$v=19$m=65536,t=3,p=4$zez+nZx3qzveFYrpH2Uvrg$3ZJ0nzcF
 # Any contributions will be credited to this user by default.
 # An account cannot be created with this username.
 ANONYMOUS_SUBMITTER = "anonymous"
+
+# Set maximum length for a page's description.
+DESCRIPTION_MAX_LENGTH = 150

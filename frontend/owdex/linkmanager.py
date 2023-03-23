@@ -22,8 +22,16 @@ class Link:
             soup = bs(response.read(), features="html.parser")
             self.content = soup.get_text()
             description = soup.find("meta", attrs={"name": "description"})
+
             if description:
                 self.description = description.get("content")
+            else:
+                self.description = self.content
+            if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
+                description = description[:app.
+                                          config["DESCRIPTION_MAX_LENGTH"] -
+                                          1] + "&hellip;"
+                # we subtract 1 extra so we have space to add the ellipsis
 
     def to_dict(self, export_to="db"):
         dict = {
