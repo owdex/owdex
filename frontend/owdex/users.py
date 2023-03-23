@@ -1,13 +1,10 @@
 from functools import wraps, partial
 
 import flask as f
+from flask import current_app as app
 from argon2.exceptions import VerifyMismatchError
 
 users = f.Blueprint("users", __name__, template_folder="templates")
-
-
-def get_current_user():
-    return f.current_app.um.get(f.session['user'])
 
 
 def require_login(endpoint=None, needs_admin=False):
@@ -18,7 +15,7 @@ def require_login(endpoint=None, needs_admin=False):
     def wrapper(*args, **kwargs):
         if "user" not in f.session:
             return "Not logged in!", 401
-        elif needs_admin and not get_current_user()["admin"]:
+        elif needs_admin and not app.um.get_current()["admin"]:
             return "Not an admin!", 403
         else:
             return endpoint(*args, **kwargs)
@@ -34,7 +31,7 @@ def login():
         username = f.request.form["username"]
         password = f.request.form["password"]
         try:
-            f.current_app.um.verify(username, password)
+            app.um.verify(username, password)
         except VerifyMismatchError:
             # wrong password
             success = False
@@ -55,8 +52,8 @@ def signup():
 
     if f.request.method == "POST":
         try:
-            f.current_app.um.create(f.request.form["username"],
-                                    f.request.form["password"])
+            app.um.create(f.request.form["username"],
+                          f.request.form["password"])
         except KeyError:
             success = False
 
@@ -72,7 +69,7 @@ def logout():
 @users.route("/protected")
 @require_login
 def protected():
-    return f"Logged in as {get_current_user()['username']}"
+    return f"Logged in as {app.um.get_current()['username']}"
 
 
 @users.route("/admin")

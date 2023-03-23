@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from argon2 import PasswordHasher
+import flask as f
 
 
 class UserManager():
@@ -41,3 +42,6 @@ class UserManager():
         user = self.get(username)
         return self._hasher.verify(
             self.get(username)["password"], given_password)
+
+    def get_current(self):
+        return self.get(f.session['user'])
