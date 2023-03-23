@@ -1,6 +1,7 @@
 import urllib.request
 
 import flask as f
+from flask import current_app as app
 
 import bs4
 from url_normalize import url_normalize as urlnorm
@@ -16,6 +17,9 @@ def add_page():
         url = urlnorm(f.request.form["url"])
         title = f.request.form["title"]
         submitter = f.request.form["submitter"]
+
+        if not submitter:
+            submitter = app.config["ANONYMOUS_SUBMITTER"]
 
         with urllib.request.urlopen(url) as response:
             soup = bs4.BeautifulSoup(response.read(), features="html.parser")
@@ -36,7 +40,12 @@ def add_page():
             commit=True)
 
         f.flash("Successfully added webpage!")
-        return f.render_template("add.html"), 201
+        return f.render_template("add.html", submitter=submitter), 201
 
     else:
-        return f.render_template("add.html")
+        try:
+            submitter = app.um.get_current()["username"]
+        except KeyError:
+            submitter = app.config["ANONYMOUS_SUBMITTER"]
+
+        return f.render_template("add.html", submitter=submitter)
