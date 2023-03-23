@@ -13,8 +13,10 @@ class Link:
     def __init__(self, url, title, submitter=None):
         self.url = url_normalize(url)
         self.title = title
-        self.submitter = submitter if submitter else app.config[
-            "ANONYMOUS_SUBMITTER"]
+
+        self.submitter = submitter if submitter \
+            else app.config["ANONYMOUS_SUBMITTER"]
+        # this can't be the default param because current_app isn't available initially
 
         with request.urlopen(url) as response:
             soup = bs(response.read(), features="html.parser")
