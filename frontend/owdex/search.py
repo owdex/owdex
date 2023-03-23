@@ -1,7 +1,7 @@
 import flask as f
-from pysolr import SolrError
+from flask import current_app as app
 
-from .solr import get_dbs
+from pysolr import SolrError
 
 search = f.Blueprint('add', __name__, template_folder="templates")
 
@@ -13,10 +13,8 @@ def search_results():
     sort = f.request.args.get("sort")
     results = []
 
-    dbs = get_dbs()
-
     try:
-        results = dbs["unstable"].search(query)
+        results = app.lm.search("unstable", query)
     except SolrError as e:
         if "org.apache.solr.search.SyntaxError" in str(e):
             f.flash(

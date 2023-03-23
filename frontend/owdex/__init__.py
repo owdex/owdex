@@ -4,6 +4,7 @@ import flask as f
 import toml
 
 from .usermanager import UserManager
+from .linkmanager import LinkManager
 from .page import page
 from .search import search
 from .add import add
@@ -24,6 +25,8 @@ def create_app(config_dict=None):
 
     app.um = UserManager(app.config["ADMIN_USERNAME"],
                          app.config["ADMIN_PASSWORD"])
+
+    app.lm = LinkManager(["stable", "unstable", "archive"])
 
     with app.app_context():
         app.register_blueprint(page)
