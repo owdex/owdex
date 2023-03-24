@@ -34,7 +34,7 @@ services:
 
   frontend_dev:
     container_name: frontend
-    build: ./frontend
+    build: .
     profiles:
       - dev
     
