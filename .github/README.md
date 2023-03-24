@@ -1,12 +1,13 @@
 # owdex
 **_an open web index_**
 
-![Website](https://img.shields.io/website?&style=for-the-badge&url=https%3A%2F%2Fowdex.com)
-![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/build-and-push-image.yml?style=for-the-badge)
 ![License](https://img.shields.io/github/license/owdex/owdex?color=blue&style=for-the-badge)
 ![Trans Rights](https://img.shields.io/badge/trans-rights-blue?style=for-the-badge)
 
+![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/build-and-push-image.yml?style=for-the-badge)
 ![GitHub Check Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/codeql.yml?label=Vulnerability%20checks&logo=github&style=for-the-badge)
+
+![Website](https://img.shields.io/website?&style=for-the-badge&url=https%3A%2F%2Fowdex.com)
 ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/owdex.com?logo=mozilla&publish&style=for-the-badge)
 ![Chromium HSTS preload](https://img.shields.io/hsts/preload/owdex.com?logo=googlechrome&logoColor=white&style=for-the-badge)
 
