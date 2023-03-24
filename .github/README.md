@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/github/license/owdex/owdex?color=blue&style=for-the-badge)
 ![Trans Rights](https://img.shields.io/badge/trans-rights-blue?style=for-the-badge)
 
-![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/build-and-push-image.yml?style=for-the-badge)
+![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/build-and-push-image.yml?style=for-the-badge&logo=docker&logoColor=white)
 ![GitHub Check Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/codeql.yml?label=Vulnerability%20checks&logo=github&style=for-the-badge)
 
 ![Website](https://img.shields.io/website?&style=for-the-badge&url=https%3A%2F%2Fowdex.com)
