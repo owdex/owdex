@@ -159,13 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# db data
-db/solr/data
-db/mongo/data
-
-Caddyfile
-caddy_data/
-
+# dev stuff
+data/
+misc/
 owdex.toml
-
-tailwind.css

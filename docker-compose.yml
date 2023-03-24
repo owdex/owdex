@@ -10,9 +10,9 @@ services:
     image: solr
 
     volumes:
-      - ./db/solr/data:/var/solr/
-      - ./db/solr/configset:/owdex_configset:ro
-      - ./db/solr/entrypoint.sh:/entrypoint.sh
+      - ./data/solr/:/var/solr/data
+      - ./misc/solr_configset:/owdex_configset:ro
+      - ./misc/solr_entrypoint.sh:/entrypoint.sh
 
     entrypoint:
     - /entrypoint.sh
