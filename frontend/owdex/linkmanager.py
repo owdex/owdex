@@ -51,3 +51,10 @@ class LinkManager:
 
     def search(self, index, query):
         return self._indices[index].search(query)
+
+    @staticmethod
+    def filter_entry(entry, attributes):
+        return {
+            attribute: entry[attribute]
+            for attribute in entry if attribute in attributes
+        }
