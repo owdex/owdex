@@ -28,7 +28,7 @@ class UserManager():
                 username,
                 "password":
                 self._hasher.hash(password) if hash else password,
-                "admin":
+                "admfrom .exportmanager import entries_to_recordin":
                 admin
             })
         else:

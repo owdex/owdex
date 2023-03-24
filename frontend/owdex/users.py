@@ -2,7 +2,6 @@ import flask as f
 from flask import current_app as app
 from argon2.exceptions import VerifyMismatchError
 
-from .exportmanager import entries_to_record
 from .usermanager import require_login
 
 users_bp = f.Blueprint("users", __name__, template_folder="templates")
