@@ -1,5 +1,5 @@
 # owdex
-**_open web index_**
+**_an open web index_**
 
 ![Website](https://img.shields.io/website?down_color=red&down_message=down&style=for-the-badge&up_color=forestgreen&up_message=up&url=https%3A%2F%2Fowdex.com)
 ![License](https://img.shields.io/github/license/owdex/owdex?color=blue&style=for-the-badge)
@@ -15,10 +15,10 @@ alternative to web search by cutting through the cruft of junk results and bring
 information.
 
 > **Warning**  
-> Owdex is not even working, let alone production-ready. It is not presently usable to fulfill its 
-> intended purpose. For that reason, it's not advisable to use it in a production environment. 
-> However, I'm making a hard push towards an alpha release soon, which should be ready Eventually 
-> (TM). 
+> Owdex fulfills minimal specifications. However, most planned features are not yet implemented,
+> and it is currently operating on a bleeding-edge release cycle. It may not be advisable to
+> use it in a production environment. A more stable, more complete alpha release will be available
+> soon. 
 
 
 ## Installation and usage
