@@ -28,6 +28,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: frontend
+          context: .
+          file: ./frontend/Dockerfile
           push: true
           tags: owdex/owdex:latest
