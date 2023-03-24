@@ -10,6 +10,9 @@ echo "Creating data folders if they don't exist..."
 mkdir -p ./data/solr
 mkdir -p ./data/mongo
 
+echo "Purging existing misc files..."
+rm -rf ./misc
+
 echo "Creating misc directory..."
 mkdir -p ./misc
 
