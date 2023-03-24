@@ -28,7 +28,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ./frontend/Dockerfile
+          context: frontend
           push: true
-          tags: owdex/owdex:latest
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}/owdex:${{ github.sha }}
