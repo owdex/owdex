@@ -7,7 +7,7 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/owdex/owdex/codeql.yml?color=forestgreen&label=Vulnerability%20checks&logo=github&style=for-the-badge)
 ![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/owdex.com?color=forestgreen&logo=mozilla&publish&style=for-the-badge)
-![Chromium HSTS preload](https://img.shields.io/hsts/preload/owdex.com?color=yellow&logo=googlechrome&logoColor=white&style=for-the-badge)
+![Chromium HSTS preload](https://img.shields.io/hsts/preload/owdex.com?color=forestgreen&logo=googlechrome&logoColor=white&style=for-the-badge)
 
 Owdex is an open index of pages from across the web. Instead of crawling through hypertext based
 on links, it only indexes pages that its users direct it to. Owdex aims to build a better 
