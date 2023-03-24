@@ -1,6 +1,10 @@
+from functools import wraps, partial
+
+import flask as f
+from flask import current_app as app
+
 from pymongo import MongoClient
 from argon2 import PasswordHasher
-import flask as f
 
 
 class UserManager():
@@ -45,3 +49,19 @@ class UserManager():
 
     def get_current(self):
         return self.get(f.session['user'])
+
+
+def require_login(endpoint=None, needs_admin=False):
+    if endpoint is None:
+        return partial(require_login, needs_admin=needs_admin)
+
+    @wraps(endpoint)
+    def wrapper(*args, **kwargs):
+        if "user" not in f.session:
+            return "Not logged in!", 401
+        elif needs_admin and not app.um.get_current()["admin"]:
+            return "Not an admin!", 403
+        else:
+            return endpoint(*args, **kwargs)
+
+    return wrapper

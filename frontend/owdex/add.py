@@ -1,11 +1,11 @@
 import flask as f
 from flask import current_app as app
 
-add = f.Blueprint('search', __name__, template_folder="templates")
+add_bp = f.Blueprint('search', __name__, template_folder="templates")
 
 
-@add.route("/add", methods=["GET", "POST"])
-def add_page():
+@add_bp.route("/add", methods=["GET", "POST"])
+def add():
     if f.request.method == "POST":
         app.lm.add(url=f.request.form["url"],
                    title=f.request.form["title"],

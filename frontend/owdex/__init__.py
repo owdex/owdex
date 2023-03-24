@@ -1,14 +1,15 @@
 import os
 
 import flask as f
+
 import toml
 
 from .usermanager import UserManager
 from .linkmanager import LinkManager
-from .page import page
-from .search import search
-from .add import add
-from .users import users
+from .page import page_bp
+from .search import search_bp
+from .add import add_bp
+from .users import users_bp
 
 
 def create_app(config_dict=None):

@@ -1,29 +1,13 @@
-from functools import wraps, partial
-
 import flask as f
 from flask import current_app as app
 from argon2.exceptions import VerifyMismatchError
 
-users = f.Blueprint("users", __name__, template_folder="templates")
+from .usermanager import require_login
+
+users_bp = f.Blueprint("users", __name__, template_folder="templates")
 
 
-def require_login(endpoint=None, needs_admin=False):
-    if endpoint is None:
-        return partial(require_login, needs_admin=needs_admin)
-
-    @wraps(endpoint)
-    def wrapper(*args, **kwargs):
-        if "user" not in f.session:
-            return "Not logged in!", 401
-        elif needs_admin and not app.um.get_current()["admin"]:
-            return "Not an admin!", 403
-        else:
-            return endpoint(*args, **kwargs)
-
-    return wrapper
-
-
-@users.route("/login", methods=["GET", "POST"])
+@users_bp.route("/login", methods=["GET", "POST"])
 def login():
     success = None
 
@@ -46,7 +30,7 @@ def login():
     return f.render_template("login.html", success=success)
 
 
-@users.route("/signup", methods=["GET", "POST"])
+@users_bp.route("/signup", methods=["GET", "POST"])
 def signup():
     success = None
 
@@ -60,19 +44,19 @@ def signup():
     return f.render_template("signup.html", success=success)
 
 
-@users.route("/logout")
+@users_bp.route("/logout")
 def logout():
     f.session.pop("user", None)
     return "Logged out"
 
 
-@users.route("/protected")
+@users_bp.route("/protected")
 @require_login
 def protected():
     return f"Logged in as {app.um.get_current()['username']}"
 
 
-@users.route("/admin")
+@users_bp.route("/admin")
 @require_login(needs_admin=True)
 def admin():
     return f.render_template("admin.html")
