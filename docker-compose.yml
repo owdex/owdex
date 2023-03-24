@@ -1,3 +1,6 @@
+# This Compose file is for development purposes.
+# For a production-ready version, see https://github.com/owdex/compose
+
 version: "3.8"
 
 services:
@@ -22,16 +25,6 @@ services:
     volumes:
       - ./db/mongo/data:/data/db
 
-
-  frontend:
-    container_name: frontend
-    build: ./frontend
-    profiles:
-      - prod
-    
-    volumes:
-      - ./owdex.toml:/owdex.toml:ro
-
   frontend_dev:
     container_name: frontend
     build: .
@@ -42,17 +35,3 @@ services:
       - 80:80
     volumes:
       - ./owdex.toml:/owdex.toml:ro
-
-
-  caddy:
-    container_name: caddy
-    image: caddy
-    profiles:
-      - prod
-
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - ./caddy_data:/data
-      - ./Caddyfile:/etc/caddy/Caddyfile
