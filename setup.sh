@@ -3,12 +3,6 @@
 echo "Setting up your Owdex development installation."
 echo "This should not be used in production. See https://github.com/owdex/compose."
 
-# check run as root/sudo
-if [ "$EUID" -ne 0 ]
-  then echo "Error: This script must be run as root to set permissions."
-  exit
-fi
-
 # cd to script location, just in case
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
@@ -27,7 +21,7 @@ mv /tmp/compose-main/misc/solr_configset /tmp/compose-main/misc/solr_entrypoint.
 # rm -rf /tmp/compose-main.zip /tmp/compose-main
 
 echo "Setting permissions..."
-chown -R 8983 ./data/solr
+sudo chown -R 8983 ./data/solr
 
 echo "All done. Happy searching!"
 
