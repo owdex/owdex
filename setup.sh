@@ -31,6 +31,4 @@ chown -R 8983 ./data/solr
 
 echo "All done. Happy searching!"
 
-echo "Note that you MUST edit ./owdex.toml and ./misc/Caddyfile. If you don't, not only will your install be unsecured, it won't work."
-
 exit
