@@ -12,3 +12,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 COPY --from=tailwind_build /build/build.css owdex/static/tailwind.css
 CMD [ "python", "-m", "owdex" ]
+
+LABEL org.opencontainers.image.source = "https://github.com/owdex/owdex"
+LABEL org.opencontainers.image.title = "Owdex frontend"
