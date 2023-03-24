@@ -25,11 +25,9 @@ services:
     volumes:
       - ./db/mongo/data:/data/db
 
-  frontend_dev:
+  frontend:
     container_name: frontend
     build: .
-    profiles:
-      - dev
     
     ports:
       - 80:80

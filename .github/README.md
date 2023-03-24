@@ -20,15 +20,16 @@ information.
 > However, I'm making a hard push towards an alpha release soon, which should be ready Eventually 
 > (TM). 
 
-## Requirements
-All You Need Is Docker™. 
 
-## Installation
-Start by `git clone`ing the repo to an arbitrary location. Then run `chmod +x ./bin/setup.sh; sudo ./bin/setup.sh`. 
-This creates all the necessary files and directories, and sets permissions where it's needed.
+## Installation and usage
+### For production
+For production, we recommend using `docker compose`. You can find a recommended setup, along with 
+usage instructions, at [`owdex/compose`](https://github.com/owdex/compose).
 
-## Usage
-It's recommended to use `docker-compose`. You must use either `--profile dev` or `--profile prod`. 
+### For development
+Just `git clone` this repo and run `docker compose up -d`. You can access the frontend at 
+[`http://127.0.0.1`](http://127.0.0.1). After making any changes to the frontend, just run 
+`docker compose restart frontend` to selectively restart it.
 
 ## Contribution
 Please see [CONTRIBUTING.md](/.github/CONTRIBUTING.md).
