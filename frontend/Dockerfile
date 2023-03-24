@@ -1,7 +1,7 @@
 FROM node:19-alpine AS tailwind_build
 WORKDIR /build
 RUN npm install tailwindcss
-COPY owdex/templates tailwind.config.js .
+COPY owdex/templates tailwind.config.js ./
 RUN npx tailwindcss -o build.css --minify
 
 
