@@ -23,7 +23,7 @@ services:
     image: mongo
 
     volumes:
-      - ./db/mongo/data:/data/db
+      - ./data/mongo:/data/db
 
   frontend:
     container_name: frontend
