@@ -30,9 +30,9 @@ def create_app(config_dict=None):
     app.lm = LinkManager(["stable", "unstable", "archive"])
 
     with app.app_context():
-        app.register_blueprint(page)
-        app.register_blueprint(search)
-        app.register_blueprint(add)
-        app.register_blueprint(users)
+        app.register_blueprint(page_bp)
+        app.register_blueprint(search_bp)
+        app.register_blueprint(add_bp)
+        app.register_blueprint(users_bp)
 
     return app
