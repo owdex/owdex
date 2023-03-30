@@ -14,7 +14,9 @@ def search_results():
     results = []
 
     try:
-        results = app.lm.search("unstable", query)
+        for index in indices:
+            index_results = app.lm.search(index, query)
+            results.extend(index_results)
     except SolrError as e:
         if "org.apache.solr.search.SyntaxError" in str(e):
             f.flash(
