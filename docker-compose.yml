@@ -9,6 +9,8 @@ services:
     container_name: solr
     image: solr
 
+    ports:
+      - 8983:8983
     volumes:
       - ./data/solr/:/var/solr/data
       - ./misc/solr_configset:/owdex_configset:ro
