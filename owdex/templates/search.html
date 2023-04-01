@@ -20,6 +20,17 @@
                 <h4 class="text-xl text-blue-400 truncate hover:underline decoration-blue-400">{{ result.title }}</h4>
             </a>
             <p class="text-sm">{{ result.description }}</p>
+            <div class="flex flex-row space-x-2 text-xs">
+                <span class="font-semibold">
+                    {{ result.submitter }}
+                </span>
+                <ul class="flex flex-row space-x-1">
+                    <li><a href="#">vote</a></li>
+                    <!-- <li><a href="#">flag</a></li>
+                    <li><a href="#">info</a></li>
+                    <li><a href="#">save</a></li> -->
+                </ul>
+            </div>
         </div>
     {% endfor %}
     </div>
