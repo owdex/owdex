@@ -10,6 +10,7 @@ from .page import page_bp
 from .search import search_bp
 from .add import add_bp
 from .users import users_bp
+from .vote import vote_bp
 
 
 def create_app(config_dict=None):
@@ -34,5 +35,6 @@ def create_app(config_dict=None):
         app.register_blueprint(search_bp)
         app.register_blueprint(add_bp)
         app.register_blueprint(users_bp)
+        app.register_blueprint(vote_bp)
 
     return app

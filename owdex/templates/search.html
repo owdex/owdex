@@ -25,7 +25,9 @@
                     {{ result.submitter }}
                 </span>
                 <ul class="flex flex-row space-x-1">
-                    <li><a href="#">vote</a></li>
+                    <li hx-post="{{ url_for('vote.vote', id=result.id) }}" hx-confirm="Vote in favour of this link?">
+                        vote
+                    </li>
                     <!-- <li><a href="#">flag</a></li>
                     <li><a href="#">info</a></li>
                     <li><a href="#">save</a></li> -->
