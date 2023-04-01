@@ -10,6 +10,8 @@
         {% if custom_css is defined %}
             <link rel="stylesheet" href="{{ custom_css }}">
         {% endif %}
+
+        <script src="{{ url_for('static', filename='vendored/htmx-1.8.6.min.js') }}"></script>
         
     </head>
     <body class="{% block body_classes %} flex flex-col px-40 py-5 h-screen text-gray-400 bg-gray-900 {% endblock body_classes %} ">
