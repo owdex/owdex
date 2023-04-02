@@ -22,14 +22,14 @@
             <p class="text-sm">{{ result.description }}</p>
             <div class="flex flex-row space-x-2 text-xs">
                 <span class="font-semibold">
-                    {{ result.submitter }}
+                    {{ result.submitter }} on {{ result.index }}
                 </span>
                 <ul class="flex flex-row space-x-1">
                     <!-- <li>
                         info
                     </li> -->
                     {% if "user" in session %}
-                        <li hx-post="{{ url_for('vote.vote', id=result.id) }}" hx-confirm="Vote in favour of this link?">
+                        <li hx-post="{{ url_for('vote.vote') }}" hx-vals='{"index": "{{ result.index }}", "id": "{{ result.id }}"}' hx-confirm="Vote in favour of this link?">
                             vote
                         </li>
                         <!-- <li>

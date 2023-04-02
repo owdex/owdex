@@ -45,9 +45,16 @@ class LinkManager:
                 "title": title,
                 "submitter": submitter,
                 "content": content,
-                "description": description
+                "description": description,
+                "votes": 1
             },
             commit=True)
+    
+    def vote(self, index, id):
+        self._indices[index].add({
+            "id": id,
+            "votes": {"inc": 1}
+        }, commit=True)
 
     def search(self, index, query):
         return self._indices[index].search(query)
