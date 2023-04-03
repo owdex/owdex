@@ -56,5 +56,13 @@ class LinkManager:
             "votes": {"inc": 1}
         }, commit=True)
 
-    def search(self, index, query):
-        return self._indices[index].search(query)
+    def search(self, query, indices):
+        results = []
+        for index_name in indices:
+            index_results = self._indices[index_name].search(query)
+            for result in index_results:
+                # we add the index attribute so we can show the index this result was pulled from
+                result.update({"index": index_name})
+            results.extend(index_results)
+
+        return results

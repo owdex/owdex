@@ -14,11 +14,7 @@ def search_results():
     results = []
 
     try:
-        for index in indices:
-            index_results = app.lm.search(index, query)
-            for result in index_results:
-                result.update({"index": index})
-            results.extend(index_results)
+        results = app.lm.search(query, indices)
     except SolrError as e:
         if "org.apache.solr.search.SyntaxError" in str(e):
             f.flash(
