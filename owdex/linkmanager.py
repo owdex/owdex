@@ -9,14 +9,31 @@ from url_normalize import url_normalize
 
 
 class LinkManager:
+    """Manage link entries in multiple indices, and serves as a wrapper for the underlying Solr database.
+    """
 
     def __init__(self, indices, host="solr", port=8983):
+        """Creates a LinkManager instance.
+
+        Args:
+            indices (list): A list of index names.
+            host (str, optional): The hostname at which the Solr instance can be reached. Defaults to "solr".
+            port (int, optional): The port at which the Solr instance can be reached. Defaults to 8983.
+        """
         self._indices = {}
         for index_name in indices:
             self._indices[index_name] = pysolr.Solr(
                 f"http://{host}:{port}/solr/{index_name}")
 
     def add(self, *, index, url, title, submitter=None):
+        """Add an entry to the specified index.
+
+        Args:
+            index (str): The name of the index to which the entry should be added.
+            url (str): The URL of the entry.
+            title (str): The title of the entry.
+            submitter (str, optional): The person who submitted the entry. Defaults to None. Should it equal None, it will be replaced with ANONYMOUS_SUBMITTER from owdex.toml.
+        """
         # We force arguments to be named for readability by using *
         url = url_normalize(url)
 
@@ -51,12 +68,27 @@ class LinkManager:
             commit=True)
     
     def vote(self, index, id):
+        """Register a vote for an entry.
+
+        Args:
+            index (str): The name of the index on which the entry is stored.
+            id (str): The internal ID of the entry.
+        """
         self._indices[index].add({
             "id": id,
             "votes": {"inc": 1}
         }, commit=True)
 
     def search(self, query, indices):
+        """Perform a search of the specified indices for the query.
+
+        Args:
+            query (str): The terms being searched for.
+            indices (str): The names of the indices in which to search.
+
+        Returns:
+            list: A list of result dicts.
+        """
         results = []
         for index_name in indices:
             index_results = self._indices[index_name].search(query)
