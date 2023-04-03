@@ -6,7 +6,7 @@
 
 {% block header %}
 {{ super() }}
-<p class="ml-auto italic text-right">on {{ indices }}, sorted by {{ sort }}</p>
+<p class="ml-auto italic text-right">on {{ indices|join(', ') }}</p>
 {% endblock header %}
 
 

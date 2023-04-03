@@ -10,7 +10,6 @@ search_bp = f.Blueprint('add', __name__, template_folder="templates")
 def search_results():
     query = f.request.args.get("query")
     indices = f.request.args.getlist("index")
-    sort = f.request.args.get("sort")
     results = []
 
     try:
@@ -26,5 +25,4 @@ def search_results():
     return f.render_template("search.html",
                              query=query,
                              indices=indices,
-                             sort=sort,
                              results=results)
