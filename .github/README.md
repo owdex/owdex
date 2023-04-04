@@ -1,6 +1,7 @@
 # owdex
 **_an open web index_**
 
+![Release number](https://img.shields.io/github/v/release/owdex/owdex?style=for-the-badge)
 ![License](https://img.shields.io/github/license/owdex/owdex?color=blue&style=for-the-badge)
 ![Trans Rights](https://img.shields.io/badge/trans-rights-blue?style=for-the-badge)
 
