@@ -10,15 +10,16 @@ from argon2 import PasswordHasher
 class UserManager():
     """Manage users, and serves as a wrapper for the underlying Mongo database and password hasher.
     """
-
-    def __init__(self, admin_username, admin_password):
+    def __init__(self, host, port, admin_username, admin_password):
         """Create a UserManager instance.
 
         Args:
-            admin_username (str): The username for the adminn user.
-            admin_password (_type_): The password for the admin user.
+            host (str): The hostname for the MongoDB database.
+            port (int): The port number for the MongoDB database.
+            admin_username (str): The username for the admin user.
+            admin_password (str): The password for the admin user.
         """
-        self._mongo = MongoClient("mongodb://mongo:27017/")
+        self._mongo = MongoClient(f"mongodb://{host}:{port}/")
         self._table = self._mongo["users"]["users"]
         self._hasher = PasswordHasher()
 
