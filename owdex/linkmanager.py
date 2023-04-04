@@ -12,13 +12,13 @@ class LinkManager:
     """Manage link entries in multiple indices, and serves as a wrapper for the underlying Solr database.
     """
 
-    def __init__(self, indices, host="solr", port=8983):
+    def __init__(self, host, port, indices):
         """Creates a LinkManager instance.
 
         Args:
             indices (list): A list of index names.
-            host (str, optional): The hostname at which the Solr instance can be reached. Defaults to "solr".
-            port (int, optional): The port at which the Solr instance can be reached. Defaults to 8983.
+            host (str, optional): The hostname at which the Solr instance can be reached.
+            port (int, optional): The port at which the Solr instance can be reached.
         """
         self._indices = {}
         for index_name in indices:
