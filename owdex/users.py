@@ -3,11 +3,17 @@ from flask import current_app as app
 from argon2.exceptions import VerifyMismatchError
 
 from .usermanager import require_login
+from .limiter import limiter
 
 users_bp = f.Blueprint("users", __name__, template_folder="templates")
 
 
 @users_bp.route("/login", methods=["GET", "POST"])
+@limiter.limit(
+    "5/minute;10/hour;25/day",
+    scope="users",
+    deduct_when=lambda response: response.status_code != 200,
+)
 def login():
     success = None
 
@@ -31,6 +37,10 @@ def login():
 
 
 @users_bp.route("/signup", methods=["GET", "POST"])
+@limiter.limit(
+    "5/minute;10/hour;25/day",
+    scope="users",
+)
 def signup():
     success = None
 

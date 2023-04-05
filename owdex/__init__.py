@@ -11,6 +11,7 @@ from .search import search_bp
 from .add import add_bp
 from .users import users_bp
 from .vote import vote_bp
+from .limiter import limiter
 
 
 def create_app(config_dict=None):
@@ -41,6 +42,12 @@ def create_app(config_dict=None):
             "archive"
         ]
         )
+
+    app.config[
+        "RATELIMIT_STORAGE_URI"
+    ] = f'mongodb://{app.config["MONGO_HOST"]}:{app.config["MONGO_PORT"]}'
+    app.config["RATELIMIT_STRATEGY"] = "fixed-window-elastic-expiry"
+    limiter.init_app(app)
 
     with app.app_context():
         app.register_blueprint(page_bp)
