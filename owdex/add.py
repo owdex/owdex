@@ -1,7 +1,7 @@
 import flask as f
 from flask import current_app as app
 
-add_bp = f.Blueprint('search', __name__, template_folder="templates")
+add_bp = f.Blueprint('add', __name__, template_folder="templates")
 
 
 @add_bp.route("/add", methods=["GET", "POST"])
