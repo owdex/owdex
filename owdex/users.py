@@ -8,8 +8,13 @@ users_bp = f.Blueprint("users", __name__, template_folder="templates")
 
 
 @users_bp.route("/login", methods=["GET", "POST"])
+@app.limiter.limit(
+    "5/minute;10/hour;25/day",
+    scope="users",
+    deduct_when=lambda response: response.status_code != 200,
+)
 def login():
-    success = None
+    status = None
 
     if f.request.method == "POST":
         username = f.request.form["username"]
@@ -18,30 +23,37 @@ def login():
             app.um.verify(username, password)
         except VerifyMismatchError:
             # wrong password
-            success = False
+            status = 401
         except KeyError:
             # no such username
-            success = False
+            status = 401
         else:
             # login successful
             f.session["user"] = username
-            success = True
+            status = 200
 
-    return f.render_template("login.html", success=success)
+    return f.render_template("login.html"), status
 
 
 @users_bp.route("/signup", methods=["GET", "POST"])
+@app.limiter.limit(
+    "5/minute;10/hour;25/day",
+    scope="users",
+)
 def signup():
-    success = None
+    status = None
 
     if f.request.method == "POST":
         try:
             app.um.create(f.request.form["username"],
                           f.request.form["password"])
         except KeyError:
-            success = False
+            # username already exists
+            status = 409
+        else:
+            status = 200
 
-    return f.render_template("signup.html", success=success)
+    return f.render_template("signup.html"), status
 
 
 @users_bp.route("/logout")
