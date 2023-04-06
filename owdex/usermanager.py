@@ -19,7 +19,8 @@ class UserManager():
             admin_username (str): The username for the admin user.
             admin_password (str): The password for the admin user.
         """
-        self._mongo = MongoClient(f"mongodb://{host}:{port}/")
+        self.mongo_uri = f"mongodb://{host}:{port}/"
+        self._mongo = MongoClient(self.mongo_uri)
         self._table = self._mongo["users"]["users"]
         self._hasher = PasswordHasher()
 

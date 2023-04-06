@@ -42,7 +42,7 @@ def create_app(config_dict=None):
     app.limiter = Limiter(
         get_remote_address,
         app = app,
-        storage_uri = f'mongodb://{app.config["MONGO_HOST"]}:{app.config["MONGO_PORT"]}',
+        storage_uri = app.um.mongo_uri,
         strategy = "fixed-window-elastic-expiry"
     )
 
