@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import flask as f
 from flask import current_app as app
 from argon2.exceptions import VerifyMismatchError
@@ -12,7 +14,7 @@ users_bp = f.Blueprint("users", __name__, template_folder="templates")
 @app.limiter.limit(
     "5/minute;10/hour;25/day",
     scope="users",
-    deduct_when=lambda response: response.status_code != 200,
+    deduct_when=lambda response: response.status_code != HTTPStatus.OK,
 )
 def login():
     if f.request.method == "POST":
@@ -21,9 +23,9 @@ def login():
         try:
             app.um.verify(username, password)
         except VerifyMismatchError:
-            return error(401, explanation=f"Wrong password for username {username}!")
+            return error(HTTPStatus.UNAUTHORIZED, explanation=f"Wrong password for username {username}!")
         except KeyError:
-            return error(401, explanation="No such username!")
+            return error(HTTPStatus.UNAUTHORIZED, explanation="No such username!")
         else:
             f.session["user"] = username
     return f.render_template("login.html")
@@ -40,11 +42,11 @@ def signup():
             app.um.create(f.request.form["username"],
                           f.request.form["password"])
         except KeyError:
-            return error(409, explanation="A user with that username already exists!")
+            return error(HTTPStatus.CONFLICT, explanation="A user with that username already exists!")
         else:
-            status = 201
+            status = HTTPStatus.CREATED
     else:
-        status = 200
+        status = HTTPStatus.OK
     return f.render_template("signup.html"), status
 
 

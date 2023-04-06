@@ -1,4 +1,5 @@
 from functools import wraps, partial
+from http import HTTPStatus
 
 import flask as f
 from flask import current_app as app
@@ -112,9 +113,9 @@ def require_login(endpoint=None, needs_admin=False):
     @wraps(endpoint)
     def wrapper(*args, **kwargs):
         if "user" not in f.session:
-            return error(401, "Not logged in!")
+            return error(HTTPStatus.UNAUTHORIZED, "Not logged in!")
         elif needs_admin and not app.um.get_current()["admin"]:
-            return error(403, "Not an admin!")
+            return error(HTTPStatus.FORBIDDEN, "Not an admin!")
         else:
             return endpoint(*args, **kwargs)
 
