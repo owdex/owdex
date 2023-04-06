@@ -8,6 +8,7 @@ import toml
 
 from .usermanager import UserManager
 from .linkmanager import LinkManager
+from .error import page_not_found, internal_server_error
 
 
 def create_app(config_dict=None):
@@ -45,6 +46,9 @@ def create_app(config_dict=None):
         storage_uri = app.um.mongo_uri,
         strategy = "fixed-window-elastic-expiry"
     )
+
+    app.register_error_handler(404, page_not_found)
+    app.register_error_handler(500, internal_server_error)
 
     with app.app_context():
         from .page import page_bp

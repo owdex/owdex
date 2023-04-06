@@ -1,0 +1,16 @@
+{% extends "page.html" %}
+
+{% block title %}
+    Error {{ status }}
+{% endblock title %}
+
+{% block main %}
+	<h2>
+		Error {{status}} 
+	</h2>
+	{% if explanation %}
+	<p>
+		{{ explanation }}
+	</p>
+	{% endif %}
+{% endblock main %}

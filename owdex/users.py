@@ -2,6 +2,7 @@ import flask as f
 from flask import current_app as app
 from argon2.exceptions import VerifyMismatchError
 
+from .error import error
 from .usermanager import require_login
 
 users_bp = f.Blueprint("users", __name__, template_folder="templates")
@@ -14,25 +15,18 @@ users_bp = f.Blueprint("users", __name__, template_folder="templates")
     deduct_when=lambda response: response.status_code != 200,
 )
 def login():
-    status = None
-
     if f.request.method == "POST":
         username = f.request.form["username"]
         password = f.request.form["password"]
         try:
             app.um.verify(username, password)
         except VerifyMismatchError:
-            # wrong password
-            status = 401
+            return error(401, explanation=f"Wrong password for username {username}!")
         except KeyError:
-            # no such username
-            status = 401
+            return error(401, explanation="No such username!")
         else:
-            # login successful
             f.session["user"] = username
-            status = 200
-
-    return f.render_template("login.html"), status
+    return f.render_template("login.html")
 
 
 @users_bp.route("/signup", methods=["GET", "POST"])
@@ -41,18 +35,16 @@ def login():
     scope="users",
 )
 def signup():
-    status = None
-
     if f.request.method == "POST":
         try:
             app.um.create(f.request.form["username"],
                           f.request.form["password"])
         except KeyError:
-            # username already exists
-            status = 409
+            return error(409, explanation="A user with that username already exists!")
         else:
-            status = 200
-
+            status = 201
+    else:
+        status = 200
     return f.render_template("signup.html"), status
 
 
