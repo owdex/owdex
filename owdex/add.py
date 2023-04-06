@@ -1,7 +1,9 @@
 import flask as f
 from flask import current_app as app
 
-add_bp = f.Blueprint('search', __name__, template_folder="templates")
+from .linkmanager import get_title as get_url_title
+
+add_bp = f.Blueprint('add', __name__, template_folder="templates")
 
 
 @add_bp.route("/add", methods=["GET", "POST"])
@@ -22,3 +24,8 @@ def add():
             submitter = app.config["ANONYMOUS_SUBMITTER"]
 
         return f.render_template("add.html", submitter=submitter)
+
+@add_bp.route("/get_title")
+def get_title():
+    title = get_url_title(f.request.args.get("url"))
+    return f.render_template("title_input.html", value=title)

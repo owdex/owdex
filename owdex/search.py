@@ -3,7 +3,7 @@ from flask import current_app as app
 
 from pysolr import SolrError
 
-search_bp = f.Blueprint('add', __name__, template_folder="templates")
+search_bp = f.Blueprint('search', __name__, template_folder="templates")
 
 
 @search_bp.route("/search")
