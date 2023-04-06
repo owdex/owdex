@@ -10,22 +10,20 @@
             <input 
             type="url" 
             name="url" 
-            placeholder="https://example.com/posts/the-cake-is-a-lie.html" 
             required
             class="p-2 w-2/3 bg-gray-800 rounded-lg border border-gray-600"
+            hx-get="/get_title"
+            hx-trigger="keyup delay:500ms changed"
+            hx-target="#title"
+            hx-params="url"
+            hx-swap="outerHTML"
             >
             <span class="block mt-1 ml-0.5 text-sm font-bold text-gray-600">
                 URL
             </span>
         </label>
         <label>
-            <input 
-            type="text" 
-            name="title" 
-            placeholder="The Cake Is A Lie" 
-            required
-            class="p-2 w-2/3 bg-gray-800 rounded-lg border border-gray-600"
-            >
+            {% include "title_input.html" %}
             <span class="block mt-1 ml-0.5 text-sm font-bold text-gray-600">
                 title
             </span>

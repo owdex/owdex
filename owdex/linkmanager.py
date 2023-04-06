@@ -98,3 +98,12 @@ class LinkManager:
             results.extend(index_results)
 
         return results
+
+
+def get_title(url, format_for_autocomplete=False):
+    with request.urlopen(url_normalize(url)) as response:
+            return bs(
+                response.read(), features="html.parser"
+            ).find(
+                "title"
+            ).text
