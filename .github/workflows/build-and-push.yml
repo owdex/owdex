@@ -10,7 +10,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  DO_PUSH: ${{ github.ref == 'refs/heads/main' or github.ref_type == 'tag' }}
+  DO_PUSH: ${{ github.ref == 'refs/heads/main' || github.ref_type == 'tag' }}
 
 jobs:
   build-and-push:
