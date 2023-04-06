@@ -5,12 +5,14 @@
 {% endblock title %}
 
 {% block main %}
-	<h2>
+<main class="my-20">
+	<h2 class="text-9xl font-bold text-center">
 		Error {{status}} 
 	</h2>
 	{% if explanation %}
-	<p>
+	<p class="text-3xl text-center">
 		{{ explanation }}
 	</p>
 	{% endif %}
+</main>
 {% endblock main %}
