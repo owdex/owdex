@@ -57,7 +57,7 @@ While you can make changes to `owdex.toml`, you don't necessarily have to change
 Please see [CONTRIBUTING.md](/.github/CONTRIBUTING.md).
 
 ## Acknowledgement
-Thanks to [@4censord](https://github.com/4censord) for exceptional help, suppport and words of advice.
+Thanks to [@4censord](https://github.com/4censord) for exceptional help, support and words of advice.
 
 ## License 
 Owdex is licensed under the [GNU AGPL v3](https://github.com/alexmshepherd/owdex/blob/main/LICENSE).
