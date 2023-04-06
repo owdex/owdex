@@ -27,10 +27,10 @@ def create_app(config_dict=None):
         app.config = app.config | config_dict
 
     app.um = UserManager(
-        app.config["ADMIN_USERNAME"],
-        app.config["ADMIN_PASSWORD"],
         app.config["MONGO_HOST"],
-        app.config["MONGO_PORT"]
+        app.config["MONGO_PORT"],
+        app.config["ADMIN_USERNAME"],
+        app.config["ADMIN_PASSWORD"]
     )
 
     app.lm = LinkManager(
