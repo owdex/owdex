@@ -17,8 +17,8 @@
     <body class="
         text-gray-900 dark:text-gray-100
         bg-gray-100 dark:bg-gray-900
-        flex flex-col
-        p-3
+        flex flex-col p-3 h-screen
+        text-center
     ">
 
         {% block header %}
@@ -58,9 +58,14 @@
 
         {% block footer %}
         <footer class="
+            grow justify-end
             flex flex-col
+            gap-3
         ">
-            <ul>
+            <ul class="
+                flex flex-col
+                gap-2
+            ">
                 <li>
                     {{ essentials.link("/about", "about") }}
                 </li>
@@ -74,7 +79,11 @@
                     {{ essentials.link("/signup", "sign up") }}
                 </li>
             </ul>
-            <ul >
+            <ul class="
+                flex flex-row
+                gap-2
+                mx-auto
+            ">
                 <li>
                     <a href="#">
                         {% include "icons/mastodon.svg" %}
