@@ -22,13 +22,21 @@
     ">
 
         {% block header %}
-            <header>
+            <header class="
+                flex flex-row justify-between
+                border-b border-gray-700 dark:border-gray-300
+                mb-4
+            ">
                 <a href="/">
-                    <h1>
+                    <h1 class="
+                        text-lg font-bold
+                    ">
                         Owdex
                     </h1>
                 </a>
-                <h2>
+                <h2 class="
+                    text-lg font-light
+                ">
                     {{ self.title() }}
                 </h2>
             </header>
