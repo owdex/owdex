@@ -21,7 +21,7 @@ jobs:
     
     steps:
       - 
-        run: echo ${{github.event_name}} ${{github.ref}}
+        run: echo ${{env.DO_PUSH}}
       - 
         name: Checkout repository
         uses: actions/checkout@v3
