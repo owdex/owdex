@@ -1,12 +1,9 @@
 {% extends "page.html" %}
+{% import "macros/forms.html" as forms %}
 
 {% block title %}
     home
 {% endblock title %}
-
-{% block body_classes %}
-flex flex-col justify-around h-screen text-gray-400 bg-gray-900
-{% endblock body_classes %}
 
 {% block header %}
     <div>
@@ -36,41 +33,24 @@ flex flex-col justify-around h-screen text-gray-400 bg-gray-900
             </button>
         </div>
         <fieldset>
-            <div>
-                <input
-                    value="stable"
-                    type="checkbox"
-                    name="index"
-                    value="stable"
-                    checked
-                >
-                <label for="stable">
-                    stable
-                </label>
-            </div>
-            <div>
-                <input
-                    value="unstable"
-                    type="checkbox"
-                    name="index"
-                    value="unstable"
-                    checked
-                >
-                <label for="unstable">
-                    unstable
-                </label>
-            </div>
-            <div>
-                <input
-                    value="archive"
-                    type="checkbox"
-                    name="index"
-                    value="archive"
-                >
-                <label for="archive">
-                    archive
-                </label>
-            </div>
+            {{ forms.checkbox(
+                name="stable",
+                field="index",
+                checked=True,
+                accent="accent-blue-500"
+            ) }}
+            {{ forms.checkbox(
+                name="unstable",
+                field="index",
+                checked=True,
+                accent="accent-green-500"
+            ) }}
+            {{ forms.checkbox(
+                name="archive",
+                field="index",
+                checked=False,
+                accent="accent-orange-500"
+            ) }}
         </fieldset>
     </form>
 {% endblock main %}

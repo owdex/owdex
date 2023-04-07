@@ -34,3 +34,26 @@
 		</span>
 	</label>
 {% endmacro %}
+
+{% macro checkbox(
+	name,
+	field=None,
+	checked=False,
+	accent="accent-blue-500"
+) %}
+	<div>
+		<input
+			type="checkbox"
+			name="{{ field if field else name }}"
+			value="{{ name }}"
+			id="{{ name }}"
+			class="{{ accent }}"
+			{% if checked %}
+				checked
+			{% endif %}
+		>
+		<label for="{{ name }}">
+			{{ name }}
+		</label>
+	</div>
+{% endmacro %}
