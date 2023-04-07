@@ -1,3 +1,5 @@
+{% import "macros/essentials.html" as essentials %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -51,24 +53,16 @@
         <footer>
             <ul>
                 <li>
-                    <a href="/about">
-                        about
-                    </a>
+                    {{ essentials.link("/about", "about") }}
                 </li>
                 <li>
-                    <a href="/add">
-                        add a page
-                    </a>
+                    {{ essentials.link("/add", "add a page") }}
                 </li>
                 <li>
-                    <a href="/login">
-                        log in
-                    </a>
+                    {{ essentials.link("/login", "log in") }}
                 </li>
                 <li>
-                    <a href="/signup">
-                        sign up
-                    </a>
+                    {{ essentials.link("/signup", "sign up") }}
                 </li>
             </ul>
             <ul >
