@@ -22,27 +22,51 @@ flex flex-col justify-around h-screen text-gray-400 bg-gray-900
 {% block main %}
     <form action="/search">
         <div>
-            <input type="search" name="query" placeholder="search an open web index" required>
+            <input 
+                type="search" 
+                name="query" 
+                placeholder="search an open web index"
+                required
+            >
             <button>
                 {% include "icons/magnifying_glass.svg" %}
-                <span>Execute search</span>
+                <span class="hidden">
+                    Execute search
+                </span>
             </button>
         </div>
         <fieldset>
             <div>
-                <input value="stable" type="checkbox" name="index" value="stable" checked>
+                <input
+                    value="stable"
+                    type="checkbox"
+                    name="index"
+                    value="stable"
+                    checked
+                >
                 <label for="stable">
                     stable
                 </label>
             </div>
             <div>
-                <input value="unstable" type="checkbox" name="index" value="unstable" checked>
+                <input
+                    value="unstable"
+                    type="checkbox"
+                    name="index"
+                    value="unstable"
+                    checked
+                >
                 <label for="unstable">
                     unstable
                 </label>
             </div>
-            <div >
-                <input value="archive" type="checkbox" name="index" value="archive">
+            <div>
+                <input
+                    value="archive"
+                    type="checkbox"
+                    name="index"
+                    value="archive"
+                >
                 <label for="archive">
                     archive
                 </label>
