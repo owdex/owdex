@@ -1,4 +1,5 @@
 {% extends "page.html" %}
+{% import "macros/forms.html" as forms %}
 
 {% block title %}
     log in
@@ -6,26 +7,19 @@
 
 {% block main %}
     <form method="post">
-        <label>
-            <input 
-                type="text" 
-                name="username" 
-                required
-            >
-            <span>
-                username 
-            </span>
-        </label>
-        <label>
-            <input 
-                type="password" 
-                name="password" 
-                required
-            >
-            <span>
-                password
-            </span>
-        </label>
+
+        {{ forms.field(
+            "username",
+            required=True,
+        ) }}
+
+        {{ forms.field(
+            "password",
+            type="password",
+            required=True,
+        ) }}
+
         {{ essentials.button("log in!") }}
+
     </form>
 {% endblock main %}
