@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: {
     relative: true,
@@ -8,7 +11,11 @@ module.exports = {
     ]
   },
   theme: {
-    extend: {},
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      gray: colors.gray,
+    }
   },
   plugins: [],
   variants: {
