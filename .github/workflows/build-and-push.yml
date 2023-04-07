@@ -40,7 +40,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - 
         name: Only build
-        if: env.DO_PUSH == false
+        if: env.DO_PUSH != true
         uses: docker/build-push-action@v4
         with:
           context: .
