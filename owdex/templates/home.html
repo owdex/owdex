@@ -1,5 +1,6 @@
 {% extends "page.html" %}
 {% import "macros/forms.html" as forms %}
+{% import "macros/essentials.html" as essentials %}
 
 {% block title %}
     home
@@ -24,53 +25,36 @@
 {% endblock header %}
 
 {% block main %}
-    <form action="/search">
-        <fieldset class="
+    <form action="/search" class="
             flex flex-row justify-center
             max-w-xl mx-auto
         ">
-            <input 
-                type="search" 
-                name="query" 
-                placeholder="search an open web index"
-                required
-                class="
-                    bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                    border-y border-l border-gray-300 dark:border-gray-700 outline-none rounded-l-lg
-                    w-full p-2 
-                    
-                "
-            >
-            <button class="
+        <input 
+            type="search" 
+            name="query" 
+            placeholder="search an open web index"
+            required
+            class="
                 bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-lg
-                p-2 
-            ">
-                {% include "icons/magnifying_glass.svg" %}
-                <span class="hidden">
-                    Execute search
-                </span>
-            </button>
-        </fieldset>
-        <fieldset>
-            {{ forms.checkbox(
-                name="stable",
-                field="index",
-                checked=True,
-                accent="accent-blue-500"
-            ) }}
-            {{ forms.checkbox(
-                name="unstable",
-                field="index",
-                checked=True,
-                accent="accent-green-500"
-            ) }}
-            {{ forms.checkbox(
-                name="archive",
-                field="index",
-                checked=False,
-                accent="accent-orange-500"
-            ) }}
-        </fieldset>
+                border-y border-l border-gray-300 dark:border-gray-700 outline-none rounded-l-lg
+                w-full p-2 
+                
+            "
+        >
+        <button class="
+            bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
+            border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-lg
+            p-2 
+        ">
+            {% include "icons/magnifying_glass.svg" %}
+            <span class="hidden">
+                Execute search
+            </span>
+        </button>
     </form>
+    <p class="
+        mt-2 text-sm
+    ">
+        {{ essentials.link("/advanced", "advanced search") }}
+    </p>
 {% endblock main %}
