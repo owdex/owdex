@@ -1,9 +1,8 @@
-<input 
-	type="text" 
-	name="title" 
-	required
-	id="title"
-	{% if value %}
-	value="{{value}}"
-	{% endif %}
->
+{% import "macros/forms.html" as forms %}
+
+{{ forms.field(
+	"title",
+	required=True,
+	label_id="title",
+	value=value
+) }}

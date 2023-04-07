@@ -1,4 +1,5 @@
 {% extends "page.html" %}
+{% import "macros/forms.html" as forms %}
 
 {% block title %}
     add a page
@@ -6,41 +7,30 @@
 
 {% block main %}
     <form method="post">
-        <label>
-            <input 
-            type="url" 
-            name="url" 
-            required
-            hx-get="/get_title"
-            hx-trigger="keyup delay:500ms changed"
-            hx-target="#title"
-            hx-params="url"
-            hx-swap="outerHTML"
-            >
-            <span>
-                URL
-            </span>
-        </label>
-        <label>
-            {% include "title_input.html" %}
-            <span>
-                title
-            </span>
-        </label>
-        <label>
-            <input 
-            type="text" 
-            name="submitter" 
-            value="{{ submitter }}"
-            required
-            >
-            <span>
-                submitter
-            </span>
-        </label>
-        <label>
-            {{ essentials.button("confirm!") }}
-        </label>
+
+        {{ forms.field(
+            "url",
+            type="url",
+            required=True,
+            hx = {
+                "get": "/get_title",
+                "trigger": "keyup delay:500ms changed",
+                "target": "#title",
+                "params": "url",
+                "swap": "outerHTML"
+            }
+        ) }}
+
+        {% include "title_input.html" %}
+
+        {{ forms.field(
+            "submitter",
+            value=submitter,
+            required=True
+        ) }}
+
+        {{ essentials.button("confirm!") }}
+
         <div>
             <p>
                 by submitting this link, you confirm that it complies with our {{ essentials.link("/standards", "index standards") }}.
@@ -52,5 +42,6 @@
                 if you add an entry to the 'submitter' field, this is the submitter name that will be attributed with having indexed this page. it serves no purpose other than gaining clout. leave it blank for the submission to be marked as anonymous.
             </p>
         </div>
+        
     </form>
 {% endblock main %}

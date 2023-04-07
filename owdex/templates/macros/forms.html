@@ -1,0 +1,31 @@
+{% macro field(
+	name, 
+	type="text", 
+	value=None, 
+	required=False, 
+	label_id=None,
+	hx={}
+) %}
+	<label
+		id="{{ label_id if label_id else '' }}"
+	>
+		<input 
+			class="p-1 rounded-md border border-slate-500"
+			
+			type="{{ type }}" 
+			name="{{ name }}" 
+			value="{{ value if value else '' }}"
+
+			{% if required %}
+				required
+			{% endif %}
+
+			{% for attr, value in hx.items() %}
+				hx-{{attr}}="{{value}}"
+			{% endfor %}
+		>
+		<span>
+			{{ name }}
+		</span>
+	</label>
+{% endmacro %}
