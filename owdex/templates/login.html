@@ -5,32 +5,28 @@
 {% endblock title %}
 
 {% block main %}
-    <form class="flex flex-col justify-center space-y-6" method="post">
+    <form method="post">
         <label>
             <input 
-            type="text" 
-            name="username" 
-            placeholder="ed_siddon" 
-            required
-            class="p-2 w-2/3 bg-gray-800 rounded-lg border border-gray-600"
+                type="text" 
+                name="username" 
+                required
             >
-            <span class="block mt-1 ml-0.5 text-sm font-bold text-gray-600">
+            <span>
                 username 
             </span>
         </label>
         <label>
             <input 
-            type="password" 
-            name="password" 
-            placeholder="hunter2" 
-            required
-            class="p-2 w-2/3 bg-gray-800 rounded-lg border border-gray-600"
+                type="password" 
+                name="password" 
+                required
             >
-            <span class="block mt-1 ml-0.5 text-sm font-bold text-gray-600">
+            <span>
                 password
             </span>
         </label>
-        <button class="p-2 w-32 text-center text-blue-400 bg-gray-800 rounded-lg border border-blue-400">
+        <button>
             log in!
         </button>
     </form>
