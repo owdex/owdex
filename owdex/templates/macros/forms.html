@@ -11,7 +11,7 @@
 	>
 		<input 
 			class="
-				p-1 
+				p-1 w-full
 				rounded-md 
 				bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
 				border border-gray-300 dark:border-gray-700 outline-none
@@ -29,7 +29,10 @@
 				hx-{{attr}}="{{value}}"
 			{% endfor %}
 		>
-		<span>
+		<span class="
+			block
+			text-sm text-gray-700 dark:text-gray-300
+		">
 			{{ name }}
 		</span>
 	</label>
