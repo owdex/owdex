@@ -1,3 +1,9 @@
 {%- macro link(url, text) -%}
-<a href="{{ url }}" class="text-blue-500">{{ text }}</a>
+	<a href="{{ url }}" class="text-blue-500">{{ text }}</a>
 {%- endmacro -%}
+
+{% macro button(text) %}
+	<button class="p-2 rounded-md border border-blue-500">
+		{{ text }}
+	</button>
+{% endmacro %}
