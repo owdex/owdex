@@ -14,14 +14,12 @@
         <script src="{{ url_for('static', filename='vendored/htmx-1.8.6.min.js') }}"></script>
         
     </head>
-    <body
-        class="
+    <body class="
         text-gray-900 dark:text-gray-100
         bg-gray-100 dark:bg-gray-900
         flex flex-col
         p-3
-        "
-    >
+    ">
 
         {% block header %}
             <header>
@@ -50,22 +48,18 @@
             {% endwith %}
         {% endblock flashes %}
 
-        <main 
-            class="
+        <main class="
             flex flex-col
-            "
-        >
+        ">
             {% block main %}
                 <!-- main content -->
             {% endblock main %}
         </main>
 
         {% block footer %}
-        <footer
-            class="
+        <footer class="
             flex flex-col
-            "
-        >
+        ">
             <ul>
                 <li>
                     {{ essentials.link("/about", "about") }}
