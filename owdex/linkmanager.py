@@ -16,9 +16,10 @@ class LinkManager:
         """Creates a LinkManager instance.
 
         Args:
+            host (str): The hostname at which the Solr instance can be reached.
+            port (int): The port at which the Solr instance can be reached.
             indices (list): A list of index names.
-            host (str, optional): The hostname at which the Solr instance can be reached.
-            port (int, optional): The port at which the Solr instance can be reached.
+            default_indices (list): A list of indices to search by default. Must be a subset of indices.
         """
         self._indices = {}
         for index_name in indices:
@@ -87,13 +88,21 @@ class LinkManager:
             list: A list of         response = result dicts.
         """
         results = []
-        for index_name in indices:
-            index_results = self._indices[index_name].search(query)
-            for result in index_results:
-                # we add the index attribute so we can show the index this result was pulled from
-                result.update({"index": index_name})
-            results.extend(index_results)
 
+        try:
+            for index_name in indices:
+                index_results = self._indices[index_name].search(query)
+                for result in index_results:
+                    # we add the index attribute so we can show the index this result was pulled from
+                    result.update({"index": index_name})
+                results.extend(index_results)
+
+        except SolrError as e:
+            if "org.apache.solr.search.SyntaxError" in str(e):
+                pass # it's a malformed query, just return what we have -- typically an empty array
+            else:
+                raise
+        
         return results
 
 
