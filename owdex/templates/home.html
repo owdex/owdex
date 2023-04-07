@@ -18,20 +18,32 @@
 
 {% block main %}
     <form action="/search">
-        <div>
+        <fieldset class="
+            flex flex-row justify-center
+        ">
             <input 
                 type="search" 
                 name="query" 
                 placeholder="search an open web index"
                 required
+                class="
+                    bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
+                    border-y border-l border-gray-300 dark:border-gray-700 outline-none
+                    p-2 rounded-l-lg
+                    
+                "
             >
-            <button>
+            <button class="
+                bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
+                border-y border-r border-gray-300 dark:border-gray-700 outline-none
+                p-2 rounded-r-lg
+            ">
                 {% include "icons/magnifying_glass.svg" %}
                 <span class="hidden">
                     Execute search
                 </span>
             </button>
-        </div>
+        </fieldset>
         <fieldset>
             {{ forms.checkbox(
                 name="stable",
