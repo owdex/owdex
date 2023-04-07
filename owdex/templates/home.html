@@ -27,6 +27,7 @@
     <form action="/search">
         <fieldset class="
             flex flex-row justify-center
+            max-w-xl mx-auto
         ">
             <input 
                 type="search" 
@@ -35,15 +36,15 @@
                 required
                 class="
                     bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                    border-y border-l border-gray-300 dark:border-gray-700 outline-none
-                    p-2 rounded-l-lg
+                    border-y border-l border-gray-300 dark:border-gray-700 outline-none rounded-l-lg
+                    w-full p-2 
                     
                 "
             >
             <button class="
                 bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                border-y border-r border-gray-300 dark:border-gray-700 outline-none
-                p-2 rounded-r-lg
+                border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-lg
+                p-2 
             ">
                 {% include "icons/magnifying_glass.svg" %}
                 <span class="hidden">
