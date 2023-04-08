@@ -23,9 +23,11 @@ def login():
         try:
             app.um.verify(username, password)
         except VerifyMismatchError:
-            return error(HTTPStatus.UNAUTHORIZED, explanation=f"Wrong password for username {username}!")
+            return error(HTTPStatus.UNAUTHORIZED,
+                         explanation="Wrong username or password")
         except KeyError:
-            return error(HTTPStatus.UNAUTHORIZED, explanation="No such username!")
+            return error(HTTPStatus.UNAUTHORIZED,
+                         explanation="Wrong username or password")
         else:
             f.session["user"] = username
     return f.render_template("login.html")
