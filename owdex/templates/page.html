@@ -66,33 +66,24 @@
 
         {% block footer %}
         <footer class="
-            grow justify-end
-            flex flex-col
-            gap-3
+            flex flex-col md:flex-row
+            grow justify-end md:justify-between
             text-lg
-            py-4
         ">
             <ul class="
-                flex flex-col
-                gap-2
+                flex flex-col md:flex-row
+                max-w-fit mx-auto
+                md:max-w-full md:mx-0 mt-auto md:max-h-fit 
             ">
-                <li>
-                    {{ essentials.link("/about", "about") }}
-                </li>
-                <li>
-                    {{ essentials.link("/add", "add a page") }}
-                </li>
-                <li>
-                    {{ essentials.link("/login", "log in") }}
-                </li>
-                <li>
-                    {{ essentials.link("/signup", "sign up") }}
-                </li>
+                {{ essentials.menu_item("/about", "about") }}
+                {{ essentials.menu_item("/add", "add a page") }}
+                {{ essentials.menu_item("/login", "log in") }}
             </ul>
             <ul class="
                 flex flex-row
-                gap-2
-                mx-auto
+                mx-auto py-4
+                md:mx-0 md:mt-auto md:py-0
+                space-x-4 
             ">
                 <li>
                     <a href="#">
