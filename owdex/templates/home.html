@@ -27,7 +27,7 @@
 {% block main %}
     <form action="/search" class="
             flex flex-row justify-center
-            max-w-xl mx-auto
+            w-9/12 mx-auto min-w-fit
         ">
         <input 
             type="search" 
@@ -52,9 +52,9 @@
             </span>
         </button>
     </form>
-    <p class="
+    <!-- <p class="
         mt-2 text-sm
     ">
         {{ essentials.link("/advanced", "advanced search") }}
-    </p>
+    </p> -->
 {% endblock main %}
