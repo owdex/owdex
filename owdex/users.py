@@ -44,7 +44,9 @@ def signup():
             app.um.create(f.request.form["username"],
                           f.request.form["password"])
         except KeyError:
-            return error(HTTPStatus.CONFLICT, explanation="A user with that username already exists!")
+            return error(
+                HTTPStatus.CONFLICT,
+                explanation="A user with that username already exists!")
         else:
             status = HTTPStatus.CREATED
     else:

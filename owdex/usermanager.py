@@ -13,6 +13,7 @@ from .error import error
 class UserManager():
     """Manage users, and serves as a wrapper for the underlying Mongo database and password hasher.
     """
+
     def __init__(self, host, port, admin_username, admin_password):
         """Create a UserManager instance.
 
