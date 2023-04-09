@@ -10,7 +10,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  DO_PUSH: ${{ github.ref == 'refs/heads/main' || github.event_name == 'release' }}
 
 jobs:
   build-and-push:
@@ -20,18 +19,11 @@ jobs:
       packages: write
     
     steps:
-      - 
-        run: echo ${{ env.DO_PUSH }}
-      - 
-        run: echo ${{ github.ref }}
-      - 
-        run: echo ${{ github.event_name }}
-      - 
+      -
         name: Checkout repository
         uses: actions/checkout@v3
       - 
         name: Log in to GHCR
-        if: env.DO_PUSH == true
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
@@ -39,21 +31,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - 
         name: Get Docker metadata
-        if: env.DO_PUSH == true
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - 
-        name: Only build
-        if: env.DO_PUSH != true
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: false
-      - 
         name: Build and push
-        if: env.DO_PUSH == true
         uses: docker/build-push-action@v4
         with:
           context: .
