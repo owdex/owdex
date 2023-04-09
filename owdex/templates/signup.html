@@ -1,33 +1,29 @@
-{% extends "page.html" %}
+{% extends "fragments/form.html" %}
 {% import "macros/forms.html" as forms %}
 
 {% block title %}
     sign up
 {% endblock title %}
 
-{% block main %}
-    <form method="post">
+{% block content %}
 
-        {{ forms.field(
-            "username",
-            required=True,
-        ) }}
+    {{ forms.field(
+        "username",
+        required=True,
+    ) }}
 
-        {{ forms.field(
-            "password",
-            type="password",
-            required=True,
-        ) }}
-        
-        {{ essentials.button("sign up!") }}
+    {{ forms.field(
+        "password",
+        type="password",
+        required=True,
+    ) }}
     
-    </form>
+    {{ essentials.button("sign up!") }}
+    
+{% endblock content %}
 
-    <div class="
-        text-xs text-left 
-        max-w-prose my-2
-    ">
-        by signing up, you agree to not do anything on our website that your mother wouldn't approve of.
-    </div>
+{% block fine_print %}
 
-{% endblock main %}
+    by signing up, you agree to not do anything on our website that your mother wouldn't approve of.
+
+{% endblock fine_print %}

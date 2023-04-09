@@ -1,30 +1,23 @@
-{% extends "page.html" %}
+{% extends "fragments/form.html" %}
 {% import "macros/forms.html" as forms %}
 
 {% block title %}
     log in
 {% endblock title %}
 
-{% block main %}
-    <form 
-        method="post"
-        class="
-            text-left max-w-prose
-        "
-    >
+{% block content %}
 
-        {{ forms.field(
-            "username",
-            required=True,
-        ) }}
+    {{ forms.field(
+        "username",
+        required=True,
+    ) }}
 
-        {{ forms.field(
-            "password",
-            type="password",
-            required=True,
-        ) }}
+    {{ forms.field(
+        "password",
+        type="password",
+        required=True,
+    ) }}
 
-        {{ essentials.button("log in!") }}
+    {{ essentials.button("log in!") }}
 
-    </form>
-{% endblock main %}
+{% endblock content %}
