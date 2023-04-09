@@ -37,7 +37,8 @@ class LinkManager:
         """
         # We force arguments to be named for readability by using *
 
-        submitter = submitter if submitter else app.config["ANONYMOUS_SUBMITTER"]
+        submitter = submitter if submitter else app.config[
+            "ANONYMOUS_SUBMITTER"]
         # this can't be the default param because current_app isn't available initially
 
         soup = bs(get(url_normalize(url)).text, features="html.parser")
@@ -45,13 +46,11 @@ class LinkManager:
         description = soup.find("meta", attrs={"name": "description"})
 
         # if there was a description, set that, otherwise just use content
-        description = description.get(
-            "content") if description else content
+        description = description.get("content") if description else content
 
         if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
-            description = description[:app.
-                                        config["DESCRIPTION_MAX_LENGTH"] -
-                                        1] + "&hellip;"
+            description = description[:app.config["DESCRIPTION_MAX_LENGTH"] -
+                                      1] + "&hellip;"
             # we subtract 1 extra so we have space to add the ellipsis
 
         self._indices[index].add(
@@ -64,7 +63,7 @@ class LinkManager:
                 "votes": 1
             },
             commit=True)
-    
+
     def vote(self, index, id):
         """Register a vote for an entry.
 
@@ -72,10 +71,7 @@ class LinkManager:
             index (str): The name of the index on which the entry is stored.
             id (str): The internal ID of the entry.
         """
-        self._indices[index].add({
-            "id": id,
-            "votes": {"inc": 1}
-        }, commit=True)
+        self._indices[index].add({"id": id, "votes": {"inc": 1}}, commit=True)
 
     def search(self, query, indices):
         """Perform a search of the specified indices for the query.
@@ -99,17 +95,13 @@ class LinkManager:
 
         except SolrError as e:
             if "org.apache.solr.search.SyntaxError" in str(e):
-                pass # it's a malformed query, just return what we have -- typically an empty array
+                pass  # it's a malformed query, just return what we have -- typically an empty array
             else:
                 raise
-        
+
         return results
 
 
 def get_title(url, format_for_autocomplete=False):
-    return bs(
-                get(url_normalize(url)).text, 
-                features="html.parser"
-             ).find(
-                "title"
-             ).text
+    return bs(get(url_normalize(url)).text,
+              features="html.parser").find("title").text
