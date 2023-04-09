@@ -23,29 +23,17 @@ def create_app(config_dict=None):
     if config_dict:
         app.config = app.config | config_dict
 
-    app.um = UserManager(
-        app.config["MONGO_HOST"],
-        app.config["MONGO_PORT"],
-        app.config["ADMIN_USERNAME"],
-        app.config["ADMIN_PASSWORD"]
-    )
+    app.um = UserManager(app.config["MONGO_HOST"], app.config["MONGO_PORT"],
+                         app.config["ADMIN_USERNAME"],
+                         app.config["ADMIN_PASSWORD"])
 
-    app.lm = LinkManager(
-        app.config["SOLR_HOST"],
-        app.config["SOLR_PORT"],
-        [
-            "stable", 
-            "unstable", 
-            "archive"
-        ]
-        )
-    
-    app.limiter = Limiter(
-        get_remote_address,
-        app = app,
-        storage_uri = app.um.mongo_uri,
-        strategy = "fixed-window-elastic-expiry"
-    )
+    app.lm = LinkManager(app.config["SOLR_HOST"], app.config["SOLR_PORT"],
+                         ["stable", "unstable", "archive"])
+
+    app.limiter = Limiter(get_remote_address,
+                          app=app,
+                          storage_uri=app.um.mongo_uri,
+                          strategy="fixed-window-elastic-expiry")
 
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(500, internal_server_error)

@@ -10,61 +10,48 @@ from .usermanager import require_login
 users_bp = f.Blueprint("users", __name__, template_folder="templates")
 
 
-@users_bp.route("/login", methods=["GET", "POST"])
+@users_bp.route("/account/<action>", methods=["POST"])
+@users_bp.route("/account", methods=["GET"])
 @app.limiter.limit(
-    "5/minute;10/hour;25/day",
+    "3/minute;10/hour;20/day",
     scope="users",
-    deduct_when=lambda response: response.status_code != HTTPStatus.OK,
+    deduct_when=lambda response: response.status_code in
+    (HTTPStatus.UNAUTHORIZED, HTTPStatus.CONFLICT, HTTPStatus.CREATED)
+    # this will rate-limit failed logins, and both successful and failed creations.
 )
-def login():
-    if f.request.method == "POST":
-        username = f.request.form["username"]
-        password = f.request.form["password"]
+def account(action=None):
+    if not action:
+        return f.render_template("account.html")
+
+    if action == "login":
         try:
+            username = f.request.form["username"]
+            password = f.request.form["password"]
             app.um.verify(username, password)
-        except VerifyMismatchError:
+        except (VerifyMismatchError, KeyError):
             return error(HTTPStatus.UNAUTHORIZED,
-                         explanation="Wrong username or password")
-        except KeyError:
-            return error(HTTPStatus.UNAUTHORIZED,
-                         explanation="Wrong username or password")
+                         explanation=f"Wrong username or password!")
         else:
             f.session["user"] = username
-    return f.render_template("login.html")
+            return f.redirect(f.url_for("page.home"))
 
-
-@users_bp.route("/signup", methods=["GET", "POST"])
-@app.limiter.limit(
-    "5/minute;10/hour;25/day",
-    scope="users",
-)
-def signup():
-    if f.request.method == "POST":
+    elif action == "signup":
         try:
             app.um.create(f.request.form["username"],
                           f.request.form["password"])
         except KeyError:
-            return error(HTTPStatus.CONFLICT, explanation="A user with that username already exists!")
+            return error(
+                HTTPStatus.CONFLICT,
+                explanation="A user with that username already exists!")
         else:
-            status = HTTPStatus.CREATED
+            f.session["user"] = f.request.form["username"]
+            return f.redirect(f.url_for("page.home")), HTTPStatus.CREATED
+
     else:
-        status = HTTPStatus.OK
-    return f.render_template("signup.html"), status
+        return f.render_template("account.html"), HTTPStatus.BAD_REQUEST
 
 
 @users_bp.route("/logout")
 def logout():
     f.session.pop("user", None)
-    return "Logged out"
-
-
-@users_bp.route("/protected")
-@require_login
-def protected():
-    return f"Logged in as {app.um.get_current()['username']}"
-
-
-@users_bp.route("/admin")
-@require_login(needs_admin=True)
-def admin():
-    return f.render_template("admin.html")
+    return f.redirect(f.url_for("page.home"))
