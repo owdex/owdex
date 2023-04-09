@@ -2,12 +2,17 @@
 	<a href="{{ url }}" class="text-blue-500">{{ text }}</a>
 {%- endmacro -%}
 
-{% macro button(text) %}
-	<button class="
-		p-1 
-		rounded-md 
-		border border-blue-500
-	">
+{% macro button(text, formaction=None) %}
+	<button 
+		class="
+			p-1 
+			rounded-md 
+			border border-blue-500
+		"
+		{% if formaction %}
+			formaction="{{ formaction }}"
+		{% endif %}
+	>
 		{{ text }}
 	</button>
 {% endmacro %}

@@ -2,7 +2,7 @@
 {% import "macros/forms.html" as forms %}
 
 {% block title %}
-    sign up
+    log in or sign up
 {% endblock title %}
 
 {% block content %}
@@ -17,13 +17,8 @@
         type="password",
         required=True,
     ) }}
-    
-    {{ essentials.button("sign up!") }}
-    
+
+    {{ essentials.button("log in", formaction="/account/login") }}
+    {{ essentials.button("sign up", formaction="/account/signup") }}
+
 {% endblock content %}
-
-{% block fine_print %}
-
-    by signing up, you agree to not do anything on our website that your mother wouldn't approve of.
-
-{% endblock fine_print %}

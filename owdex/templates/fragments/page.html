@@ -77,7 +77,11 @@
             ">
                 {{ essentials.menu_item("/about", "about") }}
                 {{ essentials.menu_item("/add", "add a page") }}
-                {{ essentials.menu_item("/login", "log in") }}
+                {% if session["user"] %}
+                    {{ essentials.menu_item("/logout", session["user"] + " (log out)") }}
+                {% else %}
+                    {{ essentials.menu_item("/account", "account") }}
+                {% endif %}
             </ul>
             <ul class="
                 flex flex-row
