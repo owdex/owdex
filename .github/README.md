@@ -32,7 +32,7 @@ $ docker compose up -d
 ```
 
 #### With Docker
-If you already have Solr and MongoDB instances running elsewhere, you can just use Owdex on its own. Images are available for every release from the [GitHub Container Registry](https://github.com/orgs/owdex/packages/container/package/owdex). 
+If you already have Solr and MongoDB instances running elsewhere, you can just use Owdex on its own. Images are available for every release from the [GitHub Container Registry](https://github.com/orgs/owdex/packages/container/package/owdex). **Make sure to set the version you want (instead of just pulling 'latest'), as breaking changes may happen at any time.**
 
 ```shell
 $ wget https://raw.githubusercontent.com/owdex/compose/main/owdex.toml.default -O owdex.toml
