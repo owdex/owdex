@@ -25,6 +25,7 @@ def add():
 
         return f.render_template("add.html", submitter=submitter)
 
+
 @add_bp.route("/get_title")
 def get_title():
     title = get_url_title(f.request.args.get("url"))
