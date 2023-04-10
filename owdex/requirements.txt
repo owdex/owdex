@@ -2,7 +2,7 @@
 argon2-cffi==21.3.0
 argon2-cffi-bindings==21.2.0
 attrs==22.2.0
-beautifulsoup4==4.11.2
+beautifulsoup4==4.12.2
 bs4==0.0.1
 certifi==2022.12.7
 cffi==1.15.1
