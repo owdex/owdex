@@ -17,11 +17,11 @@ echo "Creating misc directory..."
 mkdir -p ./misc
 
 echo "Downloading configuration files..."
-wget "https://github.com/owdex/compose/archive/refs/heads/main.zip" -O /tmp/compose-main.zip
-unzip /tmp/compose-main.zip -d /tmp
-mv /tmp/compose-main/owdex.toml .
-mv /tmp/compose-main/misc/solr_configset /tmp/compose-main/misc/solr_entrypoint.sh ./misc
-# rm -rf /tmp/compose-main.zip /tmp/compose-main
+wget "https://github.com/owdex/compose/archive/refs/heads/link-overhaul.zip" -O /tmp/compose-link-overhaul.zip
+unzip /tmp/compose-link-overhaul.zip -d /tmp
+mv /tmp/compose-link-overhaul/owdex.toml.default ./owdex.toml
+mv /tmp/compose-link-overhaul/misc/configset /tmp/compose-link-overhaul/misc/entrypoint.sh ./misc
+rm -rf /tmp/compose-link-overhaul.zip /tmp/compose-link-overhaul
 
 echo "Setting permissions..."
 sudo chown -R 8983 ./data/solr
