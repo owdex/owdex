@@ -24,7 +24,7 @@ markdown-it-py==2.2.0 ; python_version >= '3.7'
 markupsafe==2.1.2
 mdurl==0.1.2 ; python_version >= '3.7'
 ordered-set==4.1.0 ; python_version >= '3.7'
-packaging==23.0
+packaging==23.1
 pluggy==1.0.0
 pycparser==2.21
 pygments==2.15.0 ; python_version >= '3.6'
