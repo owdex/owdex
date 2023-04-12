@@ -1,33 +1,28 @@
 import flask as f
+
 import owdex.users
 from owdex.usermanager import UserManager
 
 
 def test_signup_login(client):
     with client:
-        create_response = client.post("/signup",
-                                      data={
-                                          "email": "test@test.test",
-                                          "password": "test"
-                                      })
+        create_response = client.post(
+            "/signup", data={"email": "test@test.test", "password": "test"}
+        )
         assert create_response.status_code == 200
 
-        login_response = client.post("/login",
-                                     data={
-                                         "email": "test@test.test",
-                                         "password": "test"
-                                     })
+        login_response = client.post(
+            "/login", data={"email": "test@test.test", "password": "test"}
+        )
         assert login_response.status_code == 200
         assert f.session["user"] == "test@test.test"
 
 
 def test_create_user(client):
     with client:
-        create_response = client.post("/signup",
-                                      data={
-                                          "email": "test@test.test",
-                                          "password": "test"
-                                      })
+        create_response = client.post(
+            "/signup", data={"email": "test@test.test", "password": "test"}
+        )
         assert create_response.status_code == 200
 
 

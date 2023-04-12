@@ -3,45 +3,55 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
 
         <title>owdex - {% block title %}{% endblock title %}</title>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='tailwind.css') }}">
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='tailwind.css') }}"
+        />
 
         <script src="{{ url_for('static', filename='vendored/htmx-1.8.6.min.js') }}"></script>
-        
     </head>
-    <body class="
+    <body
+        class="
         text-gray-900 dark:text-gray-100
         bg-gray-100 dark:bg-gray-900
         flex flex-col p-3 h-screen
         text-center
-    ">
-
+    "
+    >
         {% block header %}
-            <header class="
+            <header
+                class="
                 flex flex-row justify-between
                 border-b border-gray-700 dark:border-gray-300
                 mb-4
-            ">
+            "
+            >
                 <a href="/">
-                    <h1 class="
+                    <h1
+                        class="
                         text-lg font-bold
-                    ">
+                    "
+                    >
                         Owdex
                     </h1>
                 </a>
-                <h2 class="
+                <h2
+                    class="
                     text-lg font-light
-                ">
+                "
+                >
                     {{ self.title() }}
                 </h2>
             </header>
         {% endblock header %}
-
         {% block flashes %}
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -56,52 +66,59 @@
             {% endwith %}
         {% endblock flashes %}
 
-        <main class="
+        <main
+            class="
             flex flex-col
-        ">
+        "
+        >
             {% block main %}
                 <!-- main content -->
             {% endblock main %}
         </main>
 
         {% block footer %}
-        <footer class="
+            <footer
+                class="
             flex flex-col md:flex-row
             grow justify-end md:justify-between
             text-lg
-        ">
-            <ul class="
+        "
+            >
+                <ul
+                    class="
                 flex flex-col md:flex-row
                 max-w-fit mx-auto
-                md:max-w-full md:mx-0 mt-auto md:max-h-fit 
-            ">
-                {{ essentials.menu_item("/about", "about") }}
-                {{ essentials.menu_item("/add", "add a page") }}
-                {% if session["user"] %}
-                    {{ essentials.menu_item("/logout", session["user"] + " (log out)") }}
-                {% else %}
-                    {{ essentials.menu_item("/account", "account") }}
-                {% endif %}
-            </ul>
-            <ul class="
+                md:max-w-full md:mx-0 mt-auto md:max-h-fit
+            "
+                >
+                    {{ essentials.menu_item("/about", "about") }}
+                    {{ essentials.menu_item("/add", "add a page") }}
+                    {% if session["user"] %}
+                        {{ essentials.menu_item("/logout", session["user"] + " (log out)") }}
+                    {% else %}
+                        {{ essentials.menu_item("/account", "account") }}
+                    {% endif %}
+                </ul>
+                <ul
+                    class="
                 flex flex-row
                 mx-auto py-4
                 md:mx-0 md:mt-auto md:py-0
-                space-x-4 
-            ">
-                <li>
-                    <a href="#">
-                        {% include "icons/mastodon.svg" %}
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/alexmshepherd/owdex">
-                        {% include "icons/github.svg" %}
-                    </a>
-                </li>
-            </ul>
-        </footer>
+                space-x-4
+            "
+                >
+                    <li>
+                        <a href="#">
+                            {% include "icons/mastodon.svg" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/alexmshepherd/owdex">
+                            {% include "icons/github.svg" %}
+                        </a>
+                    </li>
+                </ul>
+            </footer>
         {% endblock footer %}
-          
     </body>
 </html>

@@ -1,62 +1,62 @@
-{% macro field(
-	name, 
-	type="text", 
-	value=None, 
-	required=False, 
-	label_id=None,
-	hx={}
-) %}
-	<label
-		id="{{ label_id if label_id else '' }}"
-	>
-		<input 
-			class="
+{%
+    macro field(
+    name,
+    type="text",
+    value=None,
+    required=False,
+    label_id=None,
+    hx={}
+    )
+%}
+    <label id="{{ label_id if label_id else '' }}">
+        <input
+            class="
 				p-1 w-full
-				rounded-md 
+				rounded-md
 				bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
 				border border-gray-300 dark:border-gray-700 outline-none
 			"
-			
-			type="{{ type }}" 
-			name="{{ name }}" 
-			value="{{ value if value else '' }}"
-
-			{% if required %}
-				required
-			{% endif %}
-
-			{% for attr, value in hx.items() %}
-				hx-{{attr}}="{{value}}"
-			{% endfor %}
-		>
-		<span class="
+            type="{{ type }}"
+            name="{{ name }}"
+            value="{{ value if value else '' }}"
+            {% if required %}
+                required
+            {% endif %}
+            {% for attr, value in hx.items() %}
+                hx-{{ attr }}="{{ value }}"
+            {% endfor %}
+        />
+        <span
+            class="
 			block pl-1
 			text-sm font-semibold text-gray-600 dark:text-gray-400
-		">
-			{{ name }}
-		</span>
-	</label>
+		"
+        >
+            {{ name }}
+        </span>
+    </label>
 {% endmacro %}
-
-{% macro checkbox(
-	name,
-	field=None,
-	checked=False,
-	accent="accent-blue-500"
-) %}
-	<div>
-		<input
-			type="checkbox"
-			name="{{ field if field else name }}"
-			value="{{ name }}"
-			id="{{ name }}"
-			class="{{ accent }}"
-			{% if checked %}
-				checked
-			{% endif %}
-		>
-		<label for="{{ name }}">
-			{{ name }}
-		</label>
-	</div>
+{%
+    macro checkbox(
+    name,
+    field=None,
+    checked=False,
+    accent="accent-blue-500"
+    )
+%}
+    <div>
+        <input
+            type="checkbox"
+            name="{{ field if field else name }}"
+            value="{{ name }}"
+            id="{{ name }}"
+            class="{{ accent }}"
+            {% if checked %}
+                checked
+            {% endif %}
+        />
+        <label for="{{ name }}">
+            {{ name }}
+        </label>
+    </div>
 {% endmacro %}

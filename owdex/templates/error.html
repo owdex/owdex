@@ -1,19 +1,15 @@
 {% extends "fragments/page.html" %}
-
 {% block title %}
     Error {{ status }}
 {% endblock title %}
-
 {% block main %}
-	<h2>
-		Error {{status}} 
-	</h2>
-	<h3>
-		{{ phrase }}
-	</h3>
-	{% if explanation %}
-		<p>
-			{{ explanation }}
-		</p>
-	{% endif %}
+    <h2>Error {{ status }}</h2>
+    <h3>
+        {{ phrase }}
+    </h3>
+    {% if explanation %}
+        <p>
+            {{ explanation }}
+        </p>
+    {% endif %}
 {% endblock main %}

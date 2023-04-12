@@ -3,29 +3,29 @@
 # For a production-ready version, see https://github.com/owdex/compose
 version: "3"
 services:
-  solr:
-    container_name: solr
-    image: docker.io/solr:9
-    ports:
-      - 8983:8983
-    volumes:
-      - ./data/solr/:/var/solr/data
-      - ./misc/configset:/owdex_configset:ro
-      - ./misc/entrypoint.sh:/entrypoint.sh
-    entrypoint:
-      - /entrypoint.sh
+    solr:
+        container_name: solr
+        image: docker.io/solr:9
+        ports:
+            - 8983:8983
+        volumes:
+            - ./data/solr/:/var/solr/data
+            - ./misc/configset:/owdex_configset:ro
+            - ./misc/entrypoint.sh:/entrypoint.sh:ro
+        entrypoint:
+            - /entrypoint.sh
 
-  mongo:
-    container_name: mongo
-    image: docker.io/mongo
-    volumes:
-      - ./data/mongo:/data/db
+    mongo:
+        container_name: mongo
+        image: docker.io/mongo
+        volumes:
+            - ./data/mongo:/data/db
 
-  frontend:
-    container_name: frontend
-    image: ghcr.io/owdex/owdex:develop
-    build: .
-    ports:
-      - 80:80
-    volumes:
-      - ./owdex.toml:/owdex.toml:ro
+    frontend:
+        container_name: frontend
+        image: ghcr.io/owdex/owdex:develop
+        build: .
+        ports:
+            - 80:80
+        volumes:
+            - ./owdex.toml:/owdex.toml:ro

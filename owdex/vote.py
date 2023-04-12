@@ -3,7 +3,7 @@ from flask import current_app as app
 
 from .usermanager import require_login
 
-vote_bp = f.Blueprint('vote', __name__)
+vote_bp = f.Blueprint("vote", __name__)
 
 
 @vote_bp.route("/vote", methods=["POST"])
