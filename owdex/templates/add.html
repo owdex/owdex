@@ -1,63 +1,46 @@
-{% extends "page.html" %}
+{% extends "fragments/form.html" %}
+{% import "macros/forms.html" as forms %}
 
 {% block title %}
     add a page
 {% endblock title %}
 
-{% block main %}
-    <form class="flex flex-col justify-center space-y-6" method="post">
-        <label>
-            <input 
-            type="url" 
-            name="url" 
-            required
-            class="p-2 w-2/3 bg-gray-800 rounded-lg border border-gray-600"
-            hx-get="/get_title"
-            hx-trigger="keyup delay:500ms changed"
-            hx-target="#title"
-            hx-params="url"
-            hx-swap="outerHTML"
-            >
-            <span class="block mt-1 ml-0.5 text-sm font-bold text-gray-600">
-                URL
-            </span>
-        </label>
-        <label>
-            {% include "title_input.html" %}
-            <span class="block mt-1 ml-0.5 text-sm font-bold text-gray-600">
-                title
-            </span>
-        </label>
-        <label>
-            <input 
-            type="text" 
-            name="submitter" 
-            class="p-2 w-1/3 bg-gray-800 rounded-lg border border-gray-600"
-            value="{{ submitter }}"
-            required
-            >
-            <span class="block mt-1 ml-0.5 text-sm font-bold text-gray-600">
-                submitter
-            </span>
-        </label>
-        <label>
-            <span class="hidden">
-                add this link
-            </span>
-            <button class="p-2 w-32 text-center text-blue-400 bg-gray-800 rounded-lg border border-blue-400">
-                confirm!
-            </button>
-        </label>
-        <div class="space-y-4 w-1/3 text-sm">
-            <p>
-                by submitting this link, you confirm that it complies with our <a href="/standards" class="font-semibold text-blue-400 hover:underline decoration-blue-400">index standards</a>.
-            </p>
-            <p>
-                submitted links will be added to the unstable index, where others can vote on them. if it recieves enough votes and passes trusted review, it will be moved to the stable index. <a href="/about" class="font-semibold text-blue-400 hover:underline decoration-blue-400">learn more about indices</a>.
-            </p>
-            <p>
-                if you add an entry to the 'submitter' field, this is the submitter name that will be attributed with having indexed this page. it serves no purpose other than gaining clout. leave it blank for the submission to be marked as anonymous.
-            </p>
-        </div>
-    </form>
-{% endblock main %}
+{% block content %}
+
+    {{ forms.field(
+        "url",
+        type="url",
+        required=True,
+        hx = {
+            "get": "/get_title",
+            "trigger": "keyup delay:500ms changed",
+            "target": "#title",
+            "params": "url",
+            "swap": "outerHTML"
+        }
+    ) }}
+
+    {% include "htmx/title_input.html" %}
+
+    {{ forms.field(
+        "submitter",
+        value=submitter,
+        required=True
+    ) }}
+
+    {{ essentials.button("confirm!") }}
+
+{% endblock content %}
+{% block fine_print %}
+
+    <p>
+        by submitting this link, you confirm that it complies with our {{ essentials.link("/standards", "index standards") }}.
+    </p>
+    <p>
+        submitted links will be added to the unstable index, where others can vote on them. if it recieves enough votes and passes trusted review, it will be moved to the stable index. {{essentials.link("/about", "learn more about indices")}}.
+    </p>
+    <p>
+        if you add an entry to the 'submitter' field, this is the submitter name that will be attributed with having indexed this page. it serves no purpose other than gaining clout. leave it blank for the submission to be marked as anonymous.
+    </p>
+
+{% endblock fine_print %}

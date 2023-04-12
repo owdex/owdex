@@ -29,4 +29,4 @@ def add():
 @add_bp.route("/get_title")
 def get_title():
     title = get_url_title(f.request.args.get("url"))
-    return f.render_template("title_input.html", value=title)
+    return f.render_template("htmx/title_input.html", value=title)

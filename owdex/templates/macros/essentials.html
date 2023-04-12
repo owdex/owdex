@@ -1,0 +1,29 @@
+{%- macro link(url, text) -%}
+	<a href="{{ url }}" class="text-blue-500">{{ text }}</a>
+{%- endmacro -%}
+
+{% macro button(text, formaction=None) %}
+	<button 
+		class="
+			p-1 
+			rounded-md 
+			border border-blue-500
+		"
+		{% if formaction %}
+			formaction="{{ formaction }}"
+		{% endif %}
+	>
+		{{ text }}
+	</button>
+{% endmacro %}
+
+{% macro menu_item(url, text) %}
+	<li class="
+		border-y
+		md:border-y-0 md:border-x
+		py-2 md:py-0 md:px-2
+		border-gray-300 dark:border-gray-700
+	">
+		{{ link(url, text) }}
+	</li>
+{% endmacro %}
