@@ -1,4 +1,5 @@
 import pytest
+
 from owdex import create_app
 from owdex.usermanager import UserManager
 

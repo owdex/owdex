@@ -1,8 +1,23 @@
 [tool.pytest.ini_options]
-testpaths = [
-    "tests"
-]
+    testpaths = [
+        "tests"
+    ]
 
 [tool.coverage]
-branch = true
-source = "owdex"
+    branch = true
+    source = "owdex"
+
+[tool.isort]
+    profile = "black"
+    skip_gitignore = true
+    line_length = 99
+    known_flask = ["flask", "flask-limiter"]
+    sections = ["FUTURE", "STDLIB", "FLASK", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+    src_paths = ["owdex", "tests"]
+
+[tool.black]
+    line-length = 99
+
+[tool.curlylint.rules]
+    html_has_lang = true
+    indent = 4

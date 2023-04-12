@@ -1,18 +1,17 @@
-from functools import wraps, partial
+from functools import partial, wraps
 from http import HTTPStatus
 
 import flask as f
 from flask import current_app as app
 
-from pymongo import MongoClient
 from argon2 import PasswordHasher
+from pymongo import MongoClient
 
 from .error import error
 
 
-class UserManager():
-    """Manage users, and serves as a wrapper for the underlying Mongo database and password hasher.
-    """
+class UserManager:
+    """Manage users, and serves as a wrapper for the underlying Mongo database and password hasher."""
 
     def __init__(self, host, port, admin_username, admin_password):
         """Create a UserManager instance.
@@ -48,17 +47,15 @@ class UserManager():
         try:
             user = self.get(username)
         except KeyError:
-            self._table.insert_one({
-                "username":
-                username,
-                "password":
-                self._hasher.hash(password) if hash else password,
-                "admin":
-                admin
-            })
+            self._table.insert_one(
+                {
+                    "username": username,
+                    "password": self._hasher.hash(password) if hash else password,
+                    "admin": admin,
+                }
+            )
         else:
-            raise KeyError(
-                f"User already exists with given username {username}!")
+            raise KeyError(f"User already exists with given username {username}!")
 
     def get(self, username):
         """Given a username, return a dict from the database representing that user.
@@ -86,7 +83,7 @@ class UserManager():
             given_password (str): The supposedly associated password.
 
         Raises:
-            argon2.exceptions.VerifyMismatchError: The given password did not match the 
+            argon2.exceptions.VerifyMismatchError: The given password did not match the
         """
         self._hasher.verify(self.get(username)["password"], given_password)
 
@@ -99,7 +96,7 @@ class UserManager():
         Returns:
             str: The username of the user currently logged in.
         """
-        return self.get(f.session['user'])
+        return self.get(f.session["user"])
 
 
 def require_login(endpoint=None, needs_admin=False):

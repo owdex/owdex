@@ -5,9 +5,9 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 version: 2
 updates:
-  - package-ecosystem: "pip"  # See documentation for possible values
-    directory: "/owdex"  # Location of package manifests
-    schedule:
-      interval: "weekly"
-    assignees:
-      - "alexmshepherd"
+    - package-ecosystem: "pip" # See documentation for possible values
+      directory: "/owdex" # Location of package manifests
+      schedule:
+          interval: "weekly"
+      assignees:
+          - "alexmshepherd"

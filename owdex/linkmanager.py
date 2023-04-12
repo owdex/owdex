@@ -2,28 +2,26 @@ import flask as f
 from flask import current_app as app
 
 import pysolr
-
-from requests import get
 from bs4 import BeautifulSoup as bs
+from requests import get
 from url_normalize import url_normalize
 
 
 class LinkManager:
-    """Manage link entries in multiple indices, and serves as a wrapper for the underlying Solr database.
-    """
+    """Manage link entries in multiple indices, and serves as a wrapper for the underlying Solr database."""
 
     def __init__(self, host, port, indices):
         """Creates a LinkManager instance.
 
         Args:
+            host (str): The hostname at which the Solr instance can be reached.
+            port (int): The port at which the Solr instance can be reached.
             indices (list): A list of index names.
-            host (str, optional): The hostname at which the Solr instance can be reached.
-            port (int, optional): The port at which the Solr instance can be reached.
+            default_indices (list): A list of indices to search by default. Must be a subset of indices.
         """
         self._indices = {}
         for index_name in indices:
-            self._indices[index_name] = pysolr.Solr(
-                f"http://{host}:{port}/solr/{index_name}")
+            self._indices[index_name] = pysolr.Solr(f"http://{host}:{port}/solr/{index_name}")
 
     def add(self, *, index, url, title, submitter=None):
         """Add an entry to the specified index.
@@ -36,8 +34,7 @@ class LinkManager:
         """
         # We force arguments to be named for readability by using *
 
-        submitter = submitter if submitter else app.config[
-            "ANONYMOUS_SUBMITTER"]
+        submitter = submitter if submitter else app.config["ANONYMOUS_SUBMITTER"]
         # this can't be the default param because current_app isn't available initially
 
         soup = bs(get(url_normalize(url)).text, features="html.parser")
@@ -48,8 +45,7 @@ class LinkManager:
         description = description.get("content") if description else content
 
         if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
-            description = description[:app.config["DESCRIPTION_MAX_LENGTH"] -
-                                      1] + "&hellip;"
+            description = description[: app.config["DESCRIPTION_MAX_LENGTH"] - 1] + "&hellip;"
             # we subtract 1 extra so we have space to add the ellipsis
 
         self._indices[index].add(
@@ -59,9 +55,10 @@ class LinkManager:
                 "submitter": submitter,
                 "content": content,
                 "description": description,
-                "votes": 1
+                "votes": 1,
             },
-            commit=True)
+            commit=True,
+        )
 
     def vote(self, index, id):
         """Register a vote for an entry.
@@ -83,6 +80,7 @@ class LinkManager:
             list: A list of         response = result dicts.
         """
         results = []
+
         for index_name in indices:
             index_results = self._indices[index_name].search(query)
             for result in index_results:
@@ -94,5 +92,4 @@ class LinkManager:
 
 
 def get_title(url, format_for_autocomplete=False):
-    return bs(get(url_normalize(url)).text,
-              features="html.parser").find("title").text
+    return bs(get(url_normalize(url)).text, features="html.parser").find("title").text

@@ -1,0 +1,28 @@
+{% extends "fragments/page.html" %}
+{% import "macros/forms.html" as forms %}
+{% block main %}
+    <form
+        method="post"
+        class="
+            text-left max-w-prose
+            flex flex-col gap-3
+        "
+    >
+        {% block content %}
+
+        {% endblock content %}
+    </form>
+
+    {% if self.fine_print() %}
+        <div
+            class="
+                text-xs text-left
+                max-w-prose my-2
+            "
+        >
+            {% block fine_print %}
+
+            {% endblock fine_print %}
+        </div>
+    {% endif %}
+{% endblock main %}
