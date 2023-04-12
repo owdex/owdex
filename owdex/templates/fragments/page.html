@@ -94,7 +94,7 @@
                     {{ essentials.menu_item("/about", "about") }}
                     {{ essentials.menu_item("/add", "add a page") }}
                     {% if session["user"] %}
-                        {{ essentials.menu_item("/logout", session["user"] + " (log out)") }}
+                        {{ essentials.menu_item("/account/logout", session["user"] + " (log out)") }}
                     {% else %}
                         {{ essentials.menu_item("/account", "account") }}
                     {% endif %}
