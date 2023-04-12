@@ -1,0 +1,15 @@
+printWidth: 89
+tabWidth: 4
+proseWrap: "always"
+singleAttributePerLine: true
+
+pluginSearchDirs:
+    - "./node_modules"
+
+plugins:
+    - "prettier-plugin-jinja-template"
+
+overrides:
+    - files: "*.html"
+      options:
+          parser: "jinja-template"

@@ -13,12 +13,19 @@
 
 ## **_an open web index_**
 
-Owdex is an open index of pages from across the web. Instead of crawling through hypertext based on links, it only indexes pages that its users direct it to. Owdex aims to build a better alternative to web search by cutting through the cruft of junk results and bringing focus to real information.
+Owdex is an open index of pages from across the web. Instead of crawling through
+hypertext based on links, it only indexes pages that its users direct it to. Owdex aims
+to build a better alternative to web search by cutting through the cruft of junk results
+and bringing focus to real information.
 
 ## Installation and usage
+
 ### In production
+
 #### With Docker Compose (recommended)
-We recommend using Docker Compose in production. An example setup is available at [**`owdex/compose`**](https://github.com/owdex/compose).
+
+We recommend using Docker Compose in production. An example setup is available at
+[**`owdex/compose`**](https://github.com/owdex/compose).
 
 ```shell
 $ git clone https://github.com/owdex/compose.git owdex && cd owdex
@@ -32,7 +39,12 @@ $ docker compose up -d
 ```
 
 #### With Docker
-If you already have Solr and MongoDB instances running elsewhere, you can just use Owdex on its own. Images are available for every release from the [GitHub Container Registry](https://github.com/orgs/owdex/packages/container/package/owdex). **Make sure to set the version you want (instead of just pulling 'latest'), as breaking changes may happen at any time.**
+
+If you already have Solr and MongoDB instances running elsewhere, you can just use Owdex
+on its own. Images are available for every release from the
+[GitHub Container Registry](https://github.com/orgs/owdex/packages/container/package/owdex).
+**Make sure to set the version you want (instead of just pulling 'latest'), as breaking
+changes may happen at any time.**
 
 ```shell
 $ wget https://raw.githubusercontent.com/owdex/compose/main/owdex.toml.default -O owdex.toml
@@ -42,7 +54,9 @@ $ docker run --detach --volume ./owdex.toml:/owdex.toml:ro  ghcr.io/owdex/owdex:
 ```
 
 ### In development
-You'll still likely want to use Docker Compose, as it makes managing the databases, as well as building Tailwind CSS, no longer your problem.
+
+You'll still likely want to use Docker Compose, as it makes managing the databases, as
+well as building Tailwind CSS, no longer your problem.
 
 ```shell
 $ git clone https://github.com/owdex/owdex.git
@@ -51,13 +65,20 @@ $ ./setup.sh
 $ docker compose up --build -d
 ```
 
-While you can make changes to `owdex.toml`, you don't necessarily have to change the admin password or secret key, as these don't matter much in a non-exposed development environment. You can then access the frontend at [`http://127.0.0.1`](http://127.0.0.1).
+While you can make changes to `owdex.toml`, you don't necessarily have to change the
+admin password or secret key, as these don't matter much in a non-exposed development
+environment. You can then access the frontend at [`http://127.0.0.1`](http://127.0.0.1).
 
 ## Contribution
+
 Please see [CONTRIBUTING.md](/.github/CONTRIBUTING.md).
 
 ## Acknowledgement
-Thanks to [@4censord](https://github.com/4censord) for exceptional help, support and words of advice.
 
-## License 
-Owdex is licensed under the [GNU AGPL v3](https://github.com/alexmshepherd/owdex/blob/main/LICENSE).
+Thanks to [@4censord](https://github.com/4censord) for exceptional help, support and
+words of advice.
+
+## License
+
+Owdex is licensed under the
+[GNU AGPL v3](https://github.com/alexmshepherd/owdex/blob/main/LICENSE).

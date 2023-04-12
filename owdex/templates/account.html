@@ -1,24 +1,22 @@
 {% extends "fragments/form.html" %}
 {% import "macros/forms.html" as forms %}
-
 {% block title %}
     log in or sign up
 {% endblock title %}
-
 {% block content %}
-
-    {{ forms.field(
+    {{
+        forms.field(
         "username",
         required=True,
-    ) }}
-
-    {{ forms.field(
+        )
+    }}
+    {{
+        forms.field(
         "password",
         type="password",
         required=True,
-    ) }}
-
+        )
+    }}
     {{ essentials.button("log in", formaction="/account/login") }}
     {{ essentials.button("sign up", formaction="/account/signup") }}
-
 {% endblock content %}
