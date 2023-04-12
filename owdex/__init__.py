@@ -54,7 +54,7 @@ def create_app(config_dict=None):
         app.register_blueprint(page_bp)
         app.register_blueprint(search_bp)
         app.register_blueprint(add_bp)
-        app.register_blueprint(users_bp)
+        app.register_blueprint(users_bp, url_prefix="/account")
         app.register_blueprint(vote_bp)
 
     return app

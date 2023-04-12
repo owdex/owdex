@@ -10,34 +10,34 @@
 {% block main %}
     <ul
         class="
-        flex flex-col gap-2
-        text-left max-w-prose
-    "
+            flex flex-col gap-2
+            text-left max-w-prose
+        "
     >
         {% for result in results %}
             <li
                 class="
-                group
-                flex flex-col gap-1 px-2 pb-3
-                border border-gray-200 dark:border-gray-800 rounded-lg
-                hover:bg-gray-200 dark:hover:bg-gray-800
-            "
+                    group
+                    flex flex-col gap-1 px-2 pb-3
+                    border border-gray-200 dark:border-gray-800 rounded-lg
+                    hover:bg-gray-200 dark:hover:bg-gray-800
+                "
             >
                 <div>
                     <a href="{{ result.url }}">
                         <span
                             class="
-                            text-xs text-gray-300 dark:text-gray-700
-                            group-hover:text-gray-400 group-hover:dark:text-gray-600
-                        "
+                                text-xs text-gray-300 dark:text-gray-700
+                                group-hover:text-gray-400 group-hover:dark:text-gray-600
+                            "
                         >
                             {{ result.url }}
                         </span>
                         <h4
                             class="
-                            text-lg
-                            font-bold hover:font-extrabold
-                        "
+                                text-lg
+                                font-bold hover:font-extrabold
+                            "
                         >
                             {{ result.title }}
                         </h4>
@@ -45,31 +45,31 @@
                 </div>
                 <p
                     class="
-                    text-sm
-                "
+                        text-sm
+                    "
                 >
                     {{ result.description }}
                 </p>
                 <div
                     class="
-                    flex flex-row justify-between
-                    text-xs
-                "
+                        flex flex-row justify-between
+                        text-xs
+                    "
                 >
                     <span
                         class="
-                        border-t border-gray-300 dark:border-gray-700
-                    "
+                            border-t border-gray-300 dark:border-gray-700
+                        "
                     >
                         {{ result.submitter }}
                         on {{ result.index }}
                     </span>
                     <ul
                         class="
-                        flex flex-row gap-1
-                        font-semibold
-                        text-blue-500 cursor-pointer
-                    "
+                            flex flex-row gap-1
+                            font-semibold
+                            text-blue-500 cursor-pointer
+                        "
                     >
                         <li>info</li>
                         {% if "user" in session %}

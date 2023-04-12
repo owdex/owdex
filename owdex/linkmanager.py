@@ -81,19 +81,12 @@ class LinkManager:
         """
         results = []
 
-        try:
-            for index_name in indices:
-                index_results = self._indices[index_name].search(query)
-                for result in index_results:
-                    # we add the index attribute so we can show the index this result was pulled from
-                    result.update({"index": index_name})
-                results.extend(index_results)
-
-        except SolrError as e:
-            if "org.apache.solr.search.SyntaxError" in str(e):
-                pass  # it's a malformed query, just return what we have -- typically an empty array
-            else:
-                raise
+        for index_name in indices:
+            index_results = self._indices[index_name].search(query)
+            for result in index_results:
+                # we add the index attribute so we can show the index this result was pulled from
+                result.update({"index": index_name})
+            results.extend(index_results)
 
         return results
 
