@@ -6,7 +6,14 @@
         {{ text }}
     </a>
 {%- endmacro -%}
-{% macro button(text, formaction=None) %}
+{%
+    macro
+    button(
+    text,
+    formaction=None,
+    onclick=None
+    )
+%}
     <button
         class="
             p-1
@@ -15,6 +22,9 @@
         "
         {% if formaction %}
             formaction="{{ formaction }}"
+        {% endif %}
+        {% if onclick %}
+            onclick="{{ onclick }}"
         {% endif %}
     >
         {{ text }}

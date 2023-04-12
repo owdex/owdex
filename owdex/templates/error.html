@@ -1,4 +1,5 @@
 {% extends "fragments/page.html" %}
+{% import "macros/essentials.html" as essentials %}
 {% block title %}
     Error {{ status }}
 {% endblock title %}
@@ -12,4 +13,5 @@
             {{ explanation }}
         </p>
     {% endif %}
+    {{ essentials.button("Go back", onclick="javascript:history.back()") }}
 {% endblock main %}
