@@ -1,10 +1,53 @@
+from uuid import uuid4 as uuid
+
 import flask as f
 from flask import current_app as app
 
-import pysolr
 from bs4 import BeautifulSoup as bs
+from pysolr import Solr
 from requests import get
 from url_normalize import url_normalize
+
+
+class Link:
+    def __init__(
+        self,
+        *,
+        url,
+        title,
+        submitter,
+        index=None,
+        id=None,
+        content=None,
+        description=None,
+        score=0,
+        **kwargs,
+    ):
+        self.url = url_normalize(url)
+        self.title = title
+        self.index = index
+        self.submitter = submitter
+        self.score = score
+        self.__dict__.update(kwargs)
+
+        if content and description and id:
+            self.content, self.description, self.id = content, description, id
+        else:
+            self.id = str(uuid())
+            self.content, self.description = self.scrape()
+
+    def scrape(self):
+        soup = bs(get(self.url).text, features="html.parser")
+        content = soup.get_text()
+        description = soup.find("meta", attrs={"name": "description"})
+        # if there was a description, set that, otherwise just use content
+        description = description.get("content") if description else content
+
+        # normalise description length. we subtract 1 extra so we have space to add the ellipsis.
+        if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
+            description = description[: app.config["DESCRIPTION_MAX_LENGTH"] - 1] + "&hellip;"
+
+        return content, description
 
 
 class LinkManager:
@@ -14,82 +57,75 @@ class LinkManager:
         """Creates a LinkManager instance.
 
         Args:
+            indices (list): A dict from an indices.json file.
             host (str): The hostname at which the Solr instance can be reached.
             port (int): The port at which the Solr instance can be reached.
-            indices (list): A list of index names.
-            default_indices (list): A list of indices to search by default. Must be a subset of indices.
         """
-        self._indices = {}
-        for index_name in indices:
-            self._indices[index_name] = pysolr.Solr(f"http://{host}:{port}/solr/{index_name}")
+        self.config = indices["config"]
+        self._dbs = {
+            core_name: Solr(f"http://{host}:{port}/solr/{core_name}")
+            for core_name in indices["indices"]
+        }
 
-    def add(self, *, index, url, title, submitter=None):
-        """Add an entry to the specified index.
+    def get(self, id, core=None):
+        return self.search(f"id:{id}", core=core)[0]
+
+    def add(self, entry, core=None):
+        """Add an entry to the specified index on the specified core.
 
         Args:
-            index (str): The name of the index to which the entry should be added.
-            url (str): The URL of the entry.
-            title (str): The title of the entry.
-            submitter (str, optional): The person who submitted the entry. Defaults to None. Should it equal None, it will be replaced with ANONYMOUS_SUBMITTER from owdex.toml.
+            core (str): A core in the LinkManager.
+            entry (Link): The entry to add.
         """
-        # We force arguments to be named for readability by using *
 
-        submitter = submitter if submitter else app.config["ANONYMOUS_SUBMITTER"]
-        # this can't be the default param because current_app isn't available initially
+        if core and entry.index:
+            index = entry.index
+        else:
+            submission_pool = self.config["submission_pool"].split(".")
+            core = submission_pool[0]
+            index = submission_pool[1]
 
-        soup = bs(get(url_normalize(url)).text, features="html.parser")
-        content = soup.get_text()
-        description = soup.find("meta", attrs={"name": "description"})
-
-        # if there was a description, set that, otherwise just use content
-        description = description.get("content") if description else content
-
-        if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
-            description = description[: app.config["DESCRIPTION_MAX_LENGTH"] - 1] + "&hellip;"
-            # we subtract 1 extra so we have space to add the ellipsis
-
-        self._indices[index].add(
+        self._dbs[core].add(
             {
-                "url": url,
-                "title": title,
-                "submitter": submitter,
-                "content": content,
-                "description": description,
-                "votes": 1,
+                "index": index,
+                "id": entry.id,
+                "url": entry.url,
+                "submitter": entry.submitter,
+                "score": entry.score,
+                "title": entry.title,
+                "content": entry.content,
+                "description": entry.description,
             },
             commit=True,
         )
 
-    def vote(self, index, id):
+    def vote(self, id, core=None):
         """Register a vote for an entry.
 
         Args:
-            index (str): The name of the index on which the entry is stored.
             id (str): The internal ID of the entry.
         """
-        self._indices[index].add({"id": id, "votes": {"inc": 1}}, commit=True)
+        if not core:
+            core = self.config["default_search"]
+        self._dbs[core].add({"id": id, "score": {"inc": 1}}, commit=True)
 
-    def search(self, query, indices):
+    def search(self, query, core=None):
         """Perform a search of the specified indices for the query.
 
         Args:
-            query (str): The terms being searched for.
-            indices (str): The names of the indices in which to search.
+            query (str): The query to pass to the underlying Solr database.
+            core (str): The names of the indices in which to search.
 
         Returns:
-            list: A list of         response = result dicts.
+            list: A list of result dicts.
         """
+        if not core:
+            core = self.config["default_search"]
         results = []
-
-        for index_name in indices:
-            index_results = self._indices[index_name].search(query)
-            for result in index_results:
-                # we add the index attribute so we can show the index this result was pulled from
-                result.update({"index": index_name})
-            results.extend(index_results)
-
+        for result in self._dbs[core].search(query):
+            results.append(Link(**{attr: result[attr] for attr in result}))
         return results
 
 
-def get_title(url, format_for_autocomplete=False):
+def get_title(url):
     return bs(get(url_normalize(url)).text, features="html.parser").find("title").text

@@ -9,5 +9,5 @@ vote_bp = f.Blueprint("vote", __name__)
 @vote_bp.route("/vote", methods=["POST"])
 @require_login
 def vote():
-    app.lm.vote(f.request.form["index"], f.request.form["id"])
+    app.lm.vote(f.request.form["id"], f.request.form["core"])
     return f.Response(status=204)

@@ -1,3 +1,4 @@
+import json
 import os
 
 import flask as f
@@ -11,7 +12,7 @@ from .linkmanager import LinkManager
 from .usermanager import UserManager
 
 
-def create_app(config_dict=None):
+def create_app(config_dict={}, indices_dict={}):
     app = f.Flask("owdex")
 
     for file in ("../../owdex.toml", "/owdex.toml"):
@@ -19,19 +20,26 @@ def create_app(config_dict=None):
             app.config.from_file(file, load=toml.load)
         except FileNotFoundError:
             pass
+    app.config = app.config | config_dict
 
-    if config_dict:
-        app.config = app.config | config_dict
+    indices = {}
+    for filename in ("../../indices.json", "/indices.json"):
+        try:
+            with open(filename) as file:
+                indices = json.load(file)
+        except FileNotFoundError:
+            print(f"not find {filename}")
+    indices = indices | indices_dict
+    if not indices:
+        raise RuntimeError("No indices file specified!")
+
+    app.lm = LinkManager(app.config["SOLR_HOST"], app.config["SOLR_PORT"], indices)
 
     app.um = UserManager(
         app.config["MONGO_HOST"],
         app.config["MONGO_PORT"],
         app.config["ADMIN_USERNAME"],
         app.config["ADMIN_PASSWORD"],
-    )
-
-    app.lm = LinkManager(
-        app.config["SOLR_HOST"], app.config["SOLR_PORT"], ["stable", "unstable", "archive"]
     )
 
     app.limiter = Limiter(

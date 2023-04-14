@@ -1,6 +1,7 @@
 import flask as f
 from flask import current_app as app
 
+from .linkmanager import Link
 from .linkmanager import get_title as get_url_title
 
 add_bp = f.Blueprint("add", __name__, template_folder="templates")
@@ -9,12 +10,12 @@ add_bp = f.Blueprint("add", __name__, template_folder="templates")
 @add_bp.route("/add", methods=["GET", "POST"])
 def add():
     if f.request.method == "POST":
-        app.lm.add(
+        l = Link(
             url=f.request.form["url"],
             title=f.request.form["title"],
             submitter=f.request.form["submitter"],
-            index="unstable",
         )
+        app.lm.add(l)
         f.flash("Successfully added webpage!")
         return f.render_template("add.html", submitter=f.request.form["submitter"]), 201
 

@@ -3,10 +3,6 @@
 {% block title %}
     results for "{{ query }}"
 {% endblock title %}
-{% block header %}
-    {{ super() }}
-    <p>on {{ indices|join(', ') }}</p>
-{% endblock header %}
 {% block main %}
     <ul
         class="
@@ -75,7 +71,7 @@
                         {% if "user" in session %}
                             <li
                                 hx-post="{{ url_for('vote.vote') }}"
-                                hx-vals='{"index": "{{ result.index }}", "id": "{{ result.id }}"}'
+                                hx-vals='{"id": "{{ result.id }}", "core": "{{ core }}"}'
                                 hx-confirm="Vote in favour of this link?"
                             >
                                 vote

@@ -20,6 +20,7 @@ echo "Downloading configuration files..."
 wget "https://github.com/owdex/compose/archive/refs/heads/link-overhaul.zip" -O /tmp/compose-link-overhaul.zip
 unzip /tmp/compose-link-overhaul.zip -d /tmp
 mv /tmp/compose-link-overhaul/owdex.toml.default ./owdex.toml
+mv /tmp/compose-link-overhaul/indices.json.default ./indices.json
 mv /tmp/compose-link-overhaul/misc/configset /tmp/compose-link-overhaul/misc/entrypoint.sh ./misc
 rm -rf /tmp/compose-link-overhaul.zip /tmp/compose-link-overhaul
 

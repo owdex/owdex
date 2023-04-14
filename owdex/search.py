@@ -7,12 +7,12 @@ search_bp = f.Blueprint("search", __name__, template_folder="templates")
 
 
 @search_bp.route("/search")
-def search_results():
+def search():
     query = f.request.args.get("query")
     results = []
 
     try:
-        results = app.lm.search(query, app.config["DEFAULT_INDICES"])
+        results = app.lm.search(query)
     except SolrError as e:
         if "org.apache.solr.search.SyntaxError" in str(e):
             f.flash("That query seems to be causing an issue. Try again with a different search.")
@@ -20,5 +20,5 @@ def search_results():
             raise
 
     return f.render_template(
-        "search.html", query=query, indices=app.config["DEFAULT_INDICES"], results=results
+        "search.html", query=query, results=results, core=app.lm.config["default_search"]
     )
