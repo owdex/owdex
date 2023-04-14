@@ -1,3 +1,4 @@
+import re
 from uuid import uuid4 as uuid
 
 import flask as f
@@ -37,11 +38,26 @@ class Link:
             self.content, self.description = self.scrape()
 
     def scrape(self):
-        soup = bs(get(self.url).text, features="html.parser")
+        response = get(self.url).text
+        soup = bs(response, features="html.parser")
+
+        # get all "text" content from the HTML
         content = soup.get_text()
-        description = soup.find("meta", attrs={"name": "description"})
+        # replace all whitespace (including sequential blocks) with a single space
+        content = re.sub(r"\s+", " ", content)
+
+        # get description from meta
+        meta_description = soup.find("meta", attrs={"name": "description"})
+        # get description from opengraph
+        og_description = soup.find("meta", attrs={"property": "og:description"})
         # if there was a description, set that, otherwise just use content
-        description = description.get("content") if description else content
+        description = (
+            meta_description.get("content")
+            if meta_description
+            else og_description.get("content")
+            if og_description
+            else content
+        )
 
         # normalise description length. we subtract 1 extra so we have space to add the ellipsis.
         if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
