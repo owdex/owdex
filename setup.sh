@@ -6,6 +6,14 @@ echo "This should not be used in production. See https://github.com/owdex/compos
 # cd to script location, just in case
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
+echo "Checking for prerequisites..."
+pre-commit --version > /dev/null || (echo "Pre-commit not installed!"; exit 1)
+npm --version > /dev/null || (echo "NPM not installed!"; exit 1)
+
+echo "Setting up pre-commit hooks..."
+npm install > /dev/null
+pre-commit install > /dev/null
+
 echo "Creating data folders if they don't exist..."
 mkdir -p ./data/solr
 mkdir -p ./data/mongo
