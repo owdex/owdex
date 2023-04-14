@@ -4,7 +4,8 @@
 
 | Version               | Supported          |
 | --------------------- | ------------------ |
-| bleeding edge release | :white_check_mark: |
+| v0.x.x                | :x:                |
+| v1.x.x                | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
