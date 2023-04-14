@@ -7,8 +7,6 @@ echo "This should not be used in production. See https://github.com/owdex/compos
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 echo "Checking for prerequisites..."
-docker --version > /dev/null || (echo "Docker not installed!"; exit 1)
-docker compose --help > /dev/null || (echo "Docker compose not installed!"; exit 1)
 pre-commit --version > /dev/null || (echo "Pre-commit not installed!"; exit 1)
 npm --version > /dev/null || (echo "NPM not installed!"; exit 1)
 
