@@ -125,7 +125,7 @@ class LinkManager:
             core = self.config["default_search"]
         self._dbs[core].add({"id": id, "score": {"inc": 1}}, commit=True)
 
-    def search(self, query, core=None):
+    def search(self, query, core=None, sort="score desc"):
         """Perform a search of the specified indices for the query.
 
         Args:
@@ -138,7 +138,7 @@ class LinkManager:
         if not core:
             core = self.config["default_search"]
         results = []
-        for result in self._dbs[core].search(query):
+        for result in self._dbs[core].search(query, sort=sort):
             results.append(Link(**{attr: result[attr] for attr in result}))
         return results
 
