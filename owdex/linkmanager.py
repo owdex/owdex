@@ -81,7 +81,7 @@ class LinkManager:
         if core and entry.index:
             index = entry.index
         else:
-            submission_pool = self.config["submission_pool"].split(".")
+            submission_pool = self.config["default_add"].split(".")
             core = submission_pool[0]
             index = submission_pool[1]
 
