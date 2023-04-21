@@ -35,6 +35,7 @@ rm -rf /tmp/compose-link-overhaul.zip /tmp/compose-link-overhaul
 echo "Setting permissions..."
 sudo chown -R 8983 ./data/solr
 
+python3 -m venv .venv
 echo "All done. Happy searching!"
 
 exit
