@@ -28,14 +28,18 @@ echo "Downloading configuration files..."
 wget -q "https://github.com/owdex/compose/archive/refs/heads/link-overhaul.zip" -O /tmp/compose-link-overhaul.zip
 unzip -q /tmp/compose-link-overhaul.zip -d /tmp
 mv /tmp/compose-link-overhaul/owdex.toml.default ./owdex.toml
-mv /tmp/compose-link-overhaul/indices.json.default ./indices.json
+sed -i 's/debug = false/debug = true/' owdex.toml
 mv /tmp/compose-link-overhaul/misc/configset /tmp/compose-link-overhaul/misc/entrypoint.sh ./misc
 rm -rf /tmp/compose-link-overhaul.zip /tmp/compose-link-overhaul
 
 echo "Setting permissions..."
 sudo chown -R 8983 ./data/solr
 
+echo "Creating and/or entering venv..."
 python3 -m venv .venv
+. .venv/bin/activate
+pip install -q -r owdex/requirements.txt
+
 echo "All done. Happy searching!"
 
 exit

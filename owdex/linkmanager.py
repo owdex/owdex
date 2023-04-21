@@ -60,8 +60,10 @@ class Link:
         )
 
         # normalise description length. we subtract 1 extra so we have space to add the ellipsis.
-        if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
-            description = description[: app.config["DESCRIPTION_MAX_LENGTH"] - 1] + "&hellip;"
+        if len(description) > app.settings.links.descriptions.max_length:
+            description = (
+                description[: app.settings.links.descriptions.max_length - 1] + "&hellip;"
+            )
 
         return content, description
 
@@ -77,10 +79,8 @@ class LinkManager:
             host (str): The hostname at which the Solr instance can be reached.
             port (int): The port at which the Solr instance can be reached.
         """
-        self.config = indices["config"]
         self._dbs = {
-            core_name: Solr(f"http://{host}:{port}/solr/{core_name}")
-            for core_name in indices["indices"]
+            core_name: Solr(f"http://{host}:{port}/solr/{core_name}") for core_name in indices
         }
 
     def get(self, id, core=None):
@@ -97,7 +97,7 @@ class LinkManager:
         if core and entry.index:
             index = entry.index
         else:
-            submission_pool = self.config["default_add"].split(".")
+            submission_pool = app.settings.links.defaults.add.split(".")
             core = submission_pool[0]
             index = submission_pool[1]
 
@@ -122,7 +122,7 @@ class LinkManager:
             id (str): The internal ID of the entry.
         """
         if not core:
-            core = self.config["default_search"]
+            core = app.settings.links.defaults.search
         self._dbs[core].add({"id": id, "score": {"inc": 1}}, commit=True)
 
     def search(self, query, core=None, sort="score desc"):
@@ -136,7 +136,7 @@ class LinkManager:
             list: A list of result dicts.
         """
         if not core:
-            core = self.config["default_search"]
+            core = app.settings.links.defaults.search
         results = []
         for result in self._dbs[core].search(query, sort=sort):
             results.append(Link(**{attr: result[attr] for attr in result}))

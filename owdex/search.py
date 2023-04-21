@@ -20,5 +20,5 @@ def search():
             raise
 
     return f.render_template(
-        "search.html", query=query, results=results, core=app.lm.config["default_search"]
+        "search.html", query=query, results=results, core=app.settings.links.defaults.search
     )
