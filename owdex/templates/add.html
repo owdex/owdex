@@ -4,20 +4,7 @@
     add a page
 {% endblock title %}
 {% block content %}
-    {{
-        forms.field(
-        "url",
-        type="url",
-        required=True,
-        hx = {
-        "get": "/get_title",
-        "trigger": "keyup delay:500ms changed",
-        "target": "#title",
-        "params": "url",
-        "swap": "outerHTML"
-        }
-        )
-    }}
+    {% include "htmx/url_input.html" %}
     {% include "htmx/title_input.html" %}
     {{
         forms.field(

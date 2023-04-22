@@ -4,6 +4,13 @@
     "title",
     required=True,
     label_id="title",
-    value=value
+    value=value if value else None,
+    hx={
+    "trigger": "keyup delay:500ms from:#url",
+    "include": "[name='url']",
+    "get": "/fetch_title",
+    "target": "#title",
+    "swap": "outerHTML"
+    }
     )
 }}

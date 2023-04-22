@@ -1,8 +1,7 @@
 import flask as f
 from flask import current_app as app
 
-from .linkmanager import Link
-from .linkmanager import get_title as get_url_title
+from .linkmanager import Link, get_title, normalized_url
 
 add_bp = f.Blueprint("add", __name__, template_folder="templates")
 
@@ -31,7 +30,13 @@ def add():
         return f.render_template("add.html", submitter=submitter)
 
 
-@add_bp.route("/get_title")
-def get_title():
-    title = get_url_title(f.request.args.get("url"))
+@add_bp.route("/fetch_title")
+def fetch_title():
+    title = get_title(f.request.args.get("url"))
     return f.render_template("htmx/title_input.html", value=title)
+
+
+@add_bp.route("/norm_url")
+def normalize_url():
+    url = normalized_url(f.request.args.get("url"))
+    return f.render_template("htmx/url_input.html", value=url)

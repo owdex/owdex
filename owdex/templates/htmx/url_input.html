@@ -1,0 +1,18 @@
+{% import "macros/forms.html" as forms %}
+{{
+    forms.field(
+    "url",
+    type="url",
+    required=True,
+    label_id="url",
+    value=value if value else None,
+    hx={
+    "trigger": "blur",
+    "params": "url",
+    "get": "/norm_url",
+    "target": "#url",
+    "swap": "outerHTML",
+    "swap-oob": "true"
+    }
+    )
+}}

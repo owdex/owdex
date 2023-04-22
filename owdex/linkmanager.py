@@ -1,6 +1,7 @@
 import re
 from dataclasses import KW_ONLY, dataclass
 from typing import Self
+from urllib.parse import urlparse, urlunparse
 from uuid import uuid4 as uuid
 
 import flask as f
@@ -40,7 +41,7 @@ class Link:
             Self: A Link instance with scraped information
         """
         index = "unstable" if index is None else index  # TODO: respect settings
-        url = url_normalize(url)
+        url = normalized_url(url)
         content, description = scrape(url)
         return cls(
             index=index,
@@ -208,3 +209,15 @@ def get_title(url: str) -> str:
         str: The title for the page.
     """
     return bs(get(url_normalize(url)).text, features="html.parser").find("title").text
+
+
+def normalized_url(url: str) -> str:
+    """Normalizes a URL and ensures it uses the HTTPS scheme.
+
+    Args:
+        url (str): The URL to normalize.
+
+    Returns:
+        str: A normalized URL.
+    """
+    return urlunparse(urlparse(url_normalize(url))._replace(scheme="https"))
