@@ -1,24 +1,34 @@
 {%
     macro field(
     name,
-    type="text",
-    value=None,
-    required=False,
+    label=True,
     label_id=None,
+    type="text",
+    value="",
+    placeholder="",
+    required=False,
+    classes="",
     hx={}
     )
 %}
+    <!-- prettier-ignore-start -->
+    <!-- this has to be ignored because of contitional opening/closing tags -->
+    <!-- see https://github.com/davidodenwald/prettier-plugin-jinja-template/issues/7 -->
+    {% if label %}
     <label id="{{ label_id if label_id else '' }}">
+    {% endif %}
         <input
             class="
                 p-1 w-full
                 rounded-md
                 bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
                 border border-gray-300 dark:border-gray-700 outline-none
+                {{ classes }}
             "
             type="{{ type }}"
             name="{{ name }}"
-            value="{{ value if value else '' }}"
+            value="{{ value }}"
+            placeholder="{{ placeholder }}"
             {% if required %}
                 required
             {% endif %}
@@ -26,6 +36,7 @@
                 hx-{{ attr }}="{{ value }}"
             {% endfor %}
         />
+        {% if label %}
         <span
             class="
                 block pl-1
@@ -35,6 +46,8 @@
             {{ name }}
         </span>
     </label>
+    {% endif %}
+    <!-- prettier-ignore-end -->
 {% endmacro %}
 {%
     macro checkbox(

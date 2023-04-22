@@ -6,8 +6,8 @@ from pysolr import SolrError
 search_bp = f.Blueprint("search", __name__, template_folder="templates")
 
 
-@search_bp.route("/search")
-def search():
+@search_bp.route("/results")
+def results():
     query = f.request.args.get("query")
     results = []
 
@@ -20,5 +20,10 @@ def search():
             raise
 
     return f.render_template(
-        "search.html", query=query, results=results, core=app.settings.links.defaults.search
+        "results.html", query=query, results=results, core=app.settings.links.defaults.search
     )
+
+
+@search_bp.route("/advanced")
+def advanced():
+    return f.render_template("advanced.html")

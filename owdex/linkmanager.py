@@ -55,6 +55,10 @@ class Link:
         )
 
     @classmethod
+    def from_dict(cls, data):
+        return cls(**data)
+
+    @classmethod
     def from_dict(cls, data: dict) -> Self:
         """Return a Link instance from a dict that already contains all needed information.
 
