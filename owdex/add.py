@@ -23,7 +23,10 @@ def add():
         try:
             submitter = app.um.get_current()["username"]
         except KeyError:
-            submitter = app.config["ANONYMOUS_SUBMITTER"]
+            if app.settings.links.anonymous.allowed:
+                submitter = app.settings.links.anonymous.submitter
+            else:
+                raise
 
         return f.render_template("add.html", submitter=submitter)
 

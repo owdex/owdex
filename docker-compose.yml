@@ -29,4 +29,3 @@ services:
             - 80:80
         volumes:
             - ./owdex.toml:/owdex.toml:ro
-            - ./indices.json:/indices.json:ro

@@ -2,44 +2,36 @@ import json
 import os
 
 import flask as f
-
-import toml
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+
+import box
 
 from .error import internal_server_error, page_not_found
 from .linkmanager import LinkManager
 from .usermanager import UserManager
 
 
-def create_app(config_dict={}, indices_dict={}):
+def create_app(settings={}):
     app = f.Flask("owdex")
 
-    for file in ("../../owdex.toml", "/owdex.toml"):
-        try:
-            app.config.from_file(file, load=toml.load)
-        except FileNotFoundError:
-            pass
-    app.config = app.config | config_dict
+    app.settings = box.Box.from_toml(filename="/owdex.toml") | settings
 
-    indices = {}
-    for filename in ("../../indices.json", "/indices.json"):
-        try:
-            with open(filename) as file:
-                indices = json.load(file)
-        except FileNotFoundError:
-            print(f"not find {filename}")
-    indices = indices | indices_dict
-    if not indices:
-        raise RuntimeError("No indices file specified!")
+    for key, value in {
+        "DEBUG": app.settings.runtime.debug,
+        "SECRET_KEY": app.settings.security.secret_key,
+    }.items():
+        app.config[key] = value
 
-    app.lm = LinkManager(app.config["SOLR_HOST"], app.config["SOLR_PORT"], indices)
+    app.lm = LinkManager(
+        app.settings.databases.solr.host, app.settings.databases.solr.port, app.settings.indices
+    )
 
     app.um = UserManager(
-        app.config["MONGO_HOST"],
-        app.config["MONGO_PORT"],
-        app.config["ADMIN_USERNAME"],
-        app.config["ADMIN_PASSWORD"],
+        app.settings.databases.mongo.host,
+        app.settings.databases.mongo.port,
+        app.settings.security.admin.username,
+        app.settings.security.admin.username,
     )
 
     app.limiter = Limiter(

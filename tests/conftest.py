@@ -1,3 +1,4 @@
+import box
 import pytest
 
 from owdex import create_app
@@ -6,7 +7,7 @@ from owdex.usermanager import UserManager
 
 @pytest.fixture
 def app():
-    app = create_app(custom_config={"DEBUG": True, "TESTING": True})
+    app = create_app(settings=box.Box({"DEBUG": True, "TESTING": True}))
 
     yield app
 
