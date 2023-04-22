@@ -1,5 +1,6 @@
 import re
 from dataclasses import KW_ONLY, dataclass
+from typing import Self
 from uuid import uuid4 as uuid
 
 import flask as f
@@ -26,7 +27,18 @@ class Link:
     score: int
 
     @classmethod
-    def create(cls, *, url, title, submitter, index=None):
+    def create(cls, *, url: str, title: str, submitter: str, index: str = None) -> Self:
+        """Return a Link instance from minimal information by scraping the page linked to by url.
+
+        Args:
+            url (str): The URL of a page to scrape.
+            title (str): A title describing the link's contents.
+            submitter (str): The user who submitted the link to the index.
+            index (str, optional): The index storing the link.. Defaults to "unstable".
+
+        Returns:
+            Self: A Link instance with scraped information
+        """
         index = "unstable" if index is None else index  # TODO: respect settings
         url = url_normalize(url)
         content, description = scrape(url)
@@ -42,7 +54,15 @@ class Link:
         )
 
     @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls, data: dict) -> Self:
+        """Return a Link instance from a dict that already contains all needed information.
+
+        Args:
+            data (dict): A dict representing a serialised Link object.
+
+        Returns:
+            Self: A Link instance with information from data
+        """
         return cls(
             **{
                 key: value
@@ -52,15 +72,15 @@ class Link:
             }
         )
 
-    def rescrape(self):
+    def rescrape(self) -> None:
         self.content, self.description = scrape(self.url)
 
 
 class LinkManager:
-    """Manage link entries in multiple indices, and serves as a wrapper for the underlying Solr database."""
+    """Manage link entries in multiple indices, and serve as a wrapper for an underlying Solr database."""
 
-    def __init__(self, host, port, indices):
-        """Creates a LinkManager instance.
+    def __init__(self, host: str, port: int, indices: list) -> None:
+        """Create a LinkManager instance.
 
         Args:
             indices (list): A dict from an indices.json file.
@@ -71,14 +91,26 @@ class LinkManager:
             core_name: Solr(f"http://{host}:{port}/solr/{core_name}") for core_name in indices
         }
 
-    def get(self, id, core=None):
-        return self.search(f"id:{id}", core=core)[0]
-
-    def add(self, entry, core=None):
-        """Add an entry to the specified index on the specified core.
+    def get(self, id: str, core: str = None) -> Link:
+        """Get an entry by its id.
 
         Args:
-            core (str): A core in the LinkManager.
+            id (str): The UUID for the desired entry.
+            core (str, optional): The core to search. Defaults to a value defined in owdex.toml.
+
+        Returns:
+            Link: The link with the desired UUID.
+        """
+        return self.search(f"id:{id}", core=core)[0]
+
+    def add(self, entry: Link, core: str = None) -> None:
+        """Add an entry to the specified core.
+
+        If core is specified and the link has an index attribute, those values will be used.
+        Otherwise, default values from owdex.toml will be used.
+
+        Args:
+            core (str, optional): A core in the LinkManager. Defaults to a value defined in owdex.toml.
             entry (Link): The entry to add.
         """
 
@@ -103,32 +135,41 @@ class LinkManager:
             commit=True,
         )
 
-    def vote(self, id, core=None):
+    def vote(self, id: str, core: str):
         """Register a vote for an entry.
 
         Args:
             id (str): The internal ID of the entry.
+            core (str): The core of the entry.
         """
-        if not core:
-            core = app.settings.links.defaults.search
         self._dbs[core].add({"id": id, "score": {"inc": 1}}, commit=True)
 
-    def search(self, query, core=None, sort="score desc"):
-        """Perform a search of the specified indices for the query.
+    def search(self, query: str, core: str = None, sort: str = "score desc") -> list[Link]:
+        """Perform a search using Solr query and sort notation.
+
+        An index can be specified in the query string.
 
         Args:
-            query (str): The query to pass to the underlying Solr database.
-            core (str): The names of the indices in which to search.
+            query (str): A query string in Solr query notation.
+            core (str, optional): The core to search. Defaults to a value defined in owdex.toml.
+            sort (str, optional): The sorting method to use. Defaults to "score desc", which is Solr's default sorting method.
 
-        Returns:    url: str
-
-            list: A list of result dicts.
+        Returns:
+            list[Link]: A list of Link objects matching the query and sorted in the given manner.
         """
         core = app.settings.links.defaults.search if core is None else core
         return [Link.from_dict(result) for result in self._dbs[core].search(query, sort=sort)]
 
 
-def scrape(url):
+def scrape(url: str) -> tuple[str, str]:
+    """Get the content and a description for a given webpage.
+
+    Args:
+        url (str): The URL of the page to scrape.
+
+    Returns:
+        tuple[str, str]: The content and description, respectively.
+    """
     response = get(url).text
     soup = bs(response, features="html.parser")
 
@@ -157,5 +198,13 @@ def scrape(url):
     return content, description
 
 
-def get_title(url):
+def get_title(url: str) -> str:
+    """Get the title of a webpage from its <title> element.
+
+    Args:
+        url (str): The URL to scrape.
+
+    Returns:
+        str: The title for the page.
+    """
     return bs(get(url_normalize(url)).text, features="html.parser").find("title").text
