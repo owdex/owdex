@@ -10,7 +10,7 @@ add_bp = f.Blueprint("add", __name__, template_folder="templates")
 @add_bp.route("/add", methods=["GET", "POST"])
 def add():
     if f.request.method == "POST":
-        l = Link(
+        l = Link.create(
             url=f.request.form["url"],
             title=f.request.form["title"],
             submitter=f.request.form["submitter"],

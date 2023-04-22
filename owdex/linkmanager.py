@@ -1,4 +1,5 @@
 import re
+from dataclasses import KW_ONLY, dataclass
 from uuid import uuid4 as uuid
 
 import flask as f
@@ -10,60 +11,49 @@ from requests import get
 from url_normalize import url_normalize
 
 
+@dataclass
 class Link:
-    def __init__(
-        self,
-        *,
-        url,
-        title,
-        submitter,
-        index=None,
-        id=None,
-        content=None,
-        description=None,
-        score=0,
-        **kwargs,
-    ):
-        self.url = url_normalize(url)
-        self.title = title
-        self.index = index
-        self.submitter = submitter
-        self.score = score
-        self.__dict__.update(kwargs)
+    _: KW_ONLY
+    index: str
+    id: str
 
-        if content and description and id:
-            self.content, self.description, self.id = content, description, id
-        else:
-            self.id = str(uuid())
-            self.content, self.description = self.scrape()
+    url: str
+    title: str
+    submitter: str
 
-    def scrape(self):
-        response = get(self.url).text
-        soup = bs(response, features="html.parser")
+    content: str
+    description: str
+    score: int
 
-        # get all "text" content from the HTML
-        content = soup.get_text()
-        # replace all whitespace (including sequential blocks) with a single space
-        content = re.sub(r"\s+", " ", content)
-
-        # get description from meta
-        meta_description = soup.find("meta", attrs={"name": "description"})
-        # get description from opengraph
-        og_description = soup.find("meta", attrs={"property": "og:description"})
-        # if there was a description, set that, otherwise just use content
-        description = (
-            meta_description.get("content")
-            if meta_description
-            else og_description.get("content")
-            if og_description
-            else content
+    @classmethod
+    def create(cls, *, url, title, submitter, index=None):
+        index = "unstable" if index is None else index  # TODO: respect settings
+        url = url_normalize(url)
+        content, description = scrape(url)
+        return cls(
+            index=index,
+            id=str(uuid()),
+            url=url,
+            title=title,
+            submitter=submitter,
+            content=content,
+            description=description,
+            score=0,
         )
 
-        # normalise description length. we subtract 1 extra so we have space to add the ellipsis.
-        if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
-            description = description[: app.config["DESCRIPTION_MAX_LENGTH"] - 1] + "&hellip;"
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            **{
+                key: value
+                for key, value in data.items()
+                if key
+                in ["index", "id", "url", "title", "submitter", "content", "description", "score"]
+            }
+        )
 
-        return content, description
+    def rescrape(self):
+        self.content, self.description = scrape(self.url)
 
 
 class LinkManager:
@@ -132,15 +122,41 @@ class LinkManager:
             query (str): The query to pass to the underlying Solr database.
             core (str): The names of the indices in which to search.
 
-        Returns:
+        Returns:    url: str
+
             list: A list of result dicts.
         """
-        if not core:
-            core = self.config["default_search"]
-        results = []
-        for result in self._dbs[core].search(query, sort=sort):
-            results.append(Link(**{attr: result[attr] for attr in result}))
-        return results
+        core = self.config["default_search"] if core is None else core
+        return [Link.from_dict(result) for result in self._dbs[core].search(query, sort=sort)]
+
+
+def scrape(url):
+    response = get(url).text
+    soup = bs(response, features="html.parser")
+
+    # get all "text" content from the HTML
+    content = soup.get_text()
+    # replace all whitespace (including sequential blocks) with a single space
+    content = re.sub(r"\s+", " ", content)
+
+    # get description from meta
+    meta_description = soup.find("meta", attrs={"name": "description"})
+    # get description from opengraph
+    og_description = soup.find("meta", attrs={"property": "og:description"})
+    # if there was a description, set that, otherwise just use content
+    description = (
+        meta_description.get("content")
+        if meta_description
+        else og_description.get("content")
+        if og_description
+        else content
+    )
+
+    # normalise description length. we subtract 1 extra so we have space to add the ellipsis.
+    if len(description) > app.config["DESCRIPTION_MAX_LENGTH"]:
+        description = description[: app.config["DESCRIPTION_MAX_LENGTH"] - 1] + "&hellip;"
+
+    return content, description
 
 
 def get_title(url):
