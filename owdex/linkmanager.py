@@ -7,6 +7,7 @@ from uuid import uuid4 as uuid
 import flask as f
 from flask import current_app as app
 
+from box import Box
 from bs4 import BeautifulSoup as bs
 from pysolr import Solr
 from requests import get
@@ -84,7 +85,7 @@ class Link:
 class LinkManager:
     """Manage link entries in multiple indices, and serve as a wrapper for an underlying Solr database."""
 
-    def __init__(self, host: str, port: int, indices: list) -> None:
+    def __init__(self, host: str, port: int, cores: dict) -> None:
         """Create a LinkManager instance.
 
         Args:
@@ -93,8 +94,9 @@ class LinkManager:
             port (int): The port at which the Solr instance can be reached.
         """
         self._dbs = {
-            core_name: Solr(f"http://{host}:{port}/solr/{core_name}") for core_name in indices
+            core_name: Solr(f"http://{host}:{port}/solr/{core_name}") for core_name in cores
         }
+        self.cores = cores
 
     def get(self, id: str, core: str = None) -> Link:
         """Get an entry by its id.

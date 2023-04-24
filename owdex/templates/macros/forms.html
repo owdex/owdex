@@ -73,3 +73,58 @@
         </label>
     </div>
 {% endmacro %}
+{%
+    macro select(
+    name,
+    options,
+    id=None,
+    label=True,
+    multiple=False,
+    hx={}
+    )
+%}
+    <div
+        {% if id %}
+            id="{{ id }}"
+        {% endif %}
+        class="
+            w-min
+        "
+    >
+        <select
+            name="{{ name }}"
+            id="{{ name }}"
+            {% if options|length < 2 %}
+                disabled
+            {% endif %}
+            {% for attr, value in hx.items() %}
+                hx-{{ attr }}="{{ value }}"
+            {% endfor %}
+            class="
+                p-1 rounded-md
+                bg-gray-200 dark:bg-gray-800
+                focus:bg-gray-300 focus:dark:bg-gray-700
+                disabled:bg-gray-100 disabled:dark:bg-gray-900
+                border border-gray-300 dark:border-gray-700 outline-none disabled:border-dashed
+                w-32
+            "
+        >
+            {% for option in options %}
+                <option value="{{ option }}">
+                    {{ option }}
+                </option>
+            {% endfor %}
+        </select>
+        {% if label %}
+            <label
+                for="{{ name }}"
+                class="
+                    block pl-1 text-left
+                    text-sm font-semibold text-gray-600 dark:text-gray-400
+                "
+            >
+                {{ name }}
+            </label>
+        {% endif %}
+    </div>
+{% endmacro %}

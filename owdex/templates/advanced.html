@@ -31,30 +31,55 @@
     <form
         action="/results"
         class="
-            flex flex-row justify-center
+            flex flex-col
             w-9/12 mx-auto min-w-fit
             "
     >
-        {{
-            forms.field(
-            name="query",
-            label=False,
-            type="search",
-            placeholder="search an open web index",
-            required=True,
-            classes="border-r-0 rounded-r-none p-3"
-            )
-        }}
-        <button
+        <fieldset
             class="
-                bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-md
-                p-2
+                flex flex-row justify-center
+                p-2 gap-2
             "
         >
-            {% include "icons/magnifying_glass.svg" %}
-            <span class="hidden"> Execute search </span>
-        </button>
+            <legend class="hidden">Options</legend>
+            {{
+                forms.select(
+                name="core",
+                options=cores,
+                hx={
+                "get": "/fetch_indices",
+                "target": "#indices"
+                }
+                )
+            }}
+            {% include "htmx/index_input.html" %}
+        </fieldset>
+        <fieldset
+            class="
+                flex flex-row justify-center
+            "
+        >
+            {{
+                forms.field(
+                name="query",
+                label=False,
+                type="search",
+                placeholder="search an open web index",
+                required=True,
+                classes="border-r-0 rounded-r-none p-3"
+                )
+            }}
+            <button
+                class="
+                    bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
+                    border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-md
+                    p-2
+                "
+            >
+                {% include "icons/magnifying_glass.svg" %}
+                <span class="hidden"> Execute search </span>
+            </button>
+        </fieldset>
     </form>
     <p
         class="

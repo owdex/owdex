@@ -26,4 +26,10 @@ def results():
 
 @search_bp.route("/advanced")
 def advanced():
-    return f.render_template("advanced.html")
+    return f.render_template("advanced.html", cores=app.lm.cores.keys())
+
+
+@search_bp.route("/fetch_indices")
+def fetch_indices():
+    core = f.request.args.get("core")
+    return f.render_template("htmx/index_input.html", indices=app.lm.cores[core])
