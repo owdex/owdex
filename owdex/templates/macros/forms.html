@@ -81,7 +81,8 @@
     id=None,
     label=True,
     multiple=False,
-    hx={}
+    hx={},
+    size=2
     )
 %}
     <div
@@ -101,6 +102,9 @@
             {% for attr, value in hx.items() %}
                 hx-{{ attr }}="{{ value }}"
             {% endfor %}
+            {% if multiple %}
+                multiple size="{{ size }}"
+            {% endif %}
             class="
                 p-1 rounded-md
                 bg-gray-200 dark:bg-gray-800
