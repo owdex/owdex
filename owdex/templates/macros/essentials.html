@@ -1,7 +1,16 @@
-{%- macro link(url, text) -%}
+{%-
+    macro link(
+    url,
+    text,
+    boost=False
+    )
+-%}
     <a
         href="{{ url }}"
         class="text-blue-500"
+        {% if boost %}
+            hx-boost="true" hx-push-url="false"
+        {% endif %}
     >
         {{ text }}
     </a>
