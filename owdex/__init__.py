@@ -31,7 +31,7 @@ def create_app(settings={}):
         app.settings.databases.mongo.host,
         app.settings.databases.mongo.port,
         app.settings.security.admin.username,
-        app.settings.security.admin.username,
+        app.settings.security.admin.password,
     )
 
     app.limiter = Limiter(
