@@ -42,17 +42,32 @@
             "
         >
             <legend class="hidden">Options</legend>
-            {{
-                forms.select(
-                name="core",
-                options=cores,
-                hx={
-                "get": "/fetch_indices",
-                "target": "#indices"
-                }
-                )
-            }}
-            {% include "htmx/index_input.html" %}
+            <div>
+                {{
+                    forms.select(
+                    name="core",
+                    options=cores,
+                    hx={
+                    "get": "/fetch_indices",
+                    "target": "#indices",
+                    "swap": "outerHTML"
+                    }
+                    )
+                }}
+                {{
+                    forms.label(
+                    "core"
+                    )
+                }}
+            </div>
+            <div>
+                {% include "htmx/index_input.html" %}
+                {{
+                    forms.label(
+                    "indices"
+                    )
+                }}
+            </div>
         </fieldset>
         <fieldset
             class="
