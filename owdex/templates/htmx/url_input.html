@@ -2,16 +2,14 @@
 {{
     forms.field(
     "url",
-    type="url",
     required=True,
     value=value if value else "",
     hx={
     "trigger": "blur",
-    "params": "url",
+    "include": "#url",
     "get": "/norm_url",
     "target": "#url",
     "swap": "outerHTML",
-    "swap-oob": "true"
     }
     )
 }}

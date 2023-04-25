@@ -5,8 +5,8 @@
     required=True,
     value=value if value else "",
     hx={
-    "trigger": "keyup delay:500ms from:#url",
-    "include": "[name='url']",
+    "trigger": "blur from:#url",
+    "include": "#url",
     "get": "/fetch_title",
     "target": "#title",
     "swap": "outerHTML"
