@@ -3,7 +3,7 @@
     forms.field(
     "title",
     required=True,
-    value=value if value else None,
+    value=value if value else "",
     hx={
     "trigger": "keyup delay:500ms from:#url",
     "include": "[name='url']",
