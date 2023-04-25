@@ -4,15 +4,36 @@
     add a page
 {% endblock title %}
 {% block content %}
-    {% include "htmx/url_input.html" %}
-    {% include "htmx/title_input.html" %}
-    {{
-        forms.field(
-        "submitter",
-        value=submitter,
-        required=True
-        )
-    }}
+    <div>
+        {% include "htmx/url_input.html" %}
+        {{
+            forms.label(
+            "url"
+            )
+        }}
+    </div>
+    <div>
+        {% include "htmx/title_input.html" %}
+        {{
+            forms.label(
+            "title"
+            )
+        }}
+    </div>
+    <div>
+        {{
+            forms.field(
+            "submitter",
+            value=submitter,
+            required=True
+            )
+        }}
+        {{
+            forms.label(
+            "submitter"
+            )
+        }}
+    </div>
     {{ essentials.button("confirm!") }}
 {% endblock content %}
 {% block fine_print %}

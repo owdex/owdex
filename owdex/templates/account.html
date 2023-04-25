@@ -4,19 +4,45 @@
     log in or sign up
 {% endblock title %}
 {% block content %}
-    {{
-        forms.field(
-        "username",
-        required=True,
-        )
-    }}
-    {{
-        forms.field(
-        "password",
-        type="password",
-        required=True,
-        )
-    }}
-    {{ essentials.button("log in", formaction="/account/login") }}
-    {{ essentials.button("sign up", formaction="/account/signup") }}
+    <div>
+        {{
+            forms.field(
+            "username",
+            required=True,
+            )
+        }}
+        {{
+            forms.label(
+            "username"
+            )
+        }}
+    </div>
+    <div>
+        {{
+            forms.field(
+            "password",
+            type="password",
+            required=True,
+            )
+        }}
+        {{
+            forms.label(
+            "password"
+            )
+        }}
+    </div>
+    <div>
+        {{
+            essentials.button(
+            "log in",
+            formaction="/account/login"
+            )
+        }}
+        {{
+            essentials.button(
+            "sign up",
+            formaction="/account/signup"
+            )
+        }}
+    </div>
 {% endblock content %}

@@ -1,8 +1,25 @@
 {%
+    macro label(
+    text,
+    for=None,
+    hidden=False
+    )
+%}
+    <label
+        class="
+            block pl-1
+            text-sm font-semibold text-gray-600 dark:text-gray-400
+            {{ 'hidden' if hidden else '' }}
+        "
+        for="{{ for if for else text }}"
+    >
+        {{ text }}
+    </label>
+{% endmacro %}
+{%
     macro field(
     name,
     label=True,
-    id=None,
     type="text",
     value="",
     placeholder="",
@@ -11,44 +28,26 @@
     hx={}
     )
 %}
-    <div
-        {% if id %}
-            id="{{ id }}"
+    <input
+        class="
+            p-1 w-full
+            rounded-md
+            bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
+            border border-gray-300 dark:border-gray-700 outline-none
+            {{ classes }}
+        "
+        name="{{ name }}"
+        id="{{ name }}"
+        value="{{ value }}"
+        type="{{ type }}"
+        placeholder="{{ placeholder }}"
+        {% if required %}
+            required
         {% endif %}
-        class="w-full"
-    >
-        <input
-            class="
-                p-1 w-full
-                rounded-md
-                bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                border border-gray-300 dark:border-gray-700 outline-none
-                {{ classes }}
-            "
-            type="{{ type }}"
-            name="{{ name }}"
-            id="{{ name }}_id"
-            value="{{ value }}"
-            placeholder="{{ placeholder }}"
-            {% if required %}
-                required
-            {% endif %}
-            {% for attr, value in hx.items() %}
-                hx-{{ attr }}="{{ value }}"
-            {% endfor %}
-        />
-        {% if label %}
-            <label
-                class="
-                    block pl-1
-                    text-sm font-semibold text-gray-600 dark:text-gray-400
-                "
-                for="{{ name }}_id"
-            >
-                {{ name }}
-            </label>
-        {% endif %}
-    </div>
+        {% for attr, value in hx.items() %}
+            hx-{{ attr }}="{{ value }}"
+        {% endfor %}
+    />
 {% endmacro %}
 {%
     macro checkbox(
@@ -58,78 +57,51 @@
     accent="accent-blue-500"
     )
 %}
-    <div>
-        <input
-            type="checkbox"
-            name="{{ field if field else name }}"
-            value="{{ name }}"
-            id="{{ name }}"
-            class="{{ accent }}"
-            {% if checked %}
-                checked
-            {% endif %}
-        />
-        <label for="{{ name }}">
-            {{ name }}
-        </label>
-    </div>
+    <input
+        type="checkbox"
+        name="{{ field if field else name }}"
+        value="{{ name }}"
+        id="{{ name }}"
+        class="{{ accent }}"
+        {% if checked %}
+            checked
+        {% endif %}
+    />
 {% endmacro %}
 {%
     macro select(
     name,
     options,
-    id=None,
-    label=True,
     multiple=False,
     hx={},
     size=2
     )
 %}
-    <div
-        {% if id %}
-            id="{{ id }}"
+    <select
+        name="{{ name }}"
+        id="{{ name }}"
+        {% if options|length <= 1 %}
+            disabled
+        {% endif %}
+        {% for attr, value in hx.items() %}
+            hx-{{ attr }}="{{ value }}"
+        {% endfor %}
+        {% if multiple %}
+            multiple size="{{ size if options|length > 1 else 1 }}"
         {% endif %}
         class="
-            w-min
+            p-1 rounded-md
+            bg-gray-200 dark:bg-gray-800
+            focus:bg-gray-300 focus:dark:bg-gray-700
+            disabled:bg-gray-100 disabled:dark:bg-gray-900
+            border border-gray-300 dark:border-gray-700 outline-none disabled:border-dashed
+            w-32
         "
     >
-        <select
-            name="{{ name }}"
-            id="{{ name }}_id"
-            {% if options|length < 2 %}
-                disabled
-            {% endif %}
-            {% for attr, value in hx.items() %}
-                hx-{{ attr }}="{{ value }}"
-            {% endfor %}
-            {% if multiple %}
-                multiple size="{{ size }}"
-            {% endif %}
-            class="
-                p-1 rounded-md
-                bg-gray-200 dark:bg-gray-800
-                focus:bg-gray-300 focus:dark:bg-gray-700
-                disabled:bg-gray-100 disabled:dark:bg-gray-900
-                border border-gray-300 dark:border-gray-700 outline-none disabled:border-dashed
-                w-32
-            "
-        >
-            {% for option in options %}
-                <option value="{{ option }}">
-                    {{ option }}
-                </option>
-            {% endfor %}
-        </select>
-        {% if label %}
-            <label
-                for="{{ name }}"
-                class="
-                    block pl-1 text-left
-                    text-sm font-semibold text-gray-600 dark:text-gray-400
-                "
-            >
-                {{ name }}
-            </label>
-        {% endif %}
-    </div>
+        {% for option in options %}
+            <option value="{{ option }}">
+                {{ option }}
+            </option>
+        {% endfor %}
+    </select>
 {% endmacro %}
