@@ -26,7 +26,7 @@ class Link:
 
     content: str
     description: str
-    score: int
+    votes: int
 
     @classmethod
     def create(cls, *, url: str, title: str, submitter: str, index: str = None) -> Self:
@@ -52,7 +52,7 @@ class Link:
             submitter=submitter,
             content=content,
             description=description,
-            score=0,
+            votes=0,
         )
 
     @classmethod
@@ -74,7 +74,7 @@ class Link:
                 key: value
                 for key, value in data.items()
                 if key
-                in ["index", "id", "url", "title", "submitter", "content", "description", "score"]
+                in ["index", "id", "url", "title", "submitter", "content", "description", "votes"]
             }
         )
 
@@ -134,7 +134,7 @@ class LinkManager:
                 "id": entry.id,
                 "url": entry.url,
                 "submitter": entry.submitter,
-                "score": entry.score,
+                "votes": entry.votes,
                 "title": entry.title,
                 "content": entry.content,
                 "description": entry.description,
@@ -149,7 +149,7 @@ class LinkManager:
             id (str): The internal ID of the entry.
             core (str): The core of the entry.
         """
-        self._dbs[core].add({"id": id, "score": {"inc": 1}}, commit=True)
+        self._dbs[core].add({"id": id, "votes": {"inc": 1}}, commit=True)
 
     def search(self, query: str, core: str, indices: str, sort: str) -> list[Link]:
         """Perform a search using Solr query and sort notation.

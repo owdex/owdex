@@ -11,9 +11,9 @@ def results():
     query = f.request.args.get("query", "*")
     core = f.request.args.get("core", app.settings.links.defaults.search)
     indices = f.request.args.getlist("indices")
-    sort = f.request.args.get("sort", "score desc")  # TODO: default sort in config
+    sort = f.request.args.get("sort", "relevance")  # TODO: default sort in config
 
-    sort = {"relevance": "score desc"}[sort]
+    sort = {"relevance": "score desc"}.get(sort, "score desc")
 
     try:
         results = app.lm.search(query, core, indices, sort)
