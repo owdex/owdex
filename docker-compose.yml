@@ -10,8 +10,8 @@ services:
             - 8983:8983
         volumes:
             - ./data/solr/:/var/solr/data
-            - ./misc/solr_configset:/owdex_configset:ro
-            - ./misc/solr_entrypoint.sh:/entrypoint.sh:ro
+            - ./misc/configset:/owdex_configset:ro
+            - ./misc/entrypoint.sh:/entrypoint.sh:ro
         entrypoint:
             - /entrypoint.sh
 

@@ -1,15 +1,15 @@
 {% import "macros/forms.html" as forms %}
 {{
     forms.field(
-    "title",
+    "url",
     required=True,
     value=value if value else "",
     hx={
-    "trigger": "blur from:#url",
+    "trigger": "blur",
     "include": "#url",
-    "get": "/fetch_title",
-    "target": "#title",
-    "swap": "outerHTML"
+    "get": "/norm_url",
+    "target": "#url",
+    "swap": "outerHTML",
     }
     )
 }}

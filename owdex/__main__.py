@@ -1,14 +1,14 @@
 import os
 
+from waitress import serve
+
 from owdex import create_app
 
 app = create_app()
 
-if app.config["DEBUG"]:
-    port = int(os.environ.get("PORT", 80))
-    app.run(host="0.0.0.0", port=port)
-else:
-    from waitress import serve
+port = int(os.environ.get("PORT", app.settings.runtime.port))
 
-    port = int(os.environ.get("PORT", 80))
-    serve(app, host="0.0.0.0", port=port)
+if app.settings.runtime.debug:
+    app.run(host=app.settings.runtime.host, port=port)
+else:
+    serve(app, host=app.settings.runtime.host, port=port)

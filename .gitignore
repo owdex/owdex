@@ -16,3 +16,4 @@ venv/
 data/
 misc/
 owdex.toml
+indices.json

@@ -3,11 +3,12 @@
 {% block title %}
     results for "{{ query }}"
 {% endblock title %}
-{% block header %}
-    {{ super() }}
-    <p>on {{ indices|join(', ') }}</p>
-{% endblock header %}
 {% block main %}
+    <p>
+        Searching for <code>{{ query }}</code> on <code>{{ indices }}</code> from
+        <code>{{ core }}</code> by <code>{{ sort }}</code> and got
+        <code>{{ results|length }}</code> results
+    </p>
     <ul
         class="
             flex flex-col gap-2
@@ -75,7 +76,7 @@
                         {% if "user" in session %}
                             <li
                                 hx-post="{{ url_for('vote.vote') }}"
-                                hx-vals='{"index": "{{ result.index }}", "id": "{{ result.id }}"}'
+                                hx-vals='{"id": "{{ result.id }}", "core": "{{ core }}"}'
                                 hx-confirm="Vote in favour of this link?"
                             >
                                 vote

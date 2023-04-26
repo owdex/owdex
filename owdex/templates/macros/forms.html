@@ -1,40 +1,53 @@
 {%
+    macro label(
+    text,
+    for=None,
+    hidden=False
+    )
+%}
+    <label
+        class="
+            block pl-1
+            text-sm font-semibold text-gray-600 dark:text-gray-400
+            {{ 'hidden' if hidden else '' }}
+        "
+        for="{{ for if for else text }}"
+    >
+        {{ text }}
+    </label>
+{% endmacro %}
+{%
     macro field(
     name,
+    label=True,
     type="text",
-    value=None,
+    value="",
+    placeholder="",
     required=False,
-    label_id=None,
+    classes="",
     hx={}
     )
 %}
-    <label id="{{ label_id if label_id else '' }}">
-        <input
-            class="
-                p-1 w-full
-                rounded-md
-                bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                border border-gray-300 dark:border-gray-700 outline-none
-            "
-            type="{{ type }}"
-            name="{{ name }}"
-            value="{{ value if value else '' }}"
-            {% if required %}
-                required
-            {% endif %}
-            {% for attr, value in hx.items() %}
-                hx-{{ attr }}="{{ value }}"
-            {% endfor %}
-        />
-        <span
-            class="
-                block pl-1
-                text-sm font-semibold text-gray-600 dark:text-gray-400
-            "
-        >
-            {{ name }}
-        </span>
-    </label>
+    <input
+        class="
+            p-1 w-full
+            rounded-md
+            bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
+            border border-gray-300 dark:border-gray-700 outline-none
+            {{ classes }}
+        "
+        name="{{ name }}"
+        id="{{ name }}"
+        value="{{ value }}"
+        type="{{ type }}"
+        placeholder="{{ placeholder }}"
+        {% if required %}
+            required
+        {% endif %}
+        {% for attr, value in hx.items() %}
+            hx-{{ attr }}="{{ value }}"
+        {% endfor %}
+    />
 {% endmacro %}
 {%
     macro checkbox(
@@ -44,19 +57,51 @@
     accent="accent-blue-500"
     )
 %}
-    <div>
-        <input
-            type="checkbox"
-            name="{{ field if field else name }}"
-            value="{{ name }}"
-            id="{{ name }}"
-            class="{{ accent }}"
-            {% if checked %}
-                checked
-            {% endif %}
-        />
-        <label for="{{ name }}">
-            {{ name }}
-        </label>
-    </div>
+    <input
+        type="checkbox"
+        name="{{ field if field else name }}"
+        value="{{ name }}"
+        id="{{ name }}"
+        class="{{ accent }}"
+        {% if checked %}
+            checked
+        {% endif %}
+    />
+{% endmacro %}
+{%
+    macro select(
+    name,
+    options,
+    multiple=False,
+    hx={},
+    size=2
+    )
+%}
+    <select
+        name="{{ name }}"
+        id="{{ name }}"
+        {% if options|length <= 1 %}
+            disabled
+        {% endif %}
+        {% for attr, value in hx.items() %}
+            hx-{{ attr }}="{{ value }}"
+        {% endfor %}
+        {% if multiple %}
+            multiple size="{{ size if options|length > 1 else 1 }}"
+        {% endif %}
+        class="
+            p-1 rounded-md
+            bg-gray-200 dark:bg-gray-800
+            focus:bg-gray-300 focus:dark:bg-gray-700
+            disabled:bg-gray-100 disabled:dark:bg-gray-900
+            border border-gray-300 dark:border-gray-700 outline-none disabled:border-dashed
+            w-32
+        "
+    >
+        {% for option in options %}
+            <option value="{{ option }}">
+                {{ option }}
+            </option>
+        {% endfor %}
+    </select>
 {% endmacro %}

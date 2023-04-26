@@ -1,37 +1,37 @@
+import json
 import os
 
 import flask as f
-
-import toml
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+
+import box
 
 from .error import internal_server_error, page_not_found
 from .linkmanager import LinkManager
 from .usermanager import UserManager
 
 
-def create_app(config_dict=None):
+def create_app(settings={}):
     app = f.Flask("owdex")
 
-    for file in ("../../owdex.toml", "/owdex.toml"):
-        try:
-            app.config.from_file(file, load=toml.load)
-        except FileNotFoundError:
-            pass
+    app.settings = box.Box.from_toml(filename="/owdex.toml") | settings
 
-    if config_dict:
-        app.config = app.config | config_dict
-
-    app.um = UserManager(
-        app.config["MONGO_HOST"],
-        app.config["MONGO_PORT"],
-        app.config["ADMIN_USERNAME"],
-        app.config["ADMIN_PASSWORD"],
-    )
+    for key, value in {
+        "DEBUG": app.settings.runtime.debug,
+        "SECRET_KEY": app.settings.security.secret_key,
+    }.items():
+        app.config[key] = value
 
     app.lm = LinkManager(
-        app.config["SOLR_HOST"], app.config["SOLR_PORT"], ["stable", "unstable", "archive"]
+        app.settings.databases.solr.host, app.settings.databases.solr.port, app.settings.indices
+    )
+
+    app.um = UserManager(
+        app.settings.databases.mongo.host,
+        app.settings.databases.mongo.port,
+        app.settings.security.admin.username,
+        app.settings.security.admin.password,
     )
 
     app.limiter = Limiter(

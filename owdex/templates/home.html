@@ -13,7 +13,7 @@
     >
         <h1
             class="
-            text-6xl font-bold
+                text-6xl font-bold
             "
         >
             Owdex
@@ -29,27 +29,25 @@
 {% endblock header %}
 {% block main %}
     <form
-        action="/search"
+        action="/results"
         class="
             flex flex-row justify-center
             w-9/12 mx-auto min-w-fit
-        "
-    >
-        <input
-            type="search"
-            name="query"
-            placeholder="search an open web index"
-            required
-            class="
-                bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                border-y border-l border-gray-300 dark:border-gray-700 outline-none rounded-l-lg
-                w-full p-2
             "
-        />
+    >
+        {{
+            forms.field(
+            name="query",
+            type="search",
+            placeholder="search an open web index",
+            required=True,
+            classes="border-r-0 rounded-r-none p-3"
+            )
+        }}
         <button
             class="
                 bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-lg
+                border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-md
                 p-2
             "
         >
@@ -57,9 +55,11 @@
             <span class="hidden"> Execute search </span>
         </button>
     </form>
-    <!-- <p class="
+    <p
+        class="
         mt-2 text-sm
-    ">
-        {{ essentials.link("/advanced", "advanced search") }}
-    </p> -->
+    "
+    >
+        {{ essentials.link("/advanced", "advanced search", boost=True) }}
+    </p>
 {% endblock main %}

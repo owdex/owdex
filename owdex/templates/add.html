@@ -4,29 +4,39 @@
     add a page
 {% endblock title %}
 {% block content %}
-    {{
-        forms.field(
-        "url",
-        type="url",
-        required=True,
-        hx = {
-        "get": "/get_title",
-        "trigger": "keyup delay:500ms changed",
-        "target": "#title",
-        "params": "url",
-        "swap": "outerHTML"
-        }
-        )
-    }}
-    {% include "htmx/title_input.html" %}
-    {{
-        forms.field(
-        "submitter",
-        value=submitter,
-        required=True
-        )
-    }}
-    {{ essentials.button("confirm!") }}
+    <form>
+        <div>
+            {% include "htmx/url_input.html" %}
+            {{
+                forms.label(
+                "url"
+                )
+            }}
+        </div>
+        <div>
+            {% include "htmx/title_input.html" %}
+            {{
+                forms.label(
+                "title"
+                )
+            }}
+        </div>
+        <div>
+            {{
+                forms.field(
+                "submitter",
+                value=submitter,
+                required=True
+                )
+            }}
+            {{
+                forms.label(
+                "submitter"
+                )
+            }}
+        </div>
+        {{ essentials.button("confirm!") }}
+    </form>
 {% endblock content %}
 {% block fine_print %}
     <p>

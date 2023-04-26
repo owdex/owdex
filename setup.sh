@@ -7,11 +7,11 @@ echo "This should not be used in production. See https://github.com/owdex/compos
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 echo "Checking for prerequisites..."
-pre-commit --version > /dev/null || (echo "Pre-commit not installed!"; exit 1)
-npm --version > /dev/null || (echo "NPM not installed!"; exit 1)
+pre-commit --version > /dev/null || exit 1
+npm --version > /dev/null || exit 1
 
 echo "Setting up pre-commit hooks..."
-npm install > /dev/null
+npm install --silent
 pre-commit install > /dev/null
 
 echo "Creating data folders if they don't exist..."
@@ -25,14 +25,20 @@ echo "Creating misc directory..."
 mkdir -p ./misc
 
 echo "Downloading configuration files..."
-wget -q "https://github.com/owdex/compose/archive/refs/heads/main.zip" -O /tmp/compose-main.zip
-unzip -qq /tmp/compose-main.zip -d /tmp
-mv /tmp/compose-main/owdex.toml .
-mv /tmp/compose-main/misc/solr_configset /tmp/compose-main/misc/solr_entrypoint.sh ./misc
-rm -rf /tmp/compose-main.zip /tmp/compose-main
+wget -q "https://github.com/owdex/compose/archive/refs/heads/link-overhaul.zip" -O /tmp/compose-link-overhaul.zip
+unzip -q /tmp/compose-link-overhaul.zip -d /tmp
+mv /tmp/compose-link-overhaul/owdex.toml.default ./owdex.toml
+sed -i 's/debug = false/debug = true/' owdex.toml
+mv /tmp/compose-link-overhaul/misc/configset /tmp/compose-link-overhaul/misc/entrypoint.sh ./misc
+rm -rf /tmp/compose-link-overhaul.zip /tmp/compose-link-overhaul
 
 echo "Setting permissions..."
 sudo chown -R 8983 ./data/solr
+
+echo "Creating and/or entering venv..."
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -q -r owdex/requirements.txt
 
 echo "All done. Happy searching!"
 
