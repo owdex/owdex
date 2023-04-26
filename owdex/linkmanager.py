@@ -165,9 +165,19 @@ class LinkManager:
         Returns:
             list[Link]: A list of Link objects matching the query and sorted in the given manner.
         """
+
+        params = {}
+        match sort:
+            case "relevance":
+                params["sort"] = "score desc"
+            case "votes":
+                params["sort"] = "votes desc"
+            case "magic":
+                params["boost"] = "votes"
+
         return [
             Link.from_dict(result)
-            for result in self._dbs[core].search(query, sort=sort, defType="edismax")
+            for result in self._dbs[core].search(query, defType="edismax", **params)
         ]
 
 
