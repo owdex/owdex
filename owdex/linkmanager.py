@@ -165,7 +165,10 @@ class LinkManager:
         Returns:
             list[Link]: A list of Link objects matching the query and sorted in the given manner.
         """
-        return [Link.from_dict(result) for result in self._dbs[core].search(query, sort=sort)]
+        return [
+            Link.from_dict(result)
+            for result in self._dbs[core].search(query, sort=sort, defType="edismax")
+        ]
 
 
 def scrape(url: str) -> tuple[str, str]:
