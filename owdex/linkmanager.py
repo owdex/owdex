@@ -151,20 +151,20 @@ class LinkManager:
         """
         self._dbs[core].add({"id": id, "score": {"inc": 1}}, commit=True)
 
-    def search(self, query: str, core: str = None, sort: str = "score desc") -> list[Link]:
+    def search(self, query: str, core: str, indices: str, sort: str) -> list[Link]:
         """Perform a search using Solr query and sort notation.
 
         An index can be specified in the query string.
 
         Args:
             query (str): A query string in Solr query notation.
-            core (str, optional): The core to search. Defaults to a value defined in owdex.toml.
-            sort (str, optional): The sorting method to use. Defaults to "score desc", which is Solr's default sorting method.
+            core (str): The core to search. Defaults to a value defined in owdex.toml.
+            indices (str): The indices within the core to search.
+            sort (str): The sorting method to use. Defaults to "score desc", which is Solr's default sorting method.
 
         Returns:
             list[Link]: A list of Link objects matching the query and sorted in the given manner.
         """
-        core = app.settings.links.defaults.search if core is None else core
         return [Link.from_dict(result) for result in self._dbs[core].search(query, sort=sort)]
 
 

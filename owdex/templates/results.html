@@ -4,6 +4,11 @@
     results for "{{ query }}"
 {% endblock title %}
 {% block main %}
+    <p>
+        Searching for <code>{{ query }}</code> on <code>{{ indices }}</code> from
+        <code>{{ core }}</code> by <code>{{ sort }}</code> and got
+        <code>{{ results|length }}</code> results
+    </p>
     <ul
         class="
             flex flex-col gap-2
