@@ -13,6 +13,8 @@ def results():
     indices = f.request.args.getlist("indices")
     sort = f.request.args.get("sort", "score desc")  # TODO: default sort in config
 
+    sort = {"relevance": "score desc"}[sort]
+
     try:
         results = app.lm.search(query, core, indices, sort)
     except SolrError as e:

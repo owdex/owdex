@@ -68,6 +68,21 @@
                     )
                 }}
             </div>
+            <div>
+                {{
+                    forms.select(
+                    name="sort",
+                    options=[
+                    "relevance"
+                    ]
+                    )
+                }}
+                {{
+                    forms.label(
+                    "sort by"
+                    )
+                }}
+            </div>
         </fieldset>
         <fieldset
             class="
