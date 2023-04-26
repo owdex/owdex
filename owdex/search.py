@@ -16,7 +16,7 @@ def results():
     sort = {
         "relevance": "score desc",
         "votes": "votes desc",
-        "magic": "mul(score,votes) desc",
+        # "magic": "product(score,votes) desc",
     }.get(sort, "score desc")
 
     try:
