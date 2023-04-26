@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+
+        <title>owdex - {% block title %}{% endblock title %}</title>
+
+        <script src="{{ url_for('static', filename='vendored/htmx-1.8.6.min.js') }}"></script>
+    </head>
+    <body>
+        {% block header %}
+            <header>
+                <a href="/">
+                    <h1>Owdex</h1>
+                </a>
+                <h2>
+                    {{ self.title() }}
+                </h2>
+            </header>
+        {% endblock header %}
+        {% block flashes %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>
+                                {{ message }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        {% endblock flashes %}
+
+        <main>
+            {% block main %}
+                <!-- main content -->
+            {% endblock main %}
+        </main>
+
+        {% block footer %}
+            <footer>
+                <ul>
+                    <li>
+                        <a href="/about"> about owdex </a>
+                    </li>
+                    <li>
+                        <a href="/add"> add a page </a>
+                    </li>
+                    {% if session["user"] %}
+                        <li>
+                            <a href="/account/logout">
+                                {{ session["user"] }}
+                                (log out)
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="/account"> log in or sign up </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul>
+                    <li>
+                        <a href="#">
+                            {% include "icons/mastodon.svg" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/alexmshepherd/owdex">
+                            {% include "icons/github.svg" %}
+                        </a>
+                    </li>
+                </ul>
+            </footer>
+        {% endblock footer %}
+    </body>
+</html>

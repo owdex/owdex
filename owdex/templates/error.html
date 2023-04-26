@@ -1,6 +1,5 @@
-{% extends "fragments/page.html" %}
-{% import "macros/essentials.html" as essentials %}
-{% block title %}
+{% extends "_base.html" %} COPY --from=tailwind_build /build/build.css
+owdex/static/tailwind.css{% block title %}
     Error {{ status }}
 {% endblock title %}
 {% block main %}
@@ -13,5 +12,5 @@
             {{ explanation }}
         </p>
     {% endif %}
-    {{ essentials.button("Go back", onclick="javascript:history.back()") }}
+    <button onclick="javascript:history.back()">Go back</button>
 {% endblock main %}

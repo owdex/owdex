@@ -1,123 +1,66 @@
-{% extends "fragments/page.html" %}
-{% import "macros/forms.html" as forms %}
-{% import "macros/essentials.html" as essentials %}
+{% extends "_base.html" %}
 {% block title %}
     home
 {% endblock title %}
 {% block header %}
-    <div
-        class="
-            flex flex-col grow
-            my-10
-        "
-    >
-        <h1
-            class="
-                text-6xl font-bold
-            "
-        >
-            Owdex
-        </h1>
-        <h2
-            class="
-                text-2xl
-            "
-        >
-            /o&#650;d&#603;ks/
-        </h2>
+    <div>
+        <h1>Owdex</h1>
+        <h2>/o&#650;d&#603;ks/</h2>
     </div>
 {% endblock header %}
 {% block main %}
-    <form
-        action="/results"
-        class="
-            flex flex-col
-            w-9/12 mx-auto min-w-fit
-            "
-    >
-        <fieldset
-            class="
-                flex flex-row justify-center
-                p-2 gap-2
-            "
-        >
-            <legend class="hidden">Options</legend>
-            <div>
-                {{
-                    forms.select(
-                    name="core",
-                    options=cores,
-                    hx={
-                    "get": "/fetch_indices",
-                    "target": "#indices",
-                    "swap": "outerHTML"
-                    }
-                    )
-                }}
-                {{
-                    forms.label(
-                    "core"
-                    )
-                }}
-            </div>
-            <div>
+    <form action="/results">
+        <fieldset>
+            <legend>Options</legend>
+            <label>
+                core
+                <select
+                    name="core"
+                    hx-get="/fetch_indices"
+                    hx-target="#indices"
+                    hx-swap="outerHTML"
+                >
+                    {% for core_name in cores %}
+                        <option value="{{ core_name }}">
+                            {{ core_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                indices
                 {% include "htmx/index_input.html" %}
-                {{
-                    forms.label(
-                    "indices"
-                    )
-                }}
-            </div>
-            <div>
-                {{
-                    forms.select(
-                    name="sort",
-                    options=[
-                    "relevance",
-                    "votes",
-                    "magic"
-                    ]
-                    )
-                }}
-                {{
-                    forms.label(
-                    "sort by"
-                    )
-                }}
-            </div>
+            </label>
+            <label>
+                sort by
+                <select name="sort">
+                    {% for sort_method in ["relevance", "votes", "magic"] %}
+                        <option value="{{ sort_method }}">
+                            {{ sort_method }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
         </fieldset>
-        <fieldset
-            class="
-                flex flex-row justify-center
-            "
-        >
-            {{
-                forms.field(
-                name="query",
-                label=False,
-                type="search",
-                placeholder="search an open web index",
-                required=True,
-                classes="border-r-0 rounded-r-none p-3"
-                )
-            }}
-            <button
-                class="
-                    bg-gray-200 dark:bg-gray-800 focus:bg-gray-300 focus:dark:bg-gray-700
-                    border-y border-r border-gray-300 dark:border-gray-700 outline-none rounded-r-md
-                    p-2
-                "
-            >
+        <fieldset>
+            <input
+                name="query"
+                placeholder="search an open web index"
+                required
+            />
+            <button>
                 {% include "icons/magnifying_glass.svg" %}
-                <span class="hidden"> Execute search </span>
+                <span> Execute search </span>
             </button>
         </fieldset>
     </form>
-    <p
-        class="
-        mt-2 text-sm
-    "
-    >
-        {{ essentials.link("/", "standard search", boost=True) }}
+    <p>
+        <a
+            href="/"
+            hx-boost="true"
+            hx-push-url="false"
+        >
+            standard search
+        </a>
     </p>
 {% endblock main %}

@@ -1,56 +1,41 @@
-{% extends "fragments/form.html" %}
-{% import "macros/forms.html" as forms %}
+{% extends "_base.html" %}
 {% block title %}
     add a page
 {% endblock title %}
-{% block content %}
-    <form>
-        <div>
+{% block main %}
+    <form method="post">
+        <label>
+            url
             {% include "htmx/url_input.html" %}
-            {{
-                forms.label(
-                "url"
-                )
-            }}
-        </div>
-        <div>
+        </label>
+        <label>
+            title
             {% include "htmx/title_input.html" %}
-            {{
-                forms.label(
-                "title"
-                )
-            }}
-        </div>
-        <div>
-            {{
-                forms.field(
-                "submitter",
-                value=submitter,
-                required=True
-                )
-            }}
-            {{
-                forms.label(
-                "submitter"
-                )
-            }}
-        </div>
-        {{ essentials.button("confirm!") }}
+        </label>
+        <label>
+            submitter
+            <input
+                name="submitter"
+                value="{{ submitter }}"
+                required
+            />
+        </label>
+        <button>add</button>
     </form>
-{% endblock content %}
-{% block fine_print %}
-    <p>
-        by submitting this link, you confirm that it complies with our
-        {{ essentials.link("/standards", "index standards") }}.
-    </p>
-    <p>
-        submitted links will be added to the unstable index, where others can vote on
-        them. if it recieves enough votes and passes trusted review, it will be moved to
-        the stable index. {{ essentials.link("/about", "learn more about indices") }}.
-    </p>
-    <p>
-        if you add an entry to the 'submitter' field, this is the submitter name that
-        will be attributed with having indexed this page. it serves no purpose other than
-        gaining clout. leave it blank for the submission to be marked as anonymous.
-    </p>
-{% endblock fine_print %}
+    <div>
+        <p>
+            by submitting this link, you confirm that it complies with our
+            <a href="/standards">index standards</a>.
+        </p>
+        <p>
+            submitted links will be added to the unstable index, where others can vote on
+            them. if it recieves enough votes and passes trusted review, it will be moved
+            to the stable index. <a href="/about">learn more about indices</a>.
+        </p>
+        <p>
+            if you add an entry to the 'submitter' field, this is the submitter name that
+            will be attributed with having indexed this page. it serves no purpose other
+            than gaining clout.
+        </p>
+    </div>
+{% endblock main %}
