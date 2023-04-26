@@ -1,6 +1,6 @@
 import re
 from dataclasses import KW_ONLY, dataclass
-from typing import Self
+from typing import Literal, Self
 from urllib.parse import urlparse, urlunparse
 from uuid import uuid4 as uuid
 
@@ -119,6 +119,9 @@ class LinkManager:
         Args:
             core (str, optional): A core in the LinkManager. Defaults to a value defined in owdex.toml.
             entry (Link): The entry to add.
+
+        Raises:
+            ValueError: Raised if the entry's URL is already anywhere in the database.
         """
 
         if core and entry.index:
@@ -127,6 +130,10 @@ class LinkManager:
             submission_pool = app.settings.links.defaults.add.split(".")
             core = submission_pool[0]
             index = submission_pool[1]
+
+        for db in self._dbs.values():
+            if len(db.search(f'url:"{entry.url}"')) > 0:
+                raise ValueError("URL already exists")
 
         self._dbs[core].add(
             {
