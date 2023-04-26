@@ -151,7 +151,7 @@ class LinkManager:
         """
         self._dbs[core].add({"id": id, "votes": {"inc": 1}}, commit=True)
 
-    def search(self, query: str, core: str, indices: str, sort: str) -> list[Link]:
+    def search(self, query: str, core: str, indices: list, sort: str) -> list[Link]:
         """Perform a search using Solr query and sort notation.
 
         An index can be specified in the query string.
@@ -174,6 +174,8 @@ class LinkManager:
                 params["sort"] = "votes desc"
             case "magic":
                 params["boost"] = "votes"
+
+        params["fq"] = f"index:({ ' OR '.join(indices) })"
 
         return [
             Link.from_dict(result)
