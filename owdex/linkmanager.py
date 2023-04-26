@@ -182,7 +182,7 @@ class LinkManager:
             case "magic":
                 params["boost"] = "votes"
 
-        params["fq"] = f"index:({ ' OR '.join(indices) })"
+        params["fq"] = f"index:({ ' OR '.join(indices) if indices else '*' })"
 
         return [
             Link.from_dict(result)
