@@ -11,7 +11,7 @@ coverage==7.2.3
 Deprecated==1.2.13
 dnspython==2.3.0
 exceptiongroup==1.1.1
-Flask==2.2.3
+Flask==2.3.2
 Flask-Limiter==3.3.0
 idna==3.4
 importlib-resources==5.12.0
