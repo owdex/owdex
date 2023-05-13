@@ -12,7 +12,7 @@ Deprecated==1.2.13
 dnspython==2.3.0
 exceptiongroup==1.1.1
 Flask==2.3.2
-Flask-Limiter==3.3.0
+Flask-Limiter==3.3.1
 idna==3.4
 importlib-resources==5.12.0
 iniconfig==2.0.0
