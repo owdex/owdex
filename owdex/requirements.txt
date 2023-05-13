@@ -32,7 +32,7 @@ pysolr==3.9.0
 pytest==7.3.1
 python-box==7.0.1
 python-dotenv==1.0.0
-requests==2.29.0
+requests==2.30.0
 rich==13.3.5 ; python_full_version >= '3.7.0'
 setuptools==67.7.2 ; python_version >= '3.7'
 six==1.16.0
