@@ -21,7 +21,7 @@ def handle_error(e):
         case HTTPStatus.NOT_FOUND:
             explanation = "Page not found!"
         case HTTPStatus.TOO_MANY_REQUESTS:
-            explanation = f"You made too many requests and hit the limit: {e.limit}"
+            explanation = f"You made too many requests and hit the limit of {e.limit.limit}"
         case _:
             explanation = (
                 "The server experienced an issue handling your request." if not e.args else e.args
