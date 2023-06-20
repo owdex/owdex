@@ -1,15 +1,37 @@
 import json
 import os
+from http import HTTPStatus
 
 import flask as f
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from werkzeug.exceptions import HTTPException
 
 import box
 
-from .error import internal_server_error, page_not_found
 from .linkmanager import LinkManager
 from .usermanager import UserManager
+
+
+def handle_error(e):
+    status = (
+        HTTPStatus(e.code) if isinstance(e, HTTPException) else HTTPStatus.INTERNAL_SERVER_ERROR
+    )
+    match status:
+        case HTTPStatus.NOT_FOUND:
+            explanation = "Page not found!"
+        case HTTPStatus.TOO_MANY_REQUESTS:
+            explanation = f"You made too many requests and hit the limit: {e.limit}"
+        case _:
+            explanation = (
+                "The server experienced an issue handling your request." if not e.args else e.args
+            )
+    return (
+        f.render_template(
+            "error.html", status=status.value, phrase=status.phrase, explanation=explanation
+        ),
+        status.value,
+    )
 
 
 def create_app(settings={}):
@@ -41,8 +63,7 @@ def create_app(settings={}):
         strategy="fixed-window-elastic-expiry",
     )
 
-    app.register_error_handler(404, page_not_found)
-    app.register_error_handler(500, internal_server_error)
+    app.register_error_handler(Exception, handle_error)
 
     with app.app_context():
         from .add import add_bp
