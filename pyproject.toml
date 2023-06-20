@@ -11,7 +11,7 @@
     profile = "black"
     skip_gitignore = true
     line_length = 99
-    known_flask = ["flask", "flask_limiter"]
+    known_flask = ["flask", "flask_limiter", "werkzeug"]
     sections = ["FUTURE", "STDLIB", "FLASK", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
     src_paths = ["owdex", "tests"]
 

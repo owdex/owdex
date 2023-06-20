@@ -2,10 +2,10 @@ from http import HTTPStatus
 
 import flask as f
 from flask import current_app as app
+from werkzeug import exceptions
 
 from argon2.exceptions import VerifyMismatchError
 
-from .error import error
 from .usermanager import require_login
 
 users_bp = f.Blueprint("users", __name__, template_folder="templates")
@@ -28,7 +28,7 @@ def login():
         password = f.request.form["password"]
         app.um.verify(username, password)
     except (VerifyMismatchError, KeyError):
-        return error(HTTPStatus.UNAUTHORIZED, explanation=f"Wrong username or password!")
+        raise exceptions.Unauthorized("Wrong username or password!")
     else:
         f.session["user"] = username
         return f.redirect(f.url_for("page.home"))
@@ -44,7 +44,7 @@ def signup():
     try:
         app.um.create(f.request.form["username"], f.request.form["password"])
     except KeyError:
-        return error(HTTPStatus.CONFLICT, explanation="A user with that username already exists!")
+        raise exceptions.Conflict("A user with that username already exists!")
     else:
         f.session["user"] = f.request.form["username"]
         return f.redirect(f.url_for("page.home")), HTTPStatus.CREATED
