@@ -10,6 +10,11 @@
         <title>owdex - {% block title %}{% endblock title %}</title>
 
         <script src="{{ url_for('static', filename='vendored/htmx-1.8.6.min.js') }}"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/static/build.css"
+        />
     </head>
     <body>
         {% block header %}
