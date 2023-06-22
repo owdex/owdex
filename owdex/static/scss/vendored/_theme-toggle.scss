@@ -1,0 +1,30 @@
+/*
+This is a Sass mixin to handle a 3-way dark mode.
+It relies on a data-theme attribute on your <html> element with a value of light or dark.
+If data-theme is absent (i.e. it's neither light nor dark), the system's preferred mode is used.
+
+From https://gist.github.com/loilo/dd5639089d837e95c22a706260b26706 by loilo
+Released into the public domain (CC0)
+*/
+
+@mixin light() {
+    @media (prefers-color-scheme: light) {
+        @at-root #{selector-nest(':root:not([data-theme=light]):not([data-theme=dark])', &)} {
+            @content;
+        }
+    }
+    @at-root #{selector-nest(':root[data-theme=light]', &)} {
+        @content;
+    }
+}
+
+@mixin dark() {
+    @media (prefers-color-scheme: dark) {
+        @at-root #{selector-nest(':root:not([data-theme=light]):not([data-theme=dark])', &)} {
+            @content;
+        }
+    }
+    @at-root #{selector-nest(':root[data-theme=dark]', &)} {
+        @content;
+    }
+}
