@@ -9,6 +9,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 echo "Checking for prerequisites..."
 pre-commit --version > /dev/null || exit 1
 npm --version > /dev/null || exit 1
+wget --version > /dev/null || exit 1
+unzip --help  > /dev/null || exit 1
 
 echo "Setting up pre-commit hooks..."
 npm install --silent
@@ -25,12 +27,12 @@ echo "Creating misc directory..."
 mkdir -p ./misc
 
 echo "Downloading configuration files..."
-wget -q "https://github.com/owdex/compose/archive/refs/heads/link-overhaul.zip" -O /tmp/compose-link-overhaul.zip
-unzip -q /tmp/compose-link-overhaul.zip -d /tmp
-mv /tmp/compose-link-overhaul/owdex.toml.default ./owdex.toml
+wget -q "https://github.com/owdex/compose/archive/refs/heads/main.zip" -O /tmp/compose-main.zip
+unzip -q /tmp/compose-main.zip -d /tmp
+mv /tmp/compose-main/owdex.toml.default ./owdex.toml
 sed -i 's/debug = false/debug = true/' owdex.toml
-mv /tmp/compose-link-overhaul/misc/configset /tmp/compose-link-overhaul/misc/entrypoint.sh ./misc
-rm -rf /tmp/compose-link-overhaul.zip /tmp/compose-link-overhaul
+mv /tmp/compose-main/misc/configset /tmp/compose-main/misc/entrypoint.sh ./misc
+rm -rf /tmp/compose-main.zip /tmp/compose-main
 
 echo "Setting permissions..."
 sudo chown -R 8983 ./data/solr
