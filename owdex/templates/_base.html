@@ -17,16 +17,16 @@
         />
     </head>
     <body>
-        {% block header %}
-            <header>
+        <header>
+            {% block header %}
                 <a href="/">
                     <h1>Owdex</h1>
                 </a>
                 <h2>
                     {{ self.title() }}
                 </h2>
-            </header>
-        {% endblock header %}
+            {% endblock header %}
+        </header>
         {% block flashes %}
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -47,8 +47,8 @@
             {% endblock main %}
         </main>
 
-        {% block footer %}
-            <footer>
+        <footer>
+            {% block footer %}
                 <ul>
                     <li>
                         <a href="/about"> about owdex </a>
@@ -81,7 +81,7 @@
                         </a>
                     </li>
                 </ul>
-            </footer>
-        {% endblock footer %}
+            {% endblock footer %}
+        </footer>
     </body>
 </html>
