@@ -1,13 +1,13 @@
-@use "../abstracts" as a;
+@use "variables" as v;
 @use "sass:map";
 
 html {
-    @each $key, $value in map.get(a.$themes, "default") {
+    @each $key, $value in map.get(v.$themes, "default") {
         --theme-#{$key}: #{$value};
     }
 
     @media (prefers-color-scheme: dark) {
-        @each $key, $value in map.get(a.$themes, "dark") {
+        @each $key, $value in map.get(v.$themes, "dark") {
             --theme-#{$key}: #{$value};
         }
     }
