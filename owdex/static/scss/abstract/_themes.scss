@@ -8,6 +8,10 @@ $themes: (
         border: colors.$less-dark,
         font-copy: (
             "Inter",
+            "Helvetica Neue",
+            "Helvetica",
+            "Arial",
+            "sans-serif",
         ),
     ),
     dark: (
@@ -17,6 +21,10 @@ $themes: (
         border: colors.$more-light,
         font-copy: (
             "Inter",
+            "Helvetica Neue",
+            "Helvetica",
+            "Arial",
+            "sans-serif",
         ),
     ),
 );
