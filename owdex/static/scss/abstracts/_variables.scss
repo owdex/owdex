@@ -1,0 +1,14 @@
+$themes: (
+    default: (
+        bg: linear-gradient(hsl(222, 30%, 100%), hsl(222, 30%, 90%)),
+        text: hsl(222, 30%, 30%),
+        link: hsl(222, 70%, 66%),
+        border: hsl(222, 30%, 30%),
+    ),
+    dark: (
+        bg: linear-gradient(hsl(222, 30%, 20%), hsl(222, 30%, 10%)),
+        text: hsl(222, 30%, 30%),
+        link: hsl(222, 70%, 66%),
+        border: hsl(222, 30%, 30%),
+    ),
+);

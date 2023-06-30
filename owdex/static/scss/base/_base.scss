@@ -1,0 +1,14 @@
+@use "../abstracts" as a;
+@use "sass:map";
+
+html {
+    @each $key, $value in map.get(a.$themes, "default") {
+        --theme-#{$key}: #{$value};
+    }
+
+    @media (prefers-color-scheme: dark) {
+        @each $key, $value in map.get(a.$themes, "dark") {
+            --theme-#{$key}: #{$value};
+        }
+    }
+}
