@@ -1,0 +1,22 @@
+@use "colors";
+
+$themes: (
+    default: (
+        bg: linear-gradient(colors.$light, white),
+        text: colors.$dark,
+        link: colors.$accent,
+        border: colors.$less-dark,
+        font-copy: (
+            "Inter",
+        ),
+    ),
+    dark: (
+        bg: linear-gradient(colors.$dark, black),
+        text: colors.$light,
+        link: colors.$accent,
+        border: colors.$more-light,
+        font-copy: (
+            "Inter",
+        ),
+    ),
+);
