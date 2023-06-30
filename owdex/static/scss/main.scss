@@ -1,7 +1,6 @@
 @charset 'utf-8';
 
-@forward "vendored/theme-toggle";
-@use "vendored/modern-normalize";
+@use "vendored/preflight";
 
 @use "base/base";
 @use "base/typography";
