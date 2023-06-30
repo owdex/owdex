@@ -3,11 +3,11 @@
 $scale-factor: 25%;
 $base-hue: 222;
 
-$light: hsl($base-hue, 30%, 90%);
+$light: hsl($base-hue, 30%, 85%);
 $less-light: color.scale($light, $lightness: -25%);
 $more-light: color.scale($light, $lightness: 25%);
 
-$dark: hsl($base-hue, 30%, 10%);
+$dark: hsl($base-hue, 30%, 15%);
 $less-dark: color.scale($dark, $lightness: 25%);
 $more-dark: color.scale($dark, $lightness: -25%);
 

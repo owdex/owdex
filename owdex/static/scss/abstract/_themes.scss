@@ -2,7 +2,7 @@
 
 $themes: (
     default: (
-        bg: linear-gradient(colors.$light, white),
+        bg: linear-gradient(white, colors.$light),
         text: colors.$dark,
         link: colors.$accent,
         border: colors.$less-dark,
