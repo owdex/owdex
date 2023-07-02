@@ -10,6 +10,13 @@
     COPY owdex/static/scss /scss
     RUN dart ./bin/sass.dart /scss/main.scss /build.css
 
+# Minify CSS
+    FROM node:alpine as css_minify
+
+    RUN npm install clean-css-cli -g
+
+    COPY --from=scss_build /build.css /build.css
+    RUN cleancss /build.css -O2 -o /build.min.css
 
 # Run Flask webapp
     FROM python:3-alpine AS flask
@@ -18,7 +25,7 @@
     COPY owdex/requirements.txt .
     RUN pip install --no-cache-dir -r requirements.txt
 
-    COPY --from=scss_build /build.css owdex/static/build.css
+    COPY --from=css_minify /build.min.css owdex/static/build.css
 
     COPY . .
     CMD [ "python", "-m", "owdex" ]
