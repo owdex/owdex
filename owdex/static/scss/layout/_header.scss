@@ -1,4 +1,8 @@
 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
     text-align: center;
 
     #site-name {
@@ -7,5 +11,14 @@ header {
 
     #page-title {
         font-size: 2rem;
+    }
+
+    #account {
+        flex: 1;
+    }
+
+    &::before {
+        content: "";
+        flex: 1;
     }
 }

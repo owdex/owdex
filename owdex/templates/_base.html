@@ -19,12 +19,24 @@
     <body>
         <header>
             {% block header %}
-                <a href="/">
-                    <h1 id="site-name">Owdex</h1>
-                </a>
-                <h2 id="page-title">
-                    {{ self.title() }}
-                </h2>
+                <div id="banner">
+                    <h1 id="site-name">
+                        <a href="/"> Owdex </a>
+                    </h1>
+                    <h2 id="page-title">
+                        {{ self.title() }}
+                    </h2>
+                </div>
+                <div id="account">
+                    {% if session["user"] %}
+                        <a href="/account/logout">
+                            {{ session["user"] }}
+                            (log out)
+                        </a>
+                    {% else %}
+                        <a href="/account">logged out</a>
+                    {% endif %}
+                </div>
             {% endblock header %}
         </header>
         {% block flashes %}
@@ -49,27 +61,12 @@
 
         <footer>
             {% block footer %}
-                <ul>
+                <ul id="footer-links">
                     <li>
                         <a href="/about"> about owdex </a>
                     </li>
-                    <li>
-                        <a href="/add"> add a page </a>
-                    </li>
-                    {% if session["user"] %}
-                        <li>
-                            <a href="/account/logout">
-                                {{ session["user"] }}
-                                (log out)
-                            </a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="/account"> log in or sign up </a>
-                        </li>
-                    {% endif %}
                 </ul>
-                <ul>
+                <ul id="social-icons">
                     <li>
                         <a href="#">
                             {% include "icons/mastodon.svg" %}
