@@ -1,0 +1,12 @@
+@for $i from 6 through 1 {
+    h#{7 - $i} {
+        font-size: $i * 0.75rem;
+        font-weight: $i * 100;
+        margin-bottom: $i * 0.1rem;
+        @if $i < 5 {
+            font-family: var(--theme-font-display);
+        } @else {
+            font-family: var(--theme-font-copy);
+        }
+    }
+}

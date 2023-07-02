@@ -2,10 +2,11 @@
 
 @use "vendored/preflight";
 @use "vendored/inter";
+@use "vendored/lato";
 
 @use "base";
 
-@use "components/button";
+@use "components/heading";
 
 @use "layout/footer";
 @use "layout/header";

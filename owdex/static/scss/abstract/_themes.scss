@@ -1,4 +1,5 @@
 @use "colors";
+@use "fonts";
 
 $themes: (
     default: (
@@ -6,25 +7,15 @@ $themes: (
         text: colors.$dark,
         link: colors.$accent,
         border: colors.$less-dark,
-        font-copy: (
-            "Inter",
-            "Helvetica Neue",
-            "Helvetica",
-            "Arial",
-            "sans-serif",
-        ),
+        font-display: fonts.$inter,
+        font-copy: fonts.$lato,
     ),
     dark: (
         bg: linear-gradient(colors.$dark, black),
         text: colors.$light,
         link: colors.$accent,
         border: colors.$more-light,
-        font-copy: (
-            "Inter",
-            "Helvetica Neue",
-            "Helvetica",
-            "Arial",
-            "sans-serif",
-        ),
+        font-display: fonts.$inter,
+        font-copy: fonts.$lato,
     ),
 );
