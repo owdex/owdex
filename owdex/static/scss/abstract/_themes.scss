@@ -4,6 +4,7 @@
 $themes: (
     default: (
         bg: linear-gradient(white, colors.$light),
+        bg-color: colors.$light,
         text: colors.$dark,
         link: colors.$accent,
         border: colors.$less-dark,
@@ -12,6 +13,7 @@ $themes: (
     ),
     dark: (
         bg: linear-gradient(colors.$dark, black),
+        bg-color: colors.$dark,
         text: colors.$light,
         link: colors.$accent,
         border: colors.$more-light,
