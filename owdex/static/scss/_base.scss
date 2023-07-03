@@ -24,9 +24,13 @@ body {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2vh 2vw;
+
     background: var(--theme-bg);
     font-family: var(--theme-font-copy);
     color: var(--theme-text);
     font-size: 1.25rem;
-    padding: 2vh 2vw;
 }
