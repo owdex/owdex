@@ -1,0 +1,18 @@
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+
+        &#footer-links {
+            justify-content: start;
+        }
+
+        &#social-icons {
+            justify-content: end;
+        }
+    }
+}
