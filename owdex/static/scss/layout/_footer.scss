@@ -8,6 +8,8 @@ footer {
         display: flex;
         flex-direction: row;
 
+        gap: 1rem;
+
         &#footer-links {
             justify-content: start;
         }
