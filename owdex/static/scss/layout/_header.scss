@@ -15,6 +15,11 @@ header {
 
     #account {
         flex: 1;
+        font-size: 0.8rem;
+
+        .button {
+            font-size: 1rem;
+        }
     }
 
     &::before {

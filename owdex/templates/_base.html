@@ -29,12 +29,20 @@
                 </div>
                 <div id="account">
                     {% if session["user"] %}
-                        <a href="/account/logout">
-                            {{ session["user"] }}
-                            (log out)
+                        logged in as {{ session["user"] }}
+                        <a
+                            href="/account/logout"
+                            class="button button-filled"
+                        >
+                            log out
                         </a>
                     {% else %}
-                        <a href="/account">logged out</a>
+                        not logged in <span class="smiley">:(</span>
+                        <a
+                            href="/account"
+                            class="button button-filled"
+                            >join</a
+                        >
                     {% endif %}
                 </div>
             {% endblock header %}
