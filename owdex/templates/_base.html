@@ -20,12 +20,14 @@
         <header>
             {% block header %}
                 <div id="banner">
-                    <h1 id="site-name">
-                        <a href="/"> Owdex </a>
-                    </h1>
-                    <h2 id="page-title">
-                        {{ self.title() }}
-                    </h2>
+                    {% block banner %}
+                        <h1 id="site-name">
+                            <a href="/"> Owdex </a>
+                        </h1>
+                        <h2 id="page-title">
+                            {{ self.title() }}
+                        </h2>
+                    {% endblock banner %}
                 </div>
                 <div id="account">
                     {% if session["user"] %}
