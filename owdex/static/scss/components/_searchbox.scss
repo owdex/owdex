@@ -1,0 +1,21 @@
+.searchbox {
+    display: flex;
+    flex-direction: row;
+
+    * {
+        background-color: var(--theme-bg-color);
+        color: var(--theme-text);
+    }
+
+    input {
+        border-radius: 1rem 0 0 1rem;
+        padding: 1rem;
+    }
+    button {
+        border-radius: 0 1rem 1rem 0;
+        padding: 0 1rem;
+        span {
+            display: none;
+        }
+    }
+}
