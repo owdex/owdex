@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: row;
 
+    margin: 0 auto;
+    width: 50%;
+
     * {
         background-color: var(--theme-bg-color);
         color: var(--theme-text);
@@ -10,6 +13,7 @@
     input {
         border-radius: 1rem 0 0 1rem;
         padding: 1rem;
+        width: 100%;
     }
     button {
         border-radius: 0 1rem 1rem 0;
