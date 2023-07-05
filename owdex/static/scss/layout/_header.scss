@@ -13,18 +13,10 @@ header {
         font-size: 2rem;
     }
 
-    #account {
+    #account,
+    #add {
         flex: 1;
-
-        display: flex;
-        flex-direction: column;
         font-size: 0.8rem;
-
-        gap: 0.5rem;
-
-        * {
-            margin-left: auto;
-        }
 
         .button {
             font-size: 1rem;
@@ -32,8 +24,22 @@ header {
         }
     }
 
-    &::before {
-        content: "";
-        flex: 1;
+    #account {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        * {
+            margin-left: auto;
+        }
+    }
+
+    #add {
+        display: flex;
+        flex-direction: column;
+
+        .button {
+            margin-right: auto;
+        }
     }
 }
