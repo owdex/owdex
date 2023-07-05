@@ -10,25 +10,26 @@
     <h2>/o&#650;d&#603;ks/</h2>
 {% endblock banner %}
 {% block main %}
-    <form
-        action="/results"
-        class="searchbox"
-    >
-        <input
-            name="query"
-            placeholder="search an open web index"
-            required
-        />
-        <button>
-            {% include "icons/magnifying_glass.svg" %}
-            <span> Execute search </span>
-        </button>
+    <form action="/results">
+        <div id="advanced-options"></div>
+        <fieldset class="searchbox">
+            <input
+                name="query"
+                placeholder="search an open web index"
+                required
+            />
+            <button>
+                {% include "icons/magnifying_glass.svg" %}
+                <span> Execute search </span>
+            </button>
+        </fieldset>
     </form>
     <p>
         <a
-            href="/advanced"
-            hx-boost="true"
-            hx-push-url="false"
+            id="advanced-toggle"
+            hx-target="#advanced-options"
+            hx-get="/advanced"
+            hx-swap="outerHTML"
         >
             advanced search
         </a>

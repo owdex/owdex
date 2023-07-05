@@ -1,0 +1,35 @@
+<fieldset id="advanced-options">
+    <legend>Options</legend>
+    <div id="select-column">
+        <label>
+            core
+            <select
+                name="core"
+                hx-get="/fetch_indices"
+                hx-target="#indices"
+                hx-swap="outerHTML"
+            >
+                {% for core_name in cores %}
+                    <option value="{{ core_name }}">
+                        {{ core_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>
+            sort by
+            <select name="sort">
+                {% for sort_method in ["relevance", "votes", "magic"] %}
+                    <option value="{{ sort_method }}">
+                        {{ sort_method }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+    </div>
+    <label id="select-box">
+        indices
+        {% include "htmx/index_input.html" %}
+        <span>hold <kbd>shift</kbd> to select multiple</span>
+    </label>
+</fieldset>

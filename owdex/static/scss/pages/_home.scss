@@ -16,4 +16,42 @@ body#home {
             font-weight: 200;
         }
     }
+
+    #advanced-options {
+        display: flex;
+        flex-direction: row;
+        width: 33%;
+        margin: 1rem auto;
+        gap: 1rem;
+
+        legend {
+            display: none;
+        }
+
+        #select-column,
+        #select-box {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            justify-content: space-between;
+
+            span {
+                font-size: 1rem;
+                color: var(--theme-caption);
+                font-style: italic;
+                border-bottom: 0.05rem dashed var(--theme-border);
+            }
+        }
+
+        select {
+            background-color: var(--theme-ui);
+            border-color: var(--theme-border);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            width: 100%;
+            text-align: center;
+        }
+    }
 }
