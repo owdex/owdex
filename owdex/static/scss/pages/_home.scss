@@ -1,6 +1,11 @@
 body#home {
     gap: 10rem;
 
+    main p {
+        text-align: center;
+        color: var(--theme-caption);
+    }
+
     #banner {
         h1 {
             font-size: 12rem;
