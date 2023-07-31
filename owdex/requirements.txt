@@ -9,7 +9,7 @@ charset-normalizer==3.2.0
 click==8.1.6
 coverage==7.2.7
 Deprecated==1.2.14
-dnspython==2.4.0
+dnspython==2.4.1
 exceptiongroup==1.1.2
 Flask==2.3.2
 Flask-Limiter==3.3.1
