@@ -4,7 +4,7 @@ attrs==23.1.0
 beautifulsoup4==4.12.2
 bs4==0.0.1
 certifi==2023.7.22
-cffi==1.15.1
+cffi==1.16.0
 charset-normalizer==3.3.0
 click==8.1.7
 coverage==7.3.1
