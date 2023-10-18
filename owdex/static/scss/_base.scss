@@ -1,0 +1,36 @@
+@use "abstract/themes";
+@use "sass:map";
+
+/*
+  Here we set a number of CSS variables on the pattern of --theme-x where x is a subkey in $themes.
+  This seems to be the easiest way to support light and dark mode.
+*/
+$themes: themes.$themes;
+html {
+    @each $key, $value in map.get($themes, "default") {
+        --theme-#{$key}: #{$value};
+    }
+
+    @media (prefers-color-scheme: dark) {
+        @each $key, $value in map.get($themes, "dark") {
+            --theme-#{$key}: #{$value};
+        }
+    }
+}
+
+html,
+body {
+    min-height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    padding: 5vh 2.5vw;
+
+    background: var(--theme-bg);
+    font-family: var(--theme-font-copy);
+    color: var(--theme-text);
+    font-size: 1.25rem;
+}

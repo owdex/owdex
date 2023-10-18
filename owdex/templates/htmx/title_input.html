@@ -1,15 +1,11 @@
-{% import "macros/forms.html" as forms %}
-{{
-    forms.field(
-    "title",
-    required=True,
-    value=value if value else "",
-    hx={
-    "trigger": "blur from:#url",
-    "include": "#url",
-    "get": "/fetch_title",
-    "target": "#title",
-    "swap": "outerHTML"
-    }
-    )
-}}
+<input
+    name="title"
+    id="title"
+    value="{{ value if value else '' }}"
+    required
+    hx-trigger="blur from:#url"
+    hx-get="/fetch_title"
+    hx-include="#url"
+    hx-target="#title"
+    hx-swap="outerHTML"
+/>

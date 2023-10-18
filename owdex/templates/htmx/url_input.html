@@ -1,15 +1,10 @@
-{% import "macros/forms.html" as forms %}
-{{
-    forms.field(
-    "url",
-    required=True,
-    value=value if value else "",
-    hx={
-    "trigger": "blur",
-    "include": "#url",
-    "get": "/norm_url",
-    "target": "#url",
-    "swap": "outerHTML",
-    }
-    )
-}}
+<input
+    name="url"
+    id="url"
+    value="{{ value if value else '' }}"
+    required
+    hx-trigger="blur"
+    hx-get="/norm_url"
+    hx-target="#url"
+    hx-swap="outerHTML"
+/>

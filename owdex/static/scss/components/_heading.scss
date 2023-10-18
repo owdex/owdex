@@ -1,0 +1,26 @@
+@use "sass:math";
+
+@for $i from 1 through 6 {
+    h#{$i} {
+        // subtract from 9 so that h1 gets weight of 900 (max)
+        font-weight: (10 - $i) * 100;
+
+        // magic number time! hope you remember high school math
+        // this just results in an exponential decay function that gives nice results
+        // it means we don't have to hardcode sizes and margins for each header
+        $multiplier: 6 * math.pow(0.75, $i);
+
+        // convert to rem for font size
+        font-size: $multiplier * 1rem;
+
+        // convert to rem but also scale down by a ton for margins
+        margin-bottom: $multiplier * 0.05rem;
+
+        // only use a display font above a certain size, otherwise use regular copy font
+        @if $i < 5 {
+            font-family: var(--theme-font-display);
+        } @else {
+            font-family: var(--theme-font-copy);
+        }
+    }
+}

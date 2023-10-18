@@ -1,0 +1,21 @@
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: auto;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+
+        gap: 1rem;
+
+        &#footer-links {
+            justify-content: start;
+        }
+
+        &#social-icons {
+            justify-content: end;
+        }
+    }
+}

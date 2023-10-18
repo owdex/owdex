@@ -1,8 +1,11 @@
-{% import "macros/forms.html" as forms %}
-{{
-    forms.select(
-    "indices",
-    indices,
-    multiple=True
-    )
-}}
+<select
+    name="indices"
+    id="indices"
+    multiple
+>
+    {% for index_name in indices %}
+        <option value="{{ index_name }}">
+            {{ index_name }}
+        </option>
+    {% endfor %}
+</select>

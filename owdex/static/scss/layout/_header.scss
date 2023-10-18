@@ -1,0 +1,44 @@
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    text-align: center;
+
+    #site-name {
+        font-size: 3rem;
+    }
+
+    #page-title {
+        font-size: 2rem;
+    }
+
+    #account,
+    #add {
+        flex: 1;
+        font-size: 0.8rem;
+
+        .button {
+            font-size: 1rem;
+        }
+    }
+
+    #account {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        * {
+            margin-left: auto;
+        }
+    }
+
+    #add {
+        display: flex;
+        flex-direction: column;
+
+        .button {
+            margin-right: auto;
+        }
+    }
+}

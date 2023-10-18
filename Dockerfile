@@ -1,17 +1,36 @@
-FROM node:19-alpine AS tailwind_build
-WORKDIR /build
-RUN npm install tailwindcss
-COPY owdex/templates tailwind.config.js ./
-RUN npx tailwindcss -o build.css --minify
+# Build SCSS to CSS
+    FROM dart:stable AS scss_build
+    COPY --from=bufbuild/buf /usr/local/bin/buf /usr/local/bin/
+
+    WORKDIR /dart-sass
+    RUN git clone https://github.com/sass/dart-sass.git . && \
+        dart pub get && \
+        dart run grinder protobuf
+
+    COPY owdex/static/scss /scss
+    RUN dart ./bin/sass.dart /scss/main.scss /build.css
+
+# Minify CSS
+    FROM node:alpine as css_minify
+
+    RUN npm install clean-css-cli -g
+
+    COPY --from=scss_build /build.css /build.css
+    RUN cleancss /build.css -O2 -o /build.min.css
+
+# Run Flask webapp
+    FROM python:3-alpine AS flask
+    WORKDIR /build
+
+    COPY owdex/requirements.txt .
+    RUN pip install --no-cache-dir -r requirements.txt
+
+    COPY --from=css_minify /build.min.css owdex/static/build.css
+
+    COPY . .
+    CMD [ "python", "-m", "owdex" ]
 
 
-FROM python:3-alpine AS flask_build
-WORKDIR /build
-COPY owdex/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-COPY --from=tailwind_build /build/build.css owdex/static/tailwind.css
-CMD [ "python", "-m", "owdex" ]
-
-LABEL org.opencontainers.image.source = "https://github.com/owdex/owdex"
-LABEL org.opencontainers.image.title = "Owdex frontend"
+# Metadata
+    LABEL org.opencontainers.image.source = "https://github.com/owdex/owdex"
+    LABEL org.opencontainers.image.title = "Owdex frontend"

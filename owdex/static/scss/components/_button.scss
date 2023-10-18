@@ -1,0 +1,16 @@
+.button {
+    border-width: 0.1rem;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    min-width: 5rem;
+
+    background-color: var(--theme-bg-color);
+    color: var(--theme-text);
+    border-color: var(--theme-text);
+
+    &.button-filled {
+        background-color: var(--theme-text);
+        color: var(--theme-bg-color);
+        border-color: var(--theme-bg-color);
+    }
+}

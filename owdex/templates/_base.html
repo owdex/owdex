@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
+
+        <title>owdex - {% block title %}{% endblock title %}</title>
+
+        <script src="{{ url_for('static', filename='vendored/htmx-1.8.6.min.js') }}"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/static/build.css"
+        />
+    </head>
+    <body id="{% block id %}{% endblock id %}">
+        <header>
+            {% block header %}
+                <div id="add">
+                    <a
+                        href="/add"
+                        class="button"
+                    >
+                        add a page
+                    </a>
+                </div>
+                <div id="banner">
+                    {% block banner %}
+                        <h1 id="site-name">
+                            <a href="/"> Owdex </a>
+                        </h1>
+                        <h2 id="page-title">
+                            {{ self.title() }}
+                        </h2>
+                    {% endblock banner %}
+                </div>
+                <div id="account">
+                    {% if session["user"] %}
+                        <a
+                            href="/account/logout"
+                            class="button button-filled"
+                        >
+                            log out
+                        </a>
+                        <div>user: {{ session["user"] }}</div>
+                    {% else %}
+                        <a
+                            href="/account"
+                            class="button button-filled"
+                        >
+                            join
+                        </a>
+                        <div>anonymous!</div>
+                    {% endif %}
+                </div>
+            {% endblock header %}
+        </header>
+        {% block flashes %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>
+                                {{ message }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        {% endblock flashes %}
+
+        <main>
+            {% block main %}
+                <!-- main content -->
+            {% endblock main %}
+        </main>
+
+        <footer>
+            {% block footer %}
+                <ul id="footer-links">
+                    <li>
+                        <a href="/about">about</a>
+                    </li>
+                    <li>
+                        <a href="/legal">legal</a>
+                    </li>
+                </ul>
+                <ul id="social-icons">
+                    <li>
+                        <a href="#">
+                            {% include "icons/mastodon.svg" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/alexmshepherd/owdex">
+                            {% include "icons/github.svg" %}
+                        </a>
+                    </li>
+                </ul>
+            {% endblock footer %}
+        </footer>
+    </body>
+</html>
