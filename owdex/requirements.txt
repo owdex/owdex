@@ -44,4 +44,4 @@ url-normalize==1.4.3
 urllib3==2.1.0
 waitress==2.1.2
 Werkzeug==3.0.1
-wrapt==1.15.0
+wrapt==1.16.0
