@@ -1,4 +1,4 @@
-FROM node:19-alpine AS tailwind_build
+FROM node:21-alpine AS tailwind_build
 WORKDIR /build
 RUN npm install tailwindcss
 COPY owdex/templates tailwind.config.js ./
